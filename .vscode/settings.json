@@ -1,0 +1,18 @@
+{
+    "Lua.diagnostics.globals": [
+        "GameTooltipText",
+        "GameTooltipHeaderText",
+        "GameTooltip",
+        "NORMAL_FONT_COLOR",
+        "PROFESSIONS_TRACKER_HEADER_PROFESSION",
+        "PROFESSIONS_UNTRACK_RECIPE",
+        "ObjectiveTrackerFrame",
+        "PROFESSIONS_TRACKING_VIEW_RECIPE",
+        "ProfessionsFrame",
+        "PROFESSIONS_CRAFTING_FORM_RECRAFTING_HEADER",
+        "PROFESSIONS_TRACKER_REAGENT_FORMAT",
+        "PROFESSIONS_TRACKER_REAGENT_COUNT_FORMAT",
+        "BACKDROP_SLIDER_8_8",
+        "NineSlicePanelMixin"
+    ]
+}

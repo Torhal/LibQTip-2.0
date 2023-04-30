@@ -162,8 +162,9 @@ local function AutoHideTimerFrame_OnUpdate(timer, elapsed)
     end
 end
 
-local function Slider_OnValueChanged(self)
-    self.ScrollFrame:SetVerticalScroll(self:GetValue())
+---@param slider LibQTip-2.0.Slider
+local function Slider_OnValueChanged(slider)
+    slider.ScrollFrame:SetVerticalScroll(slider:GetValue())
 end
 
 ---@param self LibQTip-2.0.Tooltip

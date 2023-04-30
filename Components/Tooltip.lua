@@ -142,23 +142,23 @@ end
 --------------------------------------------------------------------------------
 
 -- Script of the auto-hiding child frame
----@param self LibQTip-2.0.Timer
+---@param timer LibQTip-2.0.Timer
 ---@param elapsed number
-local function AutoHideTimerFrame_OnUpdate(self, elapsed)
-    self.CheckElapsed = self.CheckElapsed + elapsed
+local function AutoHideTimerFrame_OnUpdate(timer, elapsed)
+    timer.CheckElapsed = timer.CheckElapsed + elapsed
 
-    if self.CheckElapsed > 0.1 then
-        if self.Parent:IsMouseOver() or (self.AlternateFrame and self.AlternateFrame:IsMouseOver()) then
-            self.Elapsed = 0
+    if timer.CheckElapsed > 0.1 then
+        if timer.Parent:IsMouseOver() or (timer.AlternateFrame and timer.AlternateFrame:IsMouseOver()) then
+            timer.Elapsed = 0
         else
-            self.Elapsed = self.Elapsed + self.CheckElapsed
+            timer.Elapsed = timer.Elapsed + timer.CheckElapsed
 
-            if self.Elapsed >= self.Delay then
-                QTip:Release(self.Parent)
+            if timer.Elapsed >= timer.Delay then
+                QTip:Release(timer.Parent)
             end
         end
 
-        self.CheckElapsed = 0
+        timer.CheckElapsed = 0
     end
 end
 

@@ -6,8 +6,8 @@
 ## X-Date: @project-date-iso@
 ## X-Category: Library
 ## X-License: BSD
-## X-Website: http://www.wowace.com/addons/libqtip-2-0/
+## X-Website: http://www.curseforge.com/addons/libqtip-2-0/
 
 LibStub\LibStub.lua
 
-LibQTip-2.0.lua
+LibQTip-2.0.xml

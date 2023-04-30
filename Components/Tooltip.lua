@@ -456,11 +456,10 @@ end
 -- Define the font used when adding new lines.
 ---@param font FontObject|Font The new default font.
 ---@return LibQTip-2.0.Tooltip
-function Tooltip:SetFont(font)
-    local isString = type(font) == "string"
-
+function Tooltip:SetDefaultFont(font)
     ValidateFont(font, 2)
-    self.RegularFont = isString and _G[font] or font --[[@as Font]]
+
+    self.RegularFont = type(font) == "string" and _G[font] or font --[[@as Font]]
 
     return self
 end
@@ -468,7 +467,7 @@ end
 -- Define the font used when adding new header lines.
 ---@param font FontObject|Font The new default font.
 ---@return LibQTip-2.0.Tooltip
-function Tooltip:SetHeaderFont(font)
+function Tooltip:SetDefaultHeaderFont(font)
     ValidateFont(font, 2)
 
     self.HeaderFont = type(font) == "string" and _G[font] or font --[[@as Font]]

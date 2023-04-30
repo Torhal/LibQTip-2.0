@@ -373,6 +373,13 @@ function TooltipManager:ReleaseColumn(column)
     column:ClearAllPoints()
     column:ClearBackdrop()
 
+    wipe(column.Cells)
+
+    column.HorizontalJustification = "LEFT"
+    column.Index = 0
+    column.Tooltip = nil
+    column.Width = 0
+
     ScriptManager:ClearFrameScripts(column)
 
     tinsert(self.ColumnHeap, column)

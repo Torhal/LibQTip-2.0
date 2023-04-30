@@ -120,7 +120,8 @@ end
 ---- Internal Functions
 --------------------------------------------------------------------------------
 
-local function GetTipAnchor(frame)
+---@param frame Frame The frame that will serve as the tooltip anchor.
+local function GetTooltipAnchor(frame)
     local x, y = frame:GetCenter()
 
     if not x or not y then
@@ -563,7 +564,7 @@ function Tooltip:SmartAnchorTo(frame)
 
     self:ClearAllPoints()
     self:SetClampedToScreen(true)
-    self:SetPoint(GetTipAnchor(frame))
+    self:SetPoint(GetTooltipAnchor(frame))
 
     return self
 end

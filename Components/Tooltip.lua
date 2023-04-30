@@ -35,7 +35,7 @@ local Tooltip = TooltipManager.TooltipPrototype
 ---@field CheckElapsed number
 ---@field Delay number
 ---@field Elapsed number
----@field Parent LibQTip-2.0.Tooltip
+---@field Tooltip LibQTip-2.0.Tooltip
 
 --------------------------------------------------------------------------------
 ---- Constants
@@ -148,13 +148,13 @@ local function AutoHideTimerFrame_OnUpdate(timer, elapsed)
     timer.CheckElapsed = timer.CheckElapsed + elapsed
 
     if timer.CheckElapsed > 0.1 then
-        if timer.Parent:IsMouseOver() or (timer.AlternateFrame and timer.AlternateFrame:IsMouseOver()) then
+        if timer.Tooltip:IsMouseOver() or (timer.AlternateFrame and timer.AlternateFrame:IsMouseOver()) then
             timer.Elapsed = 0
         else
             timer.Elapsed = timer.Elapsed + timer.CheckElapsed
 
             if timer.Elapsed >= timer.Delay then
-                QTip:Release(timer.Parent)
+                QTip:Release(timer.Tooltip)
             end
         end
 
@@ -397,11 +397,12 @@ function Tooltip:SetAutoHideDelay(delay, alternateFrame, releaseHandler)
             self.AutoHideTimerFrame = timerFrame
         end
 
-        timerFrame.Parent = self
-        timerFrame.CheckElapsed = 0
-        timerFrame.Elapsed = 0
-        timerFrame.Delay = delay
         timerFrame.AlternateFrame = alternateFrame
+        timerFrame.CheckElapsed = 0
+        timerFrame.Delay = delay
+        timerFrame.Elapsed = 0
+        timerFrame.Tooltip = self
+
         timerFrame:Show()
     elseif timerFrame then
         self.AutoHideTimerFrame = nil

@@ -79,8 +79,9 @@ local FrameScriptHandler = {
 ---- Methods
 --------------------------------------------------------------------------------
 
+-- Clears all scripts matching a LibQTip-2.0.ScriptType from the frame.
 ---@param frame LibQTip-2.0.ScriptFrame
-function ScriptManager:ClearFrameScripts(frame)
+function ScriptManager:ClearScripts(frame)
     if
         frame._OnEnter_func
         or frame._OnLeave_func

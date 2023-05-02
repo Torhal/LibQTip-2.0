@@ -360,7 +360,7 @@ function TooltipManager:ReleaseCell(cell)
     cell:ClearAllPoints()
     cell:ClearBackdrop()
 
-    ScriptManager:ClearFrameScripts(cell)
+    ScriptManager:ClearScripts(cell)
 
     cell.CellProvider:ReleaseCell(cell)
     cell.CellProvider = nil
@@ -380,7 +380,7 @@ function TooltipManager:ReleaseColumn(column)
     column.Tooltip = nil
     column.Width = 0
 
-    ScriptManager:ClearFrameScripts(column)
+    ScriptManager:ClearScripts(column)
 
     tinsert(self.ColumnHeap, column)
 end
@@ -399,7 +399,7 @@ function TooltipManager:ReleaseLine(line)
     line.IsHeader = nil
     line.Tooltip = nil
 
-    ScriptManager:ClearFrameScripts(line)
+    ScriptManager:ClearScripts(line)
 
     tinsert(self.LineHeap, line)
 end
@@ -411,7 +411,7 @@ function TooltipManager:ReleaseTimer(timerFrame)
     timerFrame:SetParent(nil)
     timerFrame:SetScript("OnUpdate", nil)
 
-    ScriptManager:ClearFrameScripts(timerFrame)
+    ScriptManager:ClearScripts(timerFrame)
 
     tinsert(self.TimerHeap, timerFrame)
 end

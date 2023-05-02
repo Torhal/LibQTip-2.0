@@ -156,7 +156,7 @@ end
 ---@param a? number Alpha level of the Line's text. Defaults to 1.
 function Line:SetTextColor(r, g, b, a)
     if not r then
-        r, g, b, a = self.Tooltip:GetFont():GetTextColor()
+        r, g, b, a = self.Tooltip:GetDefaultFont():GetTextColor()
     end
 
     for cellIndex = 1, #self.Cells do

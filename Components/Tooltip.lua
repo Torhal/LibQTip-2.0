@@ -318,13 +318,13 @@ function Tooltip:GetDefaultCellProvider()
 end
 
 -- Return the font used for regular lines.
-function Tooltip:GetFont()
+function Tooltip:GetDefaultFont()
     return self.RegularFont
 end
 
 -- Return the font used for header lines.
 ---@return Font
-function Tooltip:GetHeaderFont()
+function Tooltip:GetDefaultHeaderFont()
     return self.HeaderFont
 end
 

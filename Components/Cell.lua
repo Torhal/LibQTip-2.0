@@ -146,7 +146,8 @@ function Cell:SetFont(font)
         type(font) == "string" and _G[font]
             or font
             or (
-                self.Tooltip:GetLine(self.LineIndex).IsHeader and self.Tooltip:GetHeaderFont() or self.Tooltip:GetFont()
+                self.Tooltip:GetLine(self.LineIndex).IsHeader and self.Tooltip:GetDefaultHeaderFont()
+                or self.Tooltip:GetDefaultFont()
             )
     )
 

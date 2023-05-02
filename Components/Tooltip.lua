@@ -313,7 +313,7 @@ end
 
 -- Return the CellProvider used for cell functionality.
 ---@return LibQTip-2.0.CellProvider
-function Tooltip:GetDefaultProvider()
+function Tooltip:GetDefaultCellProvider()
     return self.CellProvider
 end
 

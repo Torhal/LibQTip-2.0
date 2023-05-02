@@ -120,22 +120,22 @@ function ScriptManager:RawSetScript(frame, scriptType, handler)
 end
 
 ---@param frame LibQTip-2.0.ScriptFrame
----@param script LibQTip-2.0.ScriptType
+---@param scriptType LibQTip-2.0.ScriptType
 ---@param handler? fun(arg, ...)
 ---@param arg? string Data to be passed to the script function.
-function ScriptManager:SetScript(frame, script, handler, arg)
-    if not FrameScriptHandler[script] then
+function ScriptManager:SetScript(frame, scriptType, handler, arg)
+    if not FrameScriptHandler[scriptType] then
         return
     end
 
-    frame["_" .. script .. "_func"] = handler
-    frame["_" .. script .. "_arg"] = arg
+    frame["_" .. scriptType .. "_func"] = handler
+    frame["_" .. scriptType .. "_arg"] = arg
 
-    if script == "OnMouseDown" or script == "OnMouseUp" or script == "OnReceiveDrag" then
+    if scriptType == "OnMouseDown" or scriptType == "OnMouseUp" or scriptType == "OnReceiveDrag" then
         if handler then
-            self:RawSetScript(frame, script, FrameScriptHandler[script])
+            self:RawSetScript(frame, scriptType, FrameScriptHandler[scriptType])
         else
-            self:RawSetScript(frame, script, nil)
+            self:RawSetScript(frame, scriptType, nil)
         end
     end
 

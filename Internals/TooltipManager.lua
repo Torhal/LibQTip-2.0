@@ -394,6 +394,7 @@ function TooltipManager:ReleaseLine(line)
 
     wipe(line.Cells)
 
+    line.Height = 0
     line.Index = 0
     line.IsHeader = nil
     line.Tooltip = nil

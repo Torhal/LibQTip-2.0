@@ -23,6 +23,7 @@ local Line = TooltipManager.LinePrototype
 ---@param colSpan? integer The number of Columns the Cell will span. Defaults to 1.
 ---@param cellProvider? LibQTip-2.0.CellProvider The CellProvider to use. Defaults to the Cell's Tooltip's default CellProvider.
 ---@return LibQTip-2.0.Cell
+---@nodiscard
 function Line:GetCell(columnIndex, colSpan, cellProvider)
     local tooltip = self.Tooltip
     local lineCells = self.Cells

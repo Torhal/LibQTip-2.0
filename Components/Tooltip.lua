@@ -223,6 +223,7 @@ end
 -- If the number of values is greater than the number of Columns, an error is raised.
 ---@param ... string Value to be displayed in each Column of the Line.
 ---@return LibQTip-2.0.Line line
+---@nodiscard
 function Tooltip:AddLine(...)
     if #self.Columns == 0 then
         error("Column layout should be defined before adding a Line", 3)
@@ -300,6 +301,7 @@ end
 -- Returns the Column at the given index.
 ---@param columnIndex integer
 ---@return LibQTip-2.0.Column
+---@nodiscard
 function Tooltip:GetColumn(columnIndex)
     ValidateLineIndex(self, columnIndex, 2)
 
@@ -320,18 +322,21 @@ end
 
 -- Returns the CellProvider used for Cell functionality.
 ---@return LibQTip-2.0.CellProvider
+---@nodiscard
 function Tooltip:GetDefaultCellProvider()
     return self.CellProvider
 end
 
 -- Return the Font used for regular lines.
 ---@return Font
+---@nodiscard
 function Tooltip:GetDefaultFont()
     return self.RegularFont
 end
 
 -- Return the Font used for header lines.
 ---@return Font
+---@nodiscard
 function Tooltip:GetDefaultHeaderFont()
     return self.HeaderFont
 end
@@ -339,6 +344,7 @@ end
 -- Returns the Line at the given index.
 ---@param lineIndex integer
 ---@return LibQTip-2.0.Line
+---@nodiscard
 function Tooltip:GetLine(lineIndex)
     ValidateLineIndex(self, lineIndex, 2)
 
@@ -353,6 +359,7 @@ end
 
 -- Returns the total number of Lines on the Tooltip.
 ---@return number lineCount
+---@nodiscard
 function Tooltip:GetLineCount()
     return #self.Lines
 end
@@ -365,6 +372,7 @@ end
 -- Determine whether or not the Tooltip has been acquired by the specified key.
 ---@param key string The key to check.
 ---@return boolean
+---@nodiscard
 function Tooltip:IsAcquiredBy(key)
     return key ~= nil and self.Key == key
 end

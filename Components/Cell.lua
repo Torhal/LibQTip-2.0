@@ -273,7 +273,7 @@ function Cell:SetText(text)
         tooltip.ColSpanWidths[columnRange] = max(tooltip.ColSpanWidths[columnRange] or 0, width)
         TooltipManager:RegisterForCleanup(tooltip)
     else
-        TooltipManager:AdjustColumnWidth(self.Tooltip, column, width)
+        TooltipManager:AdjustColumnWidth(column, width)
     end
 
     if height > line.Height then

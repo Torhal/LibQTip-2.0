@@ -278,11 +278,9 @@ function TooltipManager:AdjustCellSizes(tooltip)
             local leftIndex, rightIndex = maxNeedColumns:match("^(%d+)%-(%d+)$")
 
             for columnIndex = leftIndex, rightIndex do
-                self:AdjustColumnWidth(
-                    tooltip,
-                    columns[columnIndex],
-                    columns[columnIndex].Width + maxNeedWidthPerColumn
-                )
+                local column = columns[columnIndex] --[[@as LibQTip-2.0.Column]]
+
+                self:AdjustColumnWidth(column, column.Width + maxNeedWidthPerColumn)
             end
 
             colSpanWidths[maxNeedColumns] = nil
@@ -312,16 +310,21 @@ function TooltipManager:AdjustCellSizes(tooltip)
     end
 end
 
----@param tooltip LibQTip-2.0.Tooltip
+-- Sets the width of the provided Column to the specified value.
+--
+--  Nothing will be done if the provided value is less than or equal to the current Column width.
 ---@param column LibQTip-2.0.Column
 ---@param width number
-function TooltipManager:AdjustColumnWidth(tooltip, column, width)
-    if width > column.Width then
-        self:SetTooltipSize(tooltip, tooltip.Width + width - column.Width, tooltip.Height)
-
-        column.Width = width
-        column:SetWidth(width)
+function TooltipManager:AdjustColumnWidth(column, width)
+    if width <= column.Width then
+        return
     end
+
+    local tooltip = column.Tooltip
+    self:SetTooltipSize(tooltip, tooltip.Width + width - column.Width, tooltip.Height)
+
+    column.Width = width
+    column:SetWidth(width)
 end
 
 -- Add 2 pixels to height so dangling letters (g, y, p, j, etc) are not clipped.

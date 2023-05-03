@@ -84,6 +84,16 @@ function Cell:GetSize()
     return width, height
 end
 
+-- Returns the text value of the Cell.
+---@return string
+function Cell:GetText()
+    if not self.FontString then
+        error("The Cell's CellProvider did not assign a FontString field", 2)
+    end
+
+    return self.FontString:GetText()
+end
+
 -- This method is called on newly created Cells for initialization.
 function Cell:OnCreation()
     self.ColSpan = 1
@@ -228,7 +238,7 @@ function Cell:SetScript(scriptType, handler, arg)
     return self
 end
 
----@param text string The text to display in the cell.
+---@param text string The text to display in the Cell.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetText(text)
     if not self.FontString then

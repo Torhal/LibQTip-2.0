@@ -223,7 +223,6 @@ end
 -- If the number of values is greater than the number of Columns, an error is raised.
 ---@param ... string Value to be displayed in each Column of the Line.
 ---@return LibQTip-2.0.Line line
----@nodiscard
 function Tooltip:AddLine(...)
     if #self.Columns == 0 then
         error("Column layout should be defined before adding a Line", 3)

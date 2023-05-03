@@ -413,6 +413,40 @@ function Tooltip:SetAutoHideDelay(delay, alternateFrame, releaseHandler)
     return self
 end
 
+-- Sets the horizontal margin size of all cells within the tooltip. This function can only be used before the tooltip has had lines set.
+---@param size integer The desired margin size. Must be a positive number or zero.
+---@return LibQTip-2.0.Tooltip
+function Tooltip:SetCellMarginH(size)
+    if #self.Lines > 0 then
+        error("Unable to set horizontal margin while the tooltip has lines.", 2)
+    end
+
+    if not size or type(size) ~= "number" or size < 0 then
+        error("Margin size must be a positive number or zero.", 2)
+    end
+
+    self.HorizontalCellMargin = size
+
+    return self
+end
+
+-- Sets the vertical margin size of all cells within the tooltip. This function can only be used before the tooltip has had lines set.
+---@param size integer The desired margin size. Must be a positive number or zero.
+---@return LibQTip-2.0.Tooltip
+function Tooltip:SetCellMarginV(size)
+    if #self.Lines > 0 then
+        error("Unable to set vertical margin while the tooltip has lines.", 2)
+    end
+
+    if not size or type(size) ~= "number" or size < 0 then
+        error("Margin size must be a positive number or zero.", 2)
+    end
+
+    self.VerticalCellMargin = size
+
+    return self
+end
+
 -- Ensure the tooltip has at least the passed number of columns, adding new columns if need be.
 --
 -- The justification of existing columns is reset to the passed values.
@@ -499,24 +533,6 @@ function Tooltip:SetHighlightTexture(...)
     return self
 end
 
--- Sets the horizontal margin size of all cells within the tooltip. This function can only be used before the tooltip has had lines set.
----@param size integer The desired margin size. Must be a positive number or zero.
----@return LibQTip-2.0.Tooltip
-function Tooltip:SetHorizontalCellMargin(size)
-    if #self.Lines > 0 then
-        -- TODO: Allow this by adjusting the cells using the new margin size
-        error("Unable to set horizontal margin while the tooltip has lines.", 2)
-    end
-
-    if not size or type(size) ~= "number" or size < 0 then
-        error("Margin size must be a positive number or zero.", 2)
-    end
-
-    self.HorizontalCellMargin = size
-
-    return self
-end
-
 ---@param scriptType LibQTip-2.0.ScriptType|"OnMouseWheel"
 ---@param handler? fun(arg, ...)
 ---@return LibQTip-2.0.Tooltip
@@ -533,24 +549,6 @@ end
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetScrollStep(step)
     self.ScrollStep = step
-
-    return self
-end
-
--- Sets the vertical margin size of all cells within the tooltip. This function can only be used before the tooltip has had lines set.
----@param size integer The desired margin size. Must be a positive number or zero.
----@return LibQTip-2.0.Tooltip
-function Tooltip:SetVerticalCellMargin(size)
-    if #self.Lines > 0 then
-        -- TODO: Allow this by adjusting the cells using the new margin size
-        error("Unable to set vertical margin while the tooltip has lines.", 2)
-    end
-
-    if not size or type(size) ~= "number" or size < 0 then
-        error("Margin size must be a positive number or zero.", 2)
-    end
-
-    self.VerticalCellMargin = size
 
     return self
 end

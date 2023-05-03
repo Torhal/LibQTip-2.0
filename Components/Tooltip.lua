@@ -120,7 +120,7 @@ end
 ---- Internal Functions
 --------------------------------------------------------------------------------
 
----@param frame Frame The frame that will serve as the tooltip anchor.
+---@param frame Frame The Frame that will serve as the Tooltip anchor.
 local function GetTooltipAnchor(frame)
     local x, y = frame:GetCenter()
 
@@ -186,8 +186,8 @@ end
 ---- Methods
 --------------------------------------------------------------------------------
 
--- Add a new column to the right of the tooltip.
----@param horizontalJustification? JustifyH The horizontal justification of cells in this column ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
+-- Add a new Column to the right of the Tooltip.
+---@param horizontalJustification? JustifyH The horizontal justification of Cells in this Column ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
 function Tooltip:AddColumn(horizontalJustification)
     horizontalJustification = horizontalJustification or "LEFT"
     ValidateJustification(horizontalJustification, 2)
@@ -200,10 +200,12 @@ function Tooltip:AddColumn(horizontalJustification)
     return column
 end
 
--- Add a new header line at the bottom of the tooltip.
+-- Add a new header Line at the bottom of the Tooltip.
 --
--- Provided values are displayed on the line with the header font. Nil values are ignored. If the number of values is greater than the number of columns, an error is raised.
----@param ... string Value to be displayed in each column of the line.
+-- Provided values are displayed on the Line using the header Font. Nil values are ignored.
+--
+-- If the number of values is greater than the number of Columns, an error is raised.
+---@param ... string Value to be displayed in each Column of the Line.
 ---@return LibQTip-2.0.Line line
 function Tooltip:AddHeader(...)
     local line = self:AddLine(...)
@@ -213,9 +215,12 @@ function Tooltip:AddHeader(...)
     return line
 end
 
--- Add a new line at the bottom of the tooltip.
--- Provided values are displayed on the line with the regular font. Nil values are ignored. If the number of values is greater than the number of columns, an error is raised.
----@param ... string Value to be displayed in each column of the line.
+-- Add a new Line at the bottom of the Tooltip.
+--
+-- Provided values are displayed on the Line with the regular Font. Nil values are ignored.
+--
+-- If the number of values is greater than the number of Columns, an error is raised.
+---@param ... string Value to be displayed in each Column of the Line.
 ---@return LibQTip-2.0.Line line
 function Tooltip:AddLine(...)
     if #self.Columns == 0 then
@@ -238,7 +243,7 @@ function Tooltip:AddLine(...)
     return line
 end
 
--- Adds a graphical separator line at the bottom of the tooltip.
+-- Adds a graphical separator Line at the bottom of the Tooltip.
 ---@param height? number Height, in pixels, of the separator. Defaults to 1.
 ---@param r? number Red color value of the separator. Defaults to NORMAL_FONT_COLOR.r
 ---@param g? number Green color value of the separator. Defaults to NORMAL_FONT_COLOR.g
@@ -261,7 +266,7 @@ function Tooltip:AddSeparator(height, r, g, b, a)
     return line
 end
 
--- Reset the contents of the tootip. The column layout is preserved but all lines are wiped.
+-- Reset the contents of the Tootip. The Column layout is preserved but all Lines are removed.
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:Clear()
     for lineIndex, line in ipairs(self.Lines) do
@@ -291,6 +296,7 @@ function Tooltip:Clear()
     return self
 end
 
+-- Returns the Column at the given index.
 ---@param columnIndex integer
 ---@return LibQTip-2.0.Column
 function Tooltip:GetColumn(columnIndex)
@@ -305,29 +311,30 @@ function Tooltip:GetColumn(columnIndex)
     return column
 end
 
--- Returns the total number of columns of the tooltip.
----@return number columnCount The number of columns added using :SetColumnLayout or :AddColumn.
+-- Returns the total number of Columns on the Tooltip.
+---@return number columnCount
 function Tooltip:GetColumnCount()
     return #self.Columns
 end
 
--- Return the CellProvider used for cell functionality.
+-- Returns the CellProvider used for Cell functionality.
 ---@return LibQTip-2.0.CellProvider
 function Tooltip:GetDefaultCellProvider()
     return self.CellProvider
 end
 
--- Return the font used for regular lines.
+-- Return the Font used for regular lines.
 function Tooltip:GetDefaultFont()
     return self.RegularFont
 end
 
--- Return the font used for header lines.
+-- Return the Font used for header lines.
 ---@return Font
 function Tooltip:GetDefaultHeaderFont()
     return self.HeaderFont
 end
 
+-- Returns the Line at the given index.
 ---@param lineIndex integer
 ---@return LibQTip-2.0.Line
 function Tooltip:GetLine(lineIndex)
@@ -342,8 +349,8 @@ function Tooltip:GetLine(lineIndex)
     return line
 end
 
--- Returns the total number of lines of the tooltip.
----@return number lineCount The number of lines added using :AddLine or :AddHeader.
+-- Returns the total number of Lines on the Tooltip.
+---@return number lineCount
 function Tooltip:GetLineCount()
     return #self.Lines
 end
@@ -353,22 +360,22 @@ function Tooltip:HookScript()
     geterrorhandler()(":HookScript is not allowed on LibQTip tooltips")
 end
 
--- Determine whether or not the tooltip has been acquired by the specified key.
+-- Determine whether or not the Tooltip has been acquired by the specified key.
 ---@param key string The key to check.
 ---@return boolean
 function Tooltip:IsAcquiredBy(key)
     return key ~= nil and self.Key == key
 end
 
--- Release the tooltip
+-- Convenience wrapper on LibQTip to release the Tooltip.
 function Tooltip:Release()
     QTip:Release(self)
 end
 
--- Sets the length of time in which the mouse pointer can be outside of the tooltip, or an alternate frame, before the tooltip is automatically hidden and then released.
+-- Sets the length of time in which the mouse pointer can be outside of the Tooltip, or an alternate Frame, before the Tooltip is automatically hidden and then released.
 ---@param delay? number Whole or fractional seconds.
----@param alternateFrame? Frame If specified, the tooltip will not be automatically hidden while the mouse pointer is over it.
----@param releaseHandler? LibQTip-2.0.ReleaseHandler Called when the tooltip is released. Generally used to clean up a reference an AddOn has to the tooltip frame, since another AddOn can subsequently acquire it.
+---@param alternateFrame? Frame If specified, the Tooltip will not be automatically hidden while the mouse pointer is over it.
+---@param releaseHandler? LibQTip-2.0.ReleaseHandler Called when the Tooltip is released. Generally used to clean up a reference an AddOn has to the Tooltip, since another AddOn can subsequently acquire it.
 -- Usage:
 --
 -- :SetAutoHideDelay(0.25) => hides after 0.25sec outside of the tooltip
@@ -413,12 +420,14 @@ function Tooltip:SetAutoHideDelay(delay, alternateFrame, releaseHandler)
     return self
 end
 
--- Sets the horizontal margin size of all cells within the tooltip. This function can only be used before the tooltip has had lines set.
+-- Sets the horizontal margin size of all Cells within the Tooltip.
+--
+-- This method can only be used before Lines have been added.
 ---@param size integer The desired margin size. Must be a positive number or zero.
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetCellMarginH(size)
     if #self.Lines > 0 then
-        error("Unable to set horizontal margin while the tooltip has lines.", 2)
+        error("Unable to set horizontal margin while the Tooltip has lines.", 2)
     end
 
     if not size or type(size) ~= "number" or size < 0 then
@@ -430,12 +439,14 @@ function Tooltip:SetCellMarginH(size)
     return self
 end
 
--- Sets the vertical margin size of all cells within the tooltip. This function can only be used before the tooltip has had lines set.
+-- Sets the vertical margin size of all cells within the Tooltip.
+--
+-- This method can only be used before Lines have been added.
 ---@param size integer The desired margin size. Must be a positive number or zero.
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetCellMarginV(size)
     if #self.Lines > 0 then
-        error("Unable to set vertical margin while the tooltip has lines.", 2)
+        error("Unable to set vertical margin while the Tooltip has lines.", 2)
     end
 
     if not size or type(size) ~= "number" or size < 0 then
@@ -447,12 +458,12 @@ function Tooltip:SetCellMarginV(size)
     return self
 end
 
--- Ensure the tooltip has at least the passed number of columns, adding new columns if need be.
+-- Ensure the Tooltip has at least the passed number of Columns.
 --
--- The justification of existing columns is reset to the passed values.
+-- The justification of existing Columns is reset to any passed values, or to "LEFT" if none are provided.
 ---@param columnCount number Minimum number of columns
 ---@param ...? JustifyH Column horizontal justifications ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
--- Example tooltip with 5 columns justified as left, center, left, left, left:
+-- Example Tooltip with 5 columns justified as left, center, left, left, left:
 --
 -- tooltip:SetColumnLayout(5, "LEFT", "CENTER")
 ---@return LibQTip-2.0.Tooltip
@@ -477,7 +488,7 @@ function Tooltip:SetColumnLayout(columnCount, ...)
     return self
 end
 
--- Define the CellProvider to be used for all cell functionality.
+-- Define the CellProvider to be used for all Cell functionality.
 ---@param cellProvider LibQTip-2.0.CellProvider The new default CellProvider.
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetDefaultCellProvider(cellProvider)
@@ -488,7 +499,7 @@ function Tooltip:SetDefaultCellProvider(cellProvider)
     return self
 end
 
--- Define the font used when adding new lines.
+-- Define the Font used when adding new Lines.
 ---@param font FontObject|Font The new default font.
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetDefaultFont(font)
@@ -499,7 +510,7 @@ function Tooltip:SetDefaultFont(font)
     return self
 end
 
--- Define the font used when adding new header lines.
+-- Define the Font used when adding new header Lines.
 ---@param font FontObject|Font The new default font.
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetDefaultHeaderFont(font)
@@ -510,7 +521,7 @@ function Tooltip:SetDefaultHeaderFont(font)
     return self
 end
 
--- Works identically to the default UI's texture:SetTexCoord() API, for the tooltip's highlight texture.
+-- Works identically to the default UI's texture:SetTexCoord() API, for the Tooltip's highlight Texture.
 ---@param ... number Arguments to pass to texture:SetTexCoord()
 ---@overload fun(ULx: number, ULy: number, LLx: number, LLy: number, URx: number, URy: number, LRx: number, LRy: number)
 ---@overload fun(minX: number, maxX: number, minY: number, maxY: number)
@@ -521,7 +532,7 @@ function Tooltip:SetHighlightTexCoord(...)
     return self
 end
 
--- Sets the texture of the highlight when mousing over a line or cell that has a script assigned to it.
+-- Sets the Texture of the highlight when mousing over a Line or Cell that has a script assigned to it.
 --
 -- Works identically to the default UI's texture:SetTexture() API.
 ---@param ... string Arguments to pass to texture:SetTexture()
@@ -533,6 +544,7 @@ function Tooltip:SetHighlightTexture(...)
     return self
 end
 
+-- Assigns a script to the Tooltip.
 ---@param scriptType LibQTip-2.0.ScriptType|"OnMouseWheel"
 ---@param handler? fun(arg, ...)
 ---@return LibQTip-2.0.Tooltip
@@ -553,8 +565,8 @@ function Tooltip:SetScrollStep(step)
     return self
 end
 
--- Smartly anchor the tooltip to the given frame and ensure that it is always on screen.
----@param frame Frame The frame that will serve as the tooltip anchor.
+-- Anchor the Tooltip to the given Frame, ensuring that it is always on screen.
+---@param frame Frame The Frame that will serve as the Tooltip anchor.
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SmartAnchorTo(frame)
     if not frame then
@@ -568,13 +580,13 @@ function Tooltip:SmartAnchorTo(frame)
     return self
 end
 
--- Resizes the tooltip to fit the screen and show a scrollbar if needed.
----@param maxHeight? number Maximum tooltip height in pixels.
+-- Resizes the Tooltip to fit the screen and show a scrollbar if needed.
+---@param maxHeight? number Maximum Tooltip height, in pixels.
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:UpdateScrolling(maxHeight)
     self:SetClampedToScreen(false)
 
-    -- All data is in the tooltip; fix colspan width and prevent the TooltipManager from messing up the tooltip later
+    -- All data is in the Tooltip; fix ColSpan width and prevent the TooltipManager from messing up the Tooltip later.
     TooltipManager:AdjustCellSizes(self)
     TooltipManager.LayoutRegistry[self] = nil
 
@@ -584,7 +596,7 @@ function Tooltip:UpdateScrolling(maxHeight)
     local screenSize = UIParent:GetHeight() / scale
     local tooltipSize = (topSide - bottomSide)
 
-    -- if the tooltip would be too high, limit its height and show the slider
+    -- If the Tooltip would be too high, limit its height and show the slider.
     if bottomSide < 0 or topSide > screenSize or (maxHeight and tooltipSize > maxHeight) then
         local shrink = (bottomSide < 0 and (5 - bottomSide) or 0)
             + (topSide > screenSize and (topSide - screenSize + 5) or 0)

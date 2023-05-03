@@ -58,13 +58,13 @@ end
 ---- Methods
 --------------------------------------------------------------------------------
 
--- Create or retrieve the tooltip with the given key.
+-- Create or retrieve the Tooltip with the given key.
 --
--- If additional arguments are passed, they are passed to :SetColumnLayout for the acquired tooltip.
----@param key string The tooltip key. Any value that can be used as a table key is accepted though you should try to provide unique keys to avoid conflicts.<br>Numbers and booleans should be avoided and strings should be carefully chosen to avoid namespace clashes - no "MyTooltip" - you have been warned!
+-- If additional arguments are passed, they are passed to :SetColumnLayout for the acquired Tooltip.
+---@param key string The Tooltip key. Any value that can be used as a table key is accepted though you should try to provide unique keys to avoid conflicts.<br>Numbers and booleans should be avoided and strings should be carefully chosen to avoid namespace clashes - no "MyTooltip" - you have been warned!
 ---@param numColumns? number Minimum number of columns
 ---@param ... JustifyH Column horizontal justifications ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
--- Example tooltip with 5 columns justified as left, center, left, left, left:
+-- Example Tooltip with 5 columns justified as left, center, left, left, left:
 --
 -- local tooltip = LibStub('LibQTip-2.0'):Acquire('MyFooBarTooltip', 5, "LEFT", "CENTER")
 ---@return LibQTip-2.0.Tooltip
@@ -114,7 +114,7 @@ function QTip:CreateCellProvider(templateCellProvider)
     return newCellProvider, newCellPrototype, baseCellPrototype
 end
 
--- Check if a given tooltip has been acquired.
+-- Check if a Tooltip has been acquired with the specified key.
 ---@param key string - The tooltip key.
 ---@return boolean
 function QTip:IsAcquired(key)
@@ -125,13 +125,13 @@ function QTip:IsAcquired(key)
     return not not TooltipManager.ActiveTooltips[key]
 end
 
--- Return an iterator on the acquired tooltips.
+-- Return an iterator on the acquired Tooltips.
 function QTip:IterateTooltips()
     return pairs(TooltipManager.ActiveTooltips)
 end
 
--- Return an acquired tooltip to the heap. The tooltip is cleared and hidden.
----@param tooltip LibQTip-2.0.Tooltip The tooltip to release. Any invalid values are silently ignored.
+-- Return an acquired Tooltip to the heap. The Tooltip is cleared and hidden.
+---@param tooltip LibQTip-2.0.Tooltip The Tooltip to release. Any invalid values are silently ignored.
 function QTip:Release(tooltip)
     local key = tooltip and tooltip.Key
 

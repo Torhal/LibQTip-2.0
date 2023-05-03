@@ -36,9 +36,9 @@ function Cell:GetContentHeight()
     return height
 end
 
--- Returns the cell's position within the containing tooltip.
----@return number lineIndex The line index of cell.
----@return number columnIndex The column index of cell.
+-- Returns the Cell's position within the containing Tooltip.
+---@return number lineIndex The Line index of Cell.
+---@return number columnIndex The Column index of Cell.
 function Cell:GetPosition()
     return self.LineIndex, self.ColumnIndex
 end

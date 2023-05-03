@@ -43,7 +43,7 @@ function Line:GetCell(columnIndex, colSpan, cellProvider)
 
         if cellProvider == nil or existingCell.CellProvider == cellProvider then
             cell = existingCell
-            cellProvider = cell.CellProvider
+            cellProvider = existingCell.CellProvider
         else
             lineCells[columnIndex] = nil
 

@@ -117,6 +117,33 @@ function Cell:OnCreation()
     self:SetJustifyH("LEFT")
 end
 
+-- Invoked whenever the Cell's content changes.
+function Cell:OnContentChanged()
+    local tooltip = self.Tooltip
+    local line = tooltip:GetLine(self.LineIndex)
+    local columnIndex = self.ColumnIndex
+    local column = tooltip:GetColumn(columnIndex)
+    local width, height = self:GetSize()
+    local colSpan = self.ColSpan
+
+    if colSpan > 1 then
+        local columnRange = ("%d-%d"):format(columnIndex, columnIndex + colSpan - 1)
+
+        tooltip.ColSpanWidths[columnRange] = max(tooltip.ColSpanWidths[columnRange] or 0, width)
+        TooltipManager:RegisterForCleanup(tooltip)
+    else
+        TooltipManager:AdjustColumnWidth(column, width)
+    end
+
+    if height > line.Height then
+        TooltipManager:SetTooltipSize(self.Tooltip, self.Tooltip.Width, self.Tooltip.Height + height - line.Height)
+
+        line.Height = height
+        line:SetHeight(height)
+    end
+end
+
+-- Invoked when the Cell's is released back to its CellProvider.
 function Cell:OnRelease()
     self:SetJustifyH("LEFT")
     self.FontString:SetFontObject(GameTooltipText)
@@ -259,29 +286,7 @@ function Cell:SetText(text)
     end
 
     self.FontString:SetText(tostring(text))
-
-    local tooltip = self.Tooltip
-    local line = tooltip:GetLine(self.LineIndex)
-    local columnIndex = self.ColumnIndex
-    local column = tooltip:GetColumn(columnIndex)
-    local width, height = self:GetSize()
-    local colSpan = self.ColSpan
-
-    if colSpan > 1 then
-        local columnRange = ("%d-%d"):format(columnIndex, columnIndex + colSpan - 1)
-
-        tooltip.ColSpanWidths[columnRange] = max(tooltip.ColSpanWidths[columnRange] or 0, width)
-        TooltipManager:RegisterForCleanup(tooltip)
-    else
-        TooltipManager:AdjustColumnWidth(column, width)
-    end
-
-    if height > line.Height then
-        TooltipManager:SetTooltipSize(self.Tooltip, self.Tooltip.Width, self.Tooltip.Height + height - line.Height)
-
-        line.Height = height
-        line:SetHeight(height)
-    end
+    self:OnContentChanged()
 
     return self
 end

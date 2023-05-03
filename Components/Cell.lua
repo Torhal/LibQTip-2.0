@@ -117,7 +117,7 @@ function Cell:OnCreation()
     self:SetJustifyH("LEFT")
 end
 
--- Invoked whenever the Cell's content changes.
+-- Invoked when the Cell's content changes.
 function Cell:OnContentChanged()
     local tooltip = self.Tooltip
     local line = tooltip:GetLine(self.LineIndex)
@@ -143,7 +143,7 @@ function Cell:OnContentChanged()
     end
 end
 
--- Invoked when the Cell's is released back to its CellProvider.
+-- Invoked when the Cell is released back to its CellProvider.
 function Cell:OnRelease()
     self:SetJustifyH("LEFT")
     self.FontString:SetFontObject(GameTooltipText)

@@ -268,6 +268,7 @@ function Cell:SetRightPadding(pixels)
     return self
 end
 
+-- Assigns a script to the Cell.
 ---@param scriptType LibQTip-2.0.ScriptType The ScriptType to assign to the Cell.
 ---@param handler fun(frame: Frame, ...) The function called when the script is run. Parameters conform to the given ScriptType.
 ---@param arg? unknown Data to be passed to the script function.

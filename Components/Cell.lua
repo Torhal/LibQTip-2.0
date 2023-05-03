@@ -84,7 +84,7 @@ function Cell:GetSize()
     return width, height
 end
 
--- Returns the text value of the Cell.
+-- Returns the text of the Cell.
 ---@return string
 function Cell:GetText()
     if not self.FontString then
@@ -92,6 +92,19 @@ function Cell:GetText()
     end
 
     return self.FontString:GetText()
+end
+
+-- Returns the text color of the Cell.
+---@return number r Red color value of the Cell's text.
+---@return number g Green color value of the Cell's text.
+---@return number b Blue color value of the Cell's text.
+---@return number a Alpha level of the Cell's text.
+function Cell:GetTextColor()
+    if not self.FontString then
+        error("The Cell's CellProvider did not assign a FontString field", 2)
+    end
+
+    return self.FontString:GetTextColor()
 end
 
 -- This method is called on newly created Cells for initialization.

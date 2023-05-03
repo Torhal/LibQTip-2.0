@@ -103,22 +103,6 @@ function Line:GetCell(columnIndex, colSpan, cellProvider)
     return cell
 end
 
----@param columnIndex integer Column index for the Cell.
----@return LibQTip-2.0.Line line
-function Line:ReleaseCell(columnIndex)
-    local cell = self.Cells[columnIndex]
-
-    if cell then
-        for cellIndex = columnIndex, columnIndex + cell.ColSpan - 1 do
-            self.Cells[cellIndex] = nil
-        end
-
-        TooltipManager:ReleaseCell(cell)
-    end
-
-    return self
-end
-
 -- Sets the background color for the Line.
 ---@param r? number Red color value of the line. Defaults to the Tooltip's current red value.
 ---@param g? number Green color value of the line. Defaults to the Tooltip's current green value.

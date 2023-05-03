@@ -22,6 +22,7 @@ local Line = TooltipManager.LinePrototype
 ---@param columnIndex integer Column index of the Cell.
 ---@param colSpan? integer The number of Columns the Cell will span. Defaults to 1.
 ---@param cellProvider? LibQTip-2.0.CellProvider The CellProvider to use. Defaults to the Cell's Tooltip's default CellProvider.
+---@return LibQTip-2.0.Cell
 function Line:GetCell(columnIndex, colSpan, cellProvider)
     local tooltip = self.Tooltip
     local lineCells = self.Cells
@@ -108,6 +109,7 @@ end
 ---@param g? number Green color value of the Line. Defaults to the Tooltip's current green value.
 ---@param b? number Blue color value of the Line. Defaults to the Tooltip's current blue value.
 ---@param a? number Alpha level of the Line. Defaults to 1.
+---@return LibQTip-2.0.Line
 function Line:SetColor(r, g, b, a)
     local red, green, blue, alpha
 
@@ -127,6 +129,7 @@ end
 ---@param scriptType LibQTip-2.0.ScriptType The column ScriptType.
 ---@param handler fun(frame: Frame, ...) The function called when the script is run. Parameters conform to the given ScriptType.
 ---@param arg? string Data to be passed to the script handler.
+---@return LibQTip-2.0.Line
 function Line:SetScript(scriptType, handler, arg)
     ScriptManager:SetScript(self, scriptType, handler, arg)
 
@@ -138,6 +141,7 @@ end
 ---@param g? number Green color value of the Line's text. Defaults to the green value of the Tooltip's default Font.
 ---@param b? number Blue color value of the Line's text. Defaults to the blue value of the Tooltip's default Font.
 ---@param a? number Alpha level of the Line's text. Defaults to 1.
+---@return LibQTip-2.0.Line
 function Line:SetTextColor(r, g, b, a)
     if not r then
         r, g, b, a = self.Tooltip:GetDefaultFont():GetTextColor()

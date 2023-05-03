@@ -188,6 +188,7 @@ end
 
 -- Add a new Column to the right of the Tooltip.
 ---@param horizontalJustification? JustifyH The horizontal justification of Cells in this Column ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
+---@return LibQTip-2.0.Column
 function Tooltip:AddColumn(horizontalJustification)
     horizontalJustification = horizontalJustification or "LEFT"
     ValidateJustification(horizontalJustification, 2)
@@ -324,6 +325,7 @@ function Tooltip:GetDefaultCellProvider()
 end
 
 -- Return the Font used for regular lines.
+---@return Font
 function Tooltip:GetDefaultFont()
     return self.RegularFont
 end

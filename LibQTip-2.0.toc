@@ -5,6 +5,7 @@
 ## Version: @project-version@
 ## X-Date: @project-date-iso@
 ## X-Category: Library
+## X-Curse-Project-ID: 856330
 ## X-License: BSD
 ## X-Website: http://www.curseforge.com/addons/libqtip-2-0/
 

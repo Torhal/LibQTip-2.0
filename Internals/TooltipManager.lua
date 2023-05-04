@@ -168,6 +168,7 @@ function TooltipManager:AcquireLine(tooltip, lineIndex)
     line:Show()
 
     line.Cells = line.Cells or {}
+    line.ColSpanCells = line.ColSpanCells or {}
     line.Height = 0
     line.Index = lineIndex
     line.Tooltip = tooltip
@@ -418,6 +419,7 @@ function TooltipManager:ReleaseLine(line)
     line:ClearBackdrop()
 
     wipe(line.Cells)
+    wipe(line.ColSpanCells)
 
     line.Height = 0
     line.Index = 0

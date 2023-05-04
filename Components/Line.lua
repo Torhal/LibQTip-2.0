@@ -9,6 +9,7 @@ local TooltipManager = QTip.TooltipManager
 
 ---@class LibQTip-2.0.Line: LibQTip-2.0.ScriptFrame
 ---@field Cells (LibQTip-2.0.Cell|nil)[] Cells indexed by Column.
+---@field ColSpanCells (true|nil)[] A value of true means the Column index is part of a ColSpan.
 ---@field Height number Height, in pixels.
 ---@field Index integer The Line's index on its Tooltip
 ---@field IsHeader? true Determines whether the Tooltip's normal or header Font should be used for Cells in this Line.
@@ -31,6 +32,10 @@ function Line:GetCell(columnIndex, colSpan, cellProvider)
     local cell ---@type LibQTip-2.0.Cell|nil
     local horizontalJustification ---@type JustifyH|nil
 
+    if self.ColSpanCells[columnIndex] then
+        error(("Overlapping Cells at column %d"):format(columnIndex), 3)
+    end
+
     -- Check for the existence of a previous Cell on the Column.
     local existingCell = lineCells[columnIndex]
 
@@ -41,8 +46,11 @@ function Line:GetCell(columnIndex, colSpan, cellProvider)
         -- Remove the previously-defined ColSpan.
         for cellIndex = columnIndex + 1, columnIndex + existingCell.ColSpan - 1 do
             lineCells[cellIndex] = nil
+            self.ColSpanCells[cellIndex] = nil
         end
 
+        -- If no CellProvider was supplied, or the supplied CellProvider matches that of the existing Cell, use that Cell.
+        -- Otherwise, the existing Cell needs to be released to make way for the new one.
         if cellProvider == nil or existingCell.CellProvider == cellProvider then
             cell = existingCell
             cellProvider = existingCell.CellProvider
@@ -51,11 +59,9 @@ function Line:GetCell(columnIndex, colSpan, cellProvider)
 
             TooltipManager:ReleaseCell(existingCell)
         end
-    elseif existingCell == nil then
+    else
         cellProvider = cellProvider or tooltip.CellProvider
         colSpan = colSpan or 1
-    else
-        error(("overlapping cells at column %d"):format(columnIndex), 3)
     end
 
     local columnCount = #tooltip.Columns
@@ -75,15 +81,17 @@ function Line:GetCell(columnIndex, colSpan, cellProvider)
 
     -- Cleanup ColSpans
     for cellIndex = columnIndex + 1, rightColumnIndex do
+        if self.ColSpanCells[cellIndex] then
+            error(("Overlapping Cells at column %d"):format({ cellIndex }), 3)
+        end
+
         local columnCell = lineCells[cellIndex]
 
         if columnCell then
             TooltipManager:ReleaseCell(columnCell)
-        elseif columnCell == false then
-            error("overlapping cells at column " .. cellIndex, 3)
         end
 
-        lineCells[cellIndex] = false
+        self.ColSpanCells[cellIndex] = true
     end
 
     if not cell then

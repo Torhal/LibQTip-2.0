@@ -15,6 +15,7 @@ local ScriptManager = QTip.ScriptManager
 ---@field ColumnMetatable table<"__index", LibQTip-2.0.Column>
 ---@field ColumnPrototype LibQTip-2.0.Column
 ---@field DefaultBackdrop backdropInfo
+---@field DefaultHighlightTexturePath string
 ---@field PixelSize TooltipPixelSize
 ---@field LayoutRegistry table<LibQTip-2.0.Tooltip, true|nil>
 ---@field LineHeap LibQTip-2.0.Line[]
@@ -48,6 +49,8 @@ TooltipManager.DefaultBackdrop = TooltipManager.DefaultBackdrop
     or {
         bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
     }
+
+TooltipManager.DefaultHighlightTexturePath = [[Interface\QuestFrame\UI-QuestTitleHighlight]]
 
 ---@class TooltipPixelSize
 ---@field CellPadding 10
@@ -195,6 +198,17 @@ function TooltipManager:AcquireTooltip(key)
         local cellPadding = PixelSize.CellPadding
 
         tooltip = setmetatable(CreateFrame("Frame", nil, UIParent, "TooltipBackdropTemplate"), self.TooltipMetatable) --[[@as LibQTip-2.0.Tooltip]]
+
+        local highlightFrame = CreateFrame("Frame", nil, UIParent)
+        highlightFrame:SetFrameStrata("TOOLTIP")
+        highlightFrame:Hide()
+        tooltip.HighlightFrame = highlightFrame
+
+        local highlightTexture = highlightFrame:CreateTexture(nil, "OVERLAY")
+        highlightTexture:SetTexture(self.DefaultHighlightTexturePath)
+        highlightTexture:SetBlendMode("ADD")
+        highlightTexture:SetAllPoints(highlightFrame)
+        tooltip.HighlightTexture = highlightTexture
 
         local scrollFrame = CreateFrame("ScrollFrame", nil, tooltip)
         scrollFrame:SetPoint("TOP", tooltip, "TOP", 0, -cellPadding)
@@ -493,8 +507,8 @@ function TooltipManager:ReleaseTooltip(tooltip)
 
     tinsert(self.TooltipHeap, tooltip)
 
-    ScriptManager.HighlightTexture:SetTexture(ScriptManager.DefaultHighlightTexturePath)
-    ScriptManager.HighlightTexture:SetTexCoord(0, 1, 0, 1)
+    tooltip:SetHighlightTexture(self.DefaultHighlightTexturePath)
+    tooltip:SetHighlightTexCoord(0, 1, 0, 1)
 end
 
 -- Sets the Tooltip's width and height.

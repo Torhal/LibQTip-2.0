@@ -16,6 +16,8 @@ local TooltipManager = QTip.TooltipManager
 ---@field Columns (LibQTip-2.0.Column|nil)[]
 ---@field HeaderFont Font
 ---@field Height number
+---@field HighlightFrame Frame
+---@field HighlightTexture Texture
 ---@field Key string
 ---@field Lines (LibQTip-2.0.Line|nil)[]
 ---@field RegularFont Font
@@ -536,7 +538,7 @@ end
 ---@overload fun(minX: number, maxX: number, minY: number, maxY: number)
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetHighlightTexCoord(...)
-    ScriptManager.HighlightTexture:SetTexCoord(...)
+    self.HighlightTexture:SetTexCoord(...)
 
     return self
 end
@@ -548,7 +550,7 @@ end
 ---@overload fun(file: string|number, horizWrap?: HorizWrap, vertWrap?: string, filterMode?: FilterMode)
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetHighlightTexture(...)
-    ScriptManager.HighlightTexture:SetTexture(...)
+    self.HighlightTexture:SetTexture(...)
 
     return self
 end

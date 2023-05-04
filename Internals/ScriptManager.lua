@@ -11,6 +11,7 @@ local ScriptManager = QTip.ScriptManager
 ScriptManager.FrameScriptMetadata = ScriptManager.FrameScriptMetadata or {}
 
 ---@class LibQTip-2.0.ScriptFrame: BackdropTemplate, Frame
+---@field Tooltip LibQTip-2.0.Tooltip
 
 ---@class LibQTip-2.0.ScriptMetadata
 ---@field Parameters? table
@@ -29,33 +30,23 @@ ScriptManager.FrameScriptMetadata = ScriptManager.FrameScriptMetadata or {}
 ---- Constants
 --------------------------------------------------------------------------------
 
-local DefaultHighlightTexturePath = [[Interface\QuestFrame\UI-QuestTitleHighlight]]
-
-local HighlightFrame = CreateFrame("Frame", nil, UIParent)
-HighlightFrame:SetFrameStrata("TOOLTIP")
-HighlightFrame:Hide()
-
-local HighlightTexture = HighlightFrame:CreateTexture(nil, "OVERLAY")
-HighlightTexture:SetTexture(DefaultHighlightTexturePath)
-HighlightTexture:SetBlendMode("ADD")
-HighlightTexture:SetAllPoints(HighlightFrame)
-
-ScriptManager.HighlightTexture = HighlightTexture
-ScriptManager.DefaultHighlightTexturePath = DefaultHighlightTexturePath
-
 ---@type table<LibQTip-2.0.ScriptType, fun(frame: LibQTip-2.0.ScriptFrame, ...)>
 local FrameScriptHandler = {
     OnEnter = function(frame, ...)
-        HighlightFrame:SetParent(frame)
-        HighlightFrame:SetAllPoints(frame)
-        HighlightFrame:Show()
+        local highlightFrame = frame.Tooltip.HighlightFrame
+
+        highlightFrame:SetParent(frame)
+        highlightFrame:SetAllPoints(frame)
+        highlightFrame:Show()
 
         ScriptManager:CallScriptHandler(frame, "OnEnter", ...)
     end,
     OnLeave = function(frame, ...)
-        HighlightFrame:Hide()
-        HighlightFrame:ClearAllPoints()
-        HighlightFrame:SetParent(nil)
+        local highlightFrame = frame.Tooltip.HighlightFrame
+
+        highlightFrame:Hide()
+        highlightFrame:ClearAllPoints()
+        highlightFrame:SetParent(nil)
 
         ScriptManager:CallScriptHandler(frame, "OnLeave", ...)
     end,

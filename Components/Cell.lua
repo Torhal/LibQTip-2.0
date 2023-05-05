@@ -186,7 +186,7 @@ function Cell:SetColor(r, g, b, a)
 end
 
 -- Sets the number of Columns the Cell will span. Defaults to 1.
----@param size integer The number of Columns the Cell will span.
+---@param size integer The number of Columns the Cell will span. Providing a negative or zero size will count back from the rightmost Column and update the ColSpan to its effective value.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetColSpan(size)
     local line = self.Tooltip:GetLine(self.LineIndex)
@@ -213,7 +213,6 @@ function Cell:SetColSpan(size)
             error("ColSpan too big: Cell extends beyond right-most Column", 3)
         end
     else
-        -- Zero or negative: count back from right-most Column and update the ColSpan to its effective value.
         rightColumnIndex = max(columnIndex, columnCount + size)
         size = 1 + rightColumnIndex - columnIndex
     end

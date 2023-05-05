@@ -72,10 +72,9 @@ TooltipManager.PixelSize = TooltipManager.PixelSize or PixelSize
 ---@param tooltip LibQTip-2.0.Tooltip
 ---@param line LibQTip-2.0.Line Line index of the Cell.
 ---@param column LibQTip-2.0.Column Column index of the Cell.
----@param rightColumnIndex integer The rightmost Column index of the Cell.
 ---@param cellProvider LibQTip-2.0.CellProvider
 ---@return LibQTip-2.0.Cell
-function TooltipManager:AcquireCell(tooltip, line, column, rightColumnIndex, cellProvider)
+function TooltipManager:AcquireCell(tooltip, line, column, cellProvider)
     local cell = cellProvider:AcquireCell()
 
     cell.ColumnIndex = column.Index
@@ -85,7 +84,7 @@ function TooltipManager:AcquireCell(tooltip, line, column, rightColumnIndex, cel
     cell:SetParent(tooltip.ScrollChild)
     cell:SetFrameLevel(tooltip.ScrollChild:GetFrameLevel() + 3)
     cell:SetPoint("LEFT", column)
-    cell:SetPoint("RIGHT", tooltip.Columns[rightColumnIndex])
+    cell:SetPoint("RIGHT", tooltip.Columns[cell.ColumnIndex + cell.ColSpan - 1])
     cell:SetPoint("TOP", line)
     cell:SetPoint("BOTTOM", line)
     cell:SetJustifyH(column.HorizontalJustification)

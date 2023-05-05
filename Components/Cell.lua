@@ -185,6 +185,61 @@ function Cell:SetColor(r, g, b, a)
     return self
 end
 
+-- Sets the number of Columns the Cell will span. Defaults to 1.
+---@param size integer The number of Columns the Cell will span.
+---@return LibQTip-2.0.Cell cell
+function Cell:SetColSpan(size)
+    local line = self.Tooltip:GetLine(self.LineIndex)
+    local colSpanCells = line.ColSpanCells
+    local lineCells = line.Cells
+
+    local columnIndex = self.ColumnIndex
+
+    size = size or 1
+
+    -- Remove the previously-defined ColSpan.
+    for cellIndex = columnIndex + 1, columnIndex + self.ColSpan - 1 do
+        lineCells[cellIndex] = nil
+        colSpanCells[cellIndex] = nil
+    end
+
+    local columnCount = #self.Tooltip.Columns
+    local rightColumnIndex
+
+    if size > 0 then
+        rightColumnIndex = columnIndex + size - 1
+
+        if rightColumnIndex > columnCount then
+            error("ColSpan too big: Cell extends beyond right-most Column", 3)
+        end
+    else
+        -- Zero or negative: count back from right-most Column and update the ColSpan to its effective value.
+        rightColumnIndex = max(columnIndex, columnCount + size)
+        size = 1 + rightColumnIndex - columnIndex
+    end
+
+    -- Cleanup ColSpans
+    for cellIndex = columnIndex + 1, rightColumnIndex do
+        if colSpanCells[cellIndex] then
+            error(("Overlapping Cells at column %d"):format({ cellIndex }), 3)
+        end
+
+        local columnCell = lineCells[cellIndex]
+
+        if columnCell then
+            TooltipManager:ReleaseCell(columnCell)
+        end
+
+        colSpanCells[cellIndex] = true
+    end
+
+    self.ColSpan = size
+
+    self:SetPoint("RIGHT", self.Tooltip.Columns[rightColumnIndex])
+
+    return self
+end
+
 ---@param font? FontObject|Font The rendering font. Defaults to regular or header font, depending on the cell's designation.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetFont(font)

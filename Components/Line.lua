@@ -21,18 +21,17 @@ local Line = TooltipManager.LinePrototype
 --------------------------------------------------------------------------------
 
 ---@param columnIndex integer Column index of the Cell.
----@param colSpan? integer The number of Columns the Cell will span. Defaults to 1.
 ---@param cellProvider? LibQTip-2.0.CellProvider The CellProvider to use. Defaults to the Cell's Tooltip's default CellProvider.
 ---@return LibQTip-2.0.Cell
 ---@nodiscard
-function Line:GetCell(columnIndex, colSpan, cellProvider)
+function Line:GetCell(columnIndex, cellProvider)
     local tooltip = self.Tooltip
     local lineCells = self.Cells
+    local colSpanCells = self.ColSpanCells
 
     local cell ---@type LibQTip-2.0.Cell|nil
-    local horizontalJustification ---@type JustifyH|nil
 
-    if self.ColSpanCells[columnIndex] then
+    if colSpanCells[columnIndex] then
         error(("Overlapping Cells at column %d"):format(columnIndex), 3)
     end
 
@@ -40,15 +39,6 @@ function Line:GetCell(columnIndex, colSpan, cellProvider)
     local existingCell = lineCells[columnIndex]
 
     if existingCell then
-        colSpan = colSpan or existingCell.ColSpan
-        horizontalJustification = existingCell.HorizontalJustification
-
-        -- Remove the previously-defined ColSpan.
-        for cellIndex = columnIndex + 1, columnIndex + existingCell.ColSpan - 1 do
-            lineCells[cellIndex] = nil
-            self.ColSpanCells[cellIndex] = nil
-        end
-
         -- If no CellProvider was supplied, or the supplied CellProvider matches that of the existing Cell, use that Cell.
         -- Otherwise, the existing Cell needs to be released to make way for the new one.
         if cellProvider == nil or existingCell.CellProvider == cellProvider then
@@ -61,53 +51,10 @@ function Line:GetCell(columnIndex, colSpan, cellProvider)
         end
     else
         cellProvider = cellProvider or tooltip.CellProvider
-        colSpan = colSpan or 1
-    end
-
-    local columnCount = #tooltip.Columns
-    local rightColumnIndex
-
-    if colSpan > 0 then
-        rightColumnIndex = columnIndex + colSpan - 1
-
-        if rightColumnIndex > columnCount then
-            error("ColSpan too big: Cell extends beyond right-most Column", 3)
-        end
-    else
-        -- Zero or negative: count back from right-most Column and update the ColSpan to its effective value.
-        rightColumnIndex = max(columnIndex, columnCount + colSpan)
-        colSpan = 1 + rightColumnIndex - columnIndex
-    end
-
-    -- Cleanup ColSpans
-    for cellIndex = columnIndex + 1, rightColumnIndex do
-        if self.ColSpanCells[cellIndex] then
-            error(("Overlapping Cells at column %d"):format({ cellIndex }), 3)
-        end
-
-        local columnCell = lineCells[cellIndex]
-
-        if columnCell then
-            TooltipManager:ReleaseCell(columnCell)
-        end
-
-        self.ColSpanCells[cellIndex] = true
     end
 
     if not cell then
-        cell = TooltipManager:AcquireCell(
-            self.Tooltip,
-            self,
-            tooltip:GetColumn(columnIndex),
-            rightColumnIndex,
-            cellProvider
-        )
-    end
-
-    cell.ColSpan = colSpan
-
-    if horizontalJustification then
-        cell:SetJustifyH(horizontalJustification)
+        cell = TooltipManager:AcquireCell(self.Tooltip, self, tooltip:GetColumn(columnIndex), cellProvider)
     end
 
     return cell

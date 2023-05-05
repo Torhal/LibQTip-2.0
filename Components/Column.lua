@@ -20,11 +20,10 @@ local Column = TooltipManager.ColumnPrototype
 --------------------------------------------------------------------------------
 
 ---@param lineIndex integer Line index of the Cell.
----@param colSpan? integer The number of columns the Cell will span. Defaults to 1.
 ---@param cellProvider? LibQTip-2.0.CellProvider CellProvider to use instead of the default one. Defaults to LibQTip.DefaultCellProvider.
 ---@return LibQTip-2.0.Cell
-function Column:GetCell(lineIndex, colSpan, cellProvider)
-    return self.Tooltip:GetLine(lineIndex):GetCell(self.Index, colSpan, cellProvider)
+function Column:GetCell(lineIndex, cellProvider)
+    return self.Tooltip:GetLine(lineIndex):GetCell(self.Index, cellProvider)
 end
 
 -- Sets the background color for the Column.

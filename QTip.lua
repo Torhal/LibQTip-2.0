@@ -64,9 +64,12 @@ end
 ---@param key string The Tooltip key. Any value that can be used as a table key is accepted though you should try to provide unique keys to avoid conflicts.<br>Numbers and booleans should be avoided and strings should be carefully chosen to avoid namespace clashes - no "MyTooltip" - you have been warned!
 ---@param numColumns? number Minimum number of columns
 ---@param ... JustifyH Column horizontal justifications ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
+-- ***
 -- Example Tooltip with 5 columns justified as left, center, left, left, left:
---
+-- ``` lua
 -- local tooltip = LibStub('LibQTip-2.0'):Acquire('MyFooBarTooltip', 5, "LEFT", "CENTER")
+-- ```
+-- ***
 ---@return LibQTip-2.0.Tooltip
 function QTip:Acquire(key, numColumns, ...)
     if key == nil then

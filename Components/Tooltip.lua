@@ -474,9 +474,12 @@ end
 -- The justification of existing Columns is reset to any passed values, or to "LEFT" if none are provided.
 ---@param columnCount number Minimum number of columns
 ---@param ...? JustifyH Column horizontal justifications ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
+-- ***
 -- Example Tooltip with 5 columns justified as left, center, left, left, left:
---
+-- ``` lua
 -- tooltip:SetColumnLayout(5, "LEFT", "CENTER")
+-- ```
+-- ***
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetColumnLayout(columnCount, ...)
     if type(columnCount) ~= "number" or columnCount < 1 then

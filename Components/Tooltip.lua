@@ -450,7 +450,7 @@ function Tooltip:SetCellMarginH(size)
     return self
 end
 
--- Sets the vertical margin size of all cells within the Tooltip.
+-- Sets the vertical margin size of all Cells within the Tooltip.
 --
 -- This method can only be used before Lines have been added.
 ---@param size integer The desired margin size. Must be a positive number or zero.
@@ -511,7 +511,7 @@ function Tooltip:SetDefaultCellProvider(cellProvider)
 end
 
 -- Define the Font used when adding new Lines.
----@param font FontObject|Font The new default font.
+---@param font FontObject|Font The new default [Font](https://wowpedia.fandom.com/wiki/UIOBJECT_Font).
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetDefaultFont(font)
     ValidateFont(font, 2)
@@ -522,7 +522,7 @@ function Tooltip:SetDefaultFont(font)
 end
 
 -- Define the Font used when adding new header Lines.
----@param font FontObject|Font The new default font.
+---@param font FontObject|Font The new default header [Font](https://wowpedia.fandom.com/wiki/UIOBJECT_Font).
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetDefaultHeaderFont(font)
     ValidateFont(font, 2)

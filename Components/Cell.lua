@@ -146,7 +146,11 @@ end
 -- Invoked when the Cell is released back to its CellProvider.
 function Cell:OnRelease()
     self:SetJustifyH("LEFT")
+    self:ClearAllPoints()
+    self:SetParent(nil)
+
     self.FontString:SetFontObject(GameTooltipText)
+    self.FontString:SetText("")
 
     -- TODO: See if this can be changed to use something else, negating the need to store RGBA on the Cell itself.
     if self.r then

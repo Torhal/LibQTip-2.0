@@ -273,12 +273,6 @@ end
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:Clear()
     for lineIndex, line in ipairs(self.Lines) do
-        for _, cell in pairs(line.Cells) do
-            if cell then
-                TooltipManager:ReleaseCell(cell)
-            end
-        end
-
         TooltipManager:ReleaseLine(line)
 
         self.Lines[lineIndex] = nil

@@ -417,6 +417,12 @@ function TooltipManager:ReleaseLine(line)
     line:ClearAllPoints()
     line:ClearBackdrop()
 
+    for _, cell in pairs(line.Cells) do
+        if cell then
+            self:ReleaseCell(cell)
+        end
+    end
+
     wipe(line.Cells)
     wipe(line.ColSpanCells)
 

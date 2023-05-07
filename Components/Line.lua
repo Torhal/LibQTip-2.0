@@ -25,39 +25,27 @@ local Line = TooltipManager.LinePrototype
 ---@return LibQTip-2.0.Cell
 ---@nodiscard
 function Line:GetCell(columnIndex, cellProvider)
-    local tooltip = self.Tooltip
-    local lineCells = self.Cells
-    local colSpanCells = self.ColSpanCells
-
-    local cell ---@type LibQTip-2.0.Cell|nil
-
-    if colSpanCells[columnIndex] then
+    if self.ColSpanCells[columnIndex] then
         error(("Overlapping Cells at column %d"):format(columnIndex), 3)
     end
 
-    -- Check for the existence of a previous Cell on the Column.
-    local existingCell = lineCells[columnIndex]
+    local existingCell = self.Cells[columnIndex]
 
     if existingCell then
-        -- If no CellProvider was supplied, or the supplied CellProvider matches that of the existing Cell, use that Cell.
-        -- Otherwise, the existing Cell needs to be released to make way for the new one.
         if cellProvider == nil or existingCell.CellProvider == cellProvider then
-            cell = existingCell
-            cellProvider = existingCell.CellProvider
-        else
-            lineCells[columnIndex] = nil
-
-            TooltipManager:ReleaseCell(existingCell)
+            return existingCell
         end
-    else
-        cellProvider = cellProvider or tooltip.CellProvider
+
+        TooltipManager:ReleaseCell(existingCell)
+        self.Cells[columnIndex] = nil
     end
 
-    if not cell then
-        cell = TooltipManager:AcquireCell(self.Tooltip, self, tooltip:GetColumn(columnIndex), cellProvider)
-    end
-
-    return cell
+    return TooltipManager:AcquireCell(
+        self.Tooltip,
+        self,
+        self.Tooltip:GetColumn(columnIndex),
+        cellProvider or self.Tooltip.CellProvider
+    )
 end
 
 -- Sets the background color for the Line.

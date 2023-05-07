@@ -483,7 +483,7 @@ end
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetColumnLayout(columnCount, ...)
     if type(columnCount) ~= "number" or columnCount < 1 then
-        error(("totalColumns must be a positive number, not '%s'"):format(tostring(columnCount)), 2)
+        error(("columnCount must be a positive number, not '%s'"):format(tostring(columnCount)), 2)
     end
 
     for columnIndex = 1, columnCount do

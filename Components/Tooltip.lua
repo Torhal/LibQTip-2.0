@@ -80,11 +80,13 @@ local function ValidateFont(font, level, silent)
         end
 
         error(
-            "font must be a Font instance or a string matching the name of a global Font instance, not: "
-                .. tostring(font),
+            ("Font must be a FontInstance or a string matching the name of a global FontInstance, not: %s"):format(
+                tostring(font)
+            ),
             level + 1
         )
     end
+
     return true
 end
 

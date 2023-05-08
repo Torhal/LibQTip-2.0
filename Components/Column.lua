@@ -8,7 +8,7 @@ local ScriptManager = QTip.ScriptManager
 local TooltipManager = QTip.TooltipManager
 
 ---@class LibQTip-2.0.Column: LibQTip-2.0.ScriptFrame
----@field Cells LibQTip-2.0.Cell[] Cells indexed by Line.
+---@field Cells LibQTip-2.0.Cell[] Cells indexed by Row.
 ---@field HorizontalJustification JustifyH
 ---@field Index integer The Column's index on its Tooltip
 ---@field Tooltip LibQTip-2.0.Tooltip
@@ -19,11 +19,11 @@ local Column = TooltipManager.ColumnPrototype
 ---- Methods
 --------------------------------------------------------------------------------
 
----@param lineIndex integer Line index of the Cell.
+---@param rowIndex integer Row index of the Cell.
 ---@param cellProvider? LibQTip-2.0.CellProvider CellProvider to use instead of the default one. Defaults to LibQTip.DefaultCellProvider.
 ---@return LibQTip-2.0.Cell
-function Column:GetCell(lineIndex, cellProvider)
-    return self.Tooltip:GetLine(lineIndex):GetCell(self.Index, cellProvider)
+function Column:GetCell(rowIndex, cellProvider)
+    return self.Tooltip:GetRow(rowIndex):GetCell(self.Index, cellProvider)
 end
 
 -- Sets the background color for the Column.
@@ -64,8 +64,8 @@ end
 ---@param a? number Alpha level of the Cell's text. Defaults to 1.
 ---@return LibQTip-2.0.Column column
 function Column:SetTextColor(r, g, b, a)
-    for lineIndex = 1, #self.Tooltip.Lines do
-        self:GetCell(lineIndex):SetTextColor(r, g, b, a)
+    for rowIndex = 1, #self.Tooltip.Rows do
+        self:GetCell(rowIndex):SetTextColor(r, g, b, a)
     end
 
     return self

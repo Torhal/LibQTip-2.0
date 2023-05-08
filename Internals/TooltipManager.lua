@@ -18,10 +18,10 @@ local ScriptManager = QTip.ScriptManager
 ---@field DefaultHighlightTexturePath string
 ---@field PixelSize TooltipPixelSize
 ---@field LayoutRegistry table<LibQTip-2.0.Tooltip, true|nil>
----@field LineHeap LibQTip-2.0.Line[]
----@field LineMetatable table<"__index", LibQTip-2.0.Line>
----@field LinePrototype LibQTip-2.0.Line
 ---@field OnReleaseHandlers table<LibQTip-2.0.Tooltip, LibQTip-2.0.ReleaseHandler>
+---@field RowHeap LibQTip-2.0.Row[]
+---@field RowMetatable table<"__index", LibQTip-2.0.Row>
+---@field RowPrototype LibQTip-2.0.Row
 ---@field TableHeap table[]
 ---@field TimerHeap LibQTip-2.0.Timer[]
 ---@field TooltipHeap LibQTip-2.0.Tooltip[]
@@ -35,10 +35,10 @@ TooltipManager.ColumnHeap = TooltipManager.ColumnHeap or {}
 TooltipManager.ColumnPrototype = TooltipManager.ColumnPrototype or setmetatable({}, QTip.FrameMetatable)
 TooltipManager.ColumnMetatable = TooltipManager.ColumnMetatable or { __index = TooltipManager.ColumnPrototype }
 TooltipManager.LayoutRegistry = TooltipManager.LayoutRegistry or {}
-TooltipManager.LineHeap = TooltipManager.LineHeap or {}
-TooltipManager.LinePrototype = TooltipManager.LinePrototype or setmetatable({}, QTip.FrameMetatable)
-TooltipManager.LineMetatable = TooltipManager.LineMetatable or { __index = TooltipManager.LinePrototype }
 TooltipManager.OnReleaseHandlers = TooltipManager.OnReleaseHandlers or {}
+TooltipManager.RowHeap = TooltipManager.RowHeap or {}
+TooltipManager.RowPrototype = TooltipManager.RowPrototype or setmetatable({}, QTip.FrameMetatable)
+TooltipManager.RowMetatable = TooltipManager.RowMetatable or { __index = TooltipManager.RowPrototype }
 TooltipManager.TableHeap = TooltipManager.TableHeap or {}
 TooltipManager.TimerHeap = TooltipManager.TimerHeap or {}
 TooltipManager.TooltipHeap = TooltipManager.TooltipHeap or {}
@@ -70,28 +70,28 @@ TooltipManager.PixelSize = TooltipManager.PixelSize or PixelSize
 
 -- Returns a Cell for the given Tooltip from the given CellProvider.
 ---@param tooltip LibQTip-2.0.Tooltip
----@param line LibQTip-2.0.Line Line index of the Cell.
----@param column LibQTip-2.0.Column Column index of the Cell.
+---@param row LibQTip-2.0.Row The Row containing the Cell.
+---@param column LibQTip-2.0.Column The Column containing the Cell.
 ---@param cellProvider LibQTip-2.0.CellProvider
 ---@return LibQTip-2.0.Cell
-function TooltipManager:AcquireCell(tooltip, line, column, cellProvider)
+function TooltipManager:AcquireCell(tooltip, row, column, cellProvider)
     local cell = cellProvider:AcquireCell()
 
     cell.ColumnIndex = column.Index
-    cell.LineIndex = line.Index
+    cell.RowIndex = row.Index
     cell.Tooltip = tooltip
 
     cell:SetParent(tooltip.ScrollChild)
     cell:SetFrameLevel(tooltip.ScrollChild:GetFrameLevel() + 3)
     cell:SetPoint("LEFT", column)
     cell:SetPoint("RIGHT", tooltip.Columns[cell.ColumnIndex + cell.ColSpan - 1])
-    cell:SetPoint("TOP", line)
-    cell:SetPoint("BOTTOM", line)
+    cell:SetPoint("TOP", row)
+    cell:SetPoint("BOTTOM", row)
     cell:SetJustifyH(column.HorizontalJustification)
     cell:Show()
 
-    column.Cells[line.Index] = cell
-    line.Cells[column.Index] = cell
+    column.Cells[row.Index] = cell
+    row.Cells[column.Index] = cell
 
     return cell
 end
@@ -137,42 +137,42 @@ function TooltipManager:AcquireColumn(tooltip, columnIndex, horizontalJustificat
     return column
 end
 
--- Returns a Line at the given index for the given Tooltip.
+-- Returns a Row at the given index for the given Tooltip.
 ---@param tooltip LibQTip-2.0.Tooltip
----@param lineIndex integer
----@return LibQTip-2.0.Line
-function TooltipManager:AcquireLine(tooltip, lineIndex)
-    ---@type LibQTip-2.0.Line|nil
-    local line = tremove(self.LineHeap)
+---@param rowIndex integer
+---@return LibQTip-2.0.Row
+function TooltipManager:AcquireRow(tooltip, rowIndex)
+    ---@type LibQTip-2.0.Row|nil
+    local row = tremove(self.RowHeap)
 
-    if not line then
-        line = setmetatable(CreateFrame("Frame", nil, nil, "BackdropTemplate"), self.LineMetatable) --[[@as LibQTip-2.0.Line]]
+    if not row then
+        row = setmetatable(CreateFrame("Frame", nil, nil, "BackdropTemplate"), self.RowMetatable) --[[@as LibQTip-2.0.Row]]
     end
 
-    line:SetParent(tooltip.ScrollChild)
-    line:SetFrameLevel(tooltip.ScrollChild:GetFrameLevel() + 2)
-    line:SetHeight(1)
-    line:SetPoint("LEFT", tooltip.ScrollChild)
-    line:SetPoint("RIGHT", tooltip.ScrollChild)
+    row:SetParent(tooltip.ScrollChild)
+    row:SetFrameLevel(tooltip.ScrollChild:GetFrameLevel() + 2)
+    row:SetHeight(1)
+    row:SetPoint("LEFT", tooltip.ScrollChild)
+    row:SetPoint("RIGHT", tooltip.ScrollChild)
 
-    if lineIndex > 1 then
+    if rowIndex > 1 then
         local verticalMargin = tooltip.VerticalCellMargin or TooltipManager.PixelSize.VerticalCellMargin
 
-        line:SetPoint("TOP", tooltip.Lines[lineIndex - 1], "BOTTOM", 0, -verticalMargin)
+        row:SetPoint("TOP", tooltip.Rows[rowIndex - 1], "BOTTOM", 0, -verticalMargin)
         TooltipManager:SetTooltipSize(tooltip, tooltip.Width, tooltip.Height + verticalMargin)
     else
-        line:SetPoint("TOP", tooltip.ScrollChild)
+        row:SetPoint("TOP", tooltip.ScrollChild)
     end
 
-    line:Show()
+    row:Show()
 
-    line.Cells = line.Cells or {}
-    line.ColSpanCells = line.ColSpanCells or {}
-    line.Height = 0
-    line.Index = lineIndex
-    line.Tooltip = tooltip
+    row.Cells = row.Cells or {}
+    row.ColSpanCells = row.ColSpanCells or {}
+    row.Height = 0
+    row.Index = rowIndex
+    row.Tooltip = tooltip
 
-    return line
+    return row
 end
 
 -- Returns a Timer for the given Tooltip.
@@ -228,7 +228,7 @@ function TooltipManager:AcquireTooltip(key)
     tooltip.DefaultHeadingFont = GameTooltipHeaderText
     tooltip.HorizontalCellMargin = tooltip.HorizontalCellMargin or PixelSize.HorizontalCellMargin
     tooltip.Key = key
-    tooltip.Lines = tooltip.Lines or {}
+    tooltip.Rows = tooltip.Rows or {}
     tooltip.DefaultFont = GameTooltipText
     tooltip.Scripts = tooltip.Scripts or {}
     tooltip.VerticalCellMargin = tooltip.VerticalCellMargin or PixelSize.VerticalCellMargin
@@ -254,7 +254,7 @@ function TooltipManager:AcquireTooltip(key)
     return tooltip
 end
 
--- Sets the widths of Cells and heights of Lines within the Tooltip, based on Cell contents.
+-- Sets the widths of Cells and heights of Rows within the Tooltip, based on Cell contents.
 ---@param tooltip LibQTip-2.0.Tooltip
 function TooltipManager:AdjustCellSizes(tooltip)
     local colSpanWidths = tooltip.ColSpanWidths
@@ -305,24 +305,24 @@ function TooltipManager:AdjustCellSizes(tooltip)
         end
     end
 
-    local lines = tooltip.Lines
+    local rows = tooltip.Rows
 
-    -- Now that the Cell width is set, recalculate the height values of the Lines.
-    for _, line in ipairs(lines) do
-        if #line.Cells > 0 then
-            local lineHeight = 0
+    -- Now that the Cell width is set, recalculate the height values of the Rows.
+    for _, row in ipairs(rows) do
+        if #row.Cells > 0 then
+            local rowHeight = 0
 
-            for _, cell in ipairs(line.Cells) do
+            for _, cell in ipairs(row.Cells) do
                 if cell then
-                    lineHeight = max(lineHeight, cell:GetContentHeight())
+                    rowHeight = max(rowHeight, cell:GetContentHeight())
                 end
             end
 
-            if lineHeight > 0 then
-                self:SetTooltipSize(tooltip, tooltip.Width, tooltip.Height + lineHeight - line.Height)
+            if rowHeight > 0 then
+                self:SetTooltipSize(tooltip, tooltip.Width, tooltip.Height + rowHeight - row.Height)
 
-                line.Height = lineHeight
-                line:SetHeight(lineHeight)
+                row.Height = rowHeight
+                row:SetHeight(rowHeight)
             end
         end
     end
@@ -409,31 +409,31 @@ function TooltipManager:ReleaseColumn(column)
     tinsert(self.ColumnHeap, column)
 end
 
--- Releases a LineHeap to the TooltipManager's LineHeap.
----@param line LibQTip-2.0.Line
-function TooltipManager:ReleaseLine(line)
-    line:Hide()
-    line:SetParent(nil)
-    line:ClearAllPoints()
-    line:ClearBackdrop()
+-- Releases a Row to the TooltipManager's RowHeap.
+---@param row LibQTip-2.0.Row
+function TooltipManager:ReleaseRow(row)
+    row:Hide()
+    row:SetParent(nil)
+    row:ClearAllPoints()
+    row:ClearBackdrop()
 
-    for _, cell in pairs(line.Cells) do
+    for _, cell in pairs(row.Cells) do
         if cell then
             self:ReleaseCell(cell)
         end
     end
 
-    wipe(line.Cells)
-    wipe(line.ColSpanCells)
+    wipe(row.Cells)
+    wipe(row.ColSpanCells)
 
-    line.Height = 0
-    line.Index = 0
-    line.IsHeading = nil
-    line.Tooltip = nil
+    row.Height = 0
+    row.Index = 0
+    row.IsHeading = nil
+    row.Tooltip = nil
 
-    ScriptManager:ClearScripts(line)
+    ScriptManager:ClearScripts(row)
 
-    tinsert(self.LineHeap, line)
+    tinsert(self.RowHeap, row)
 end
 
 -- Releases a Timer to the TooltipManager's TimerHeap.
@@ -502,7 +502,7 @@ function TooltipManager:ReleaseTooltip(tooltip)
 
     wipe(tooltip.ColSpanWidths)
     wipe(tooltip.Columns)
-    wipe(tooltip.Lines)
+    wipe(tooltip.Rows)
 
     for scriptType in pairs(tooltip.Scripts) do
         ScriptManager:RawSetScript(tooltip, scriptType, nil)

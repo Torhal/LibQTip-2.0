@@ -19,7 +19,7 @@ local TooltipManager = QTip.TooltipManager
 ---@field HighlightFrame Frame
 ---@field HighlightTexture Texture
 ---@field Key string
----@field Lines (LibQTip-2.0.Line|nil)[]
+---@field Rows (LibQTip-2.0.Row|nil)[]
 ---@field DefaultFont Font
 ---@field Scripts? table<LibQTip-2.0.ScriptType, true|nil>
 ---@field ScrollChild Frame
@@ -106,15 +106,15 @@ local function ValidateJustification(justification, level, silent)
 end
 
 ---@param tooltip LibQTip-2.0.Tooltip
----@param lineIndex integer
+---@param rowIndex integer
 ---@param level integer
 ---@return boolean isValid
-local function ValidateLineIndex(tooltip, lineIndex, level)
+local function ValidateRowIndex(tooltip, rowIndex, level)
     local callerLevel = level + 1
-    local lineIndexType = type(lineIndex)
+    local rowIndexType = type(rowIndex)
 
-    if lineIndexType ~= "number" then
-        error(("The lineIndex must be a number, not '%s'"):format(lineIndexType), callerLevel)
+    if rowIndexType ~= "number" then
+        error(("The rowIndex must be a number, not '%s'"):format(rowIndexType), callerLevel)
     end
 
     return true
@@ -205,79 +205,79 @@ function Tooltip:AddColumn(horizontalJustification)
     return column
 end
 
--- Add a new heading Line at the bottom of the Tooltip.
+-- Add a new heading Row at the bottom of the Tooltip.
 --
--- Provided values are displayed on the Line using the DefaultHeadingFont. Nil values are ignored.
+-- Provided values are displayed on the Row using the DefaultHeadingFont. Nil values are ignored.
 --
 -- If the number of values is greater than the number of Columns, an error is raised.
----@param ... string Value to be displayed in each Column of the Line.
----@return LibQTip-2.0.Line line
-function Tooltip:AddHeadingLine(...)
-    local line = self:AddLine(...)
+---@param ... string Value to be displayed in each Column of the Row.
+---@return LibQTip-2.0.Row row
+function Tooltip:AddHeadingRow(...)
+    local row = self:AddRow(...)
 
-    line.IsHeading = true
+    row.IsHeading = true
 
-    return line
+    return row
 end
 
--- Add a new Line at the bottom of the Tooltip.
+-- Add a new Row at the bottom of the Tooltip.
 --
--- Provided values are displayed on the Line with the regular Font. Nil values are ignored.
+-- Provided values are displayed on the Row with the regular Font. Nil values are ignored.
 --
 -- If the number of values is greater than the number of Columns, an error is raised.
----@param ... string Value to be displayed in each Column of the Line.
----@return LibQTip-2.0.Line line
-function Tooltip:AddLine(...)
+---@param ... string Value to be displayed in each Column of the Row.
+---@return LibQTip-2.0.Row row
+function Tooltip:AddRow(...)
     if #self.Columns == 0 then
-        error("Column layout should be defined before adding a Line", 3)
+        error("Column layout should be defined before adding a Row", 3)
     end
 
-    local lineIndex = #self.Lines + 1
-    local line = self.Lines[lineIndex] or TooltipManager:AcquireLine(self, lineIndex)
+    local rowIndex = #self.Rows + 1
+    local row = self.Rows[rowIndex] or TooltipManager:AcquireRow(self, rowIndex)
 
-    self.Lines[lineIndex] = line
+    self.Rows[rowIndex] = row
 
     for columnIndex = 1, #self.Columns do
         local value = select(columnIndex, ...)
 
         if value ~= nil then
-            line:GetCell(columnIndex):SetText(value)
+            row:GetCell(columnIndex):SetText(value)
         end
     end
 
-    return line
+    return row
 end
 
--- Adds a graphical separator Line at the bottom of the Tooltip.
+-- Adds a graphical separator Row at the bottom of the Tooltip.
 ---@param height? number Height, in pixels, of the separator. Defaults to 1.
 ---@param r? number Red color value of the separator. Defaults to NORMAL_FONT_COLOR.r
 ---@param g? number Green color value of the separator. Defaults to NORMAL_FONT_COLOR.g
 ---@param b? number Blue color value of the separator. Defaults to NORMAL_FONT_COLOR.b
 ---@param a? number Alpha level of the separator. Defaults to 1.
----@return LibQTip-2.0.Line line
+---@return LibQTip-2.0.Row row
 function Tooltip:AddSeparator(height, r, g, b, a)
-    local line = self:AddLine()
+    local row = self:AddRow()
     local color = NORMAL_FONT_COLOR
 
     height = height or 1
 
     TooltipManager:SetTooltipSize(self, self.Width, self.Height + height)
 
-    line.Height = height
-    line:SetHeight(height)
-    line:SetBackdrop(TooltipManager.DefaultBackdrop)
-    line:SetBackdropColor(r or color.r, g or color.g, b or color.b, a or 1)
+    row.Height = height
+    row:SetHeight(height)
+    row:SetBackdrop(TooltipManager.DefaultBackdrop)
+    row:SetBackdropColor(r or color.r, g or color.g, b or color.b, a or 1)
 
-    return line
+    return row
 end
 
--- Reset the contents of the Tootip. The Column layout is preserved but all Lines are removed.
+-- Reset the contents of the Tootip. The Column layout is preserved but all Rows are removed.
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:Clear()
-    for lineIndex, line in ipairs(self.Lines) do
-        TooltipManager:ReleaseLine(line)
+    for rowIndex, row in ipairs(self.Rows) do
+        TooltipManager:ReleaseRow(row)
 
-        self.Lines[lineIndex] = nil
+        self.Rows[rowIndex] = nil
     end
 
     for _, column in ipairs(self.Columns) do
@@ -302,7 +302,7 @@ end
 ---@return LibQTip-2.0.Column
 ---@nodiscard
 function Tooltip:GetColumn(columnIndex)
-    ValidateLineIndex(self, columnIndex, 2)
+    ValidateRowIndex(self, columnIndex, 2)
 
     local column = self.Columns[columnIndex]
 
@@ -326,41 +326,41 @@ function Tooltip:GetDefaultCellProvider()
     return self.CellProvider
 end
 
--- Return the Font used for regular lines.
+-- Return the Font used for regular Rows.
 ---@return Font
 ---@nodiscard
 function Tooltip:GetDefaultFont()
     return self.DefaultFont
 end
 
--- Return the Tooltip's DefaultHeadingFont used for heading Lines.
+-- Return the Tooltip's DefaultHeadingFont used for heading Rows.
 ---@return Font
 ---@nodiscard
 function Tooltip:GetDefaultHeadingFont()
     return self.DefaultHeadingFont
 end
 
--- Returns the Line at the given index.
----@param lineIndex integer
----@return LibQTip-2.0.Line
+-- Returns the Row at the given index.
+---@param rowIndex integer
+---@return LibQTip-2.0.Row
 ---@nodiscard
-function Tooltip:GetLine(lineIndex)
-    ValidateLineIndex(self, lineIndex, 2)
+function Tooltip:GetRow(rowIndex)
+    ValidateRowIndex(self, rowIndex, 2)
 
-    local line = self.Lines[lineIndex]
+    local row = self.Rows[rowIndex]
 
-    if not line then
-        error(("There is no line at index %d"):format(lineIndex), 2)
+    if not row then
+        error(("There is no row at index %d"):format(rowIndex), 2)
     end
 
-    return line
+    return row
 end
 
--- Returns the total number of Lines on the Tooltip.
----@return number lineCount
+-- Returns the total number of Rows on the Tooltip.
+---@return number rowCount
 ---@nodiscard
-function Tooltip:GetLineCount()
-    return #self.Lines
+function Tooltip:GetRowCount()
+    return #self.Rows
 end
 
 -- Disallow the use of the HookScript method to avoid one AddOn breaking all others.
@@ -431,12 +431,12 @@ end
 
 -- Sets the horizontal margin size of all Cells within the Tooltip.
 --
--- This method can only be used before Lines have been added.
+-- This method can only be used before Rows have been added.
 ---@param size integer The desired margin size. Must be a positive number or zero.
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetCellMarginH(size)
-    if #self.Lines > 0 then
-        error("Unable to set horizontal margin while the Tooltip has lines.", 2)
+    if #self.Rows > 0 then
+        error("Unable to set horizontal margin while the Tooltip has Rows.", 2)
     end
 
     if not size or type(size) ~= "number" or size < 0 then
@@ -450,12 +450,12 @@ end
 
 -- Sets the vertical margin size of all Cells within the Tooltip.
 --
--- This method can only be used before Lines have been added.
+-- This method can only be used before Rows have been added.
 ---@param size integer The desired margin size. Must be a positive number or zero.
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetCellMarginV(size)
-    if #self.Lines > 0 then
-        error("Unable to set vertical margin while the Tooltip has lines.", 2)
+    if #self.Rows > 0 then
+        error("Unable to set vertical margin while the Tooltip has Rows.", 2)
     end
 
     if not size or type(size) ~= "number" or size < 0 then
@@ -511,7 +511,7 @@ function Tooltip:SetDefaultCellProvider(cellProvider)
     return self
 end
 
--- Define the Font used when adding new Lines.
+-- Define the Font used when adding new Rows.
 ---@param font FontObject|Font The new default [Font](https://wowpedia.fandom.com/wiki/UIOBJECT_Font).
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetDefaultFont(font)
@@ -522,7 +522,7 @@ function Tooltip:SetDefaultFont(font)
     return self
 end
 
--- Define the Font used when adding new heading Lines.
+-- Define the Font used when adding new heading Rows.
 ---@param font FontObject|Font The new default heading [Font](https://wowpedia.fandom.com/wiki/UIOBJECT_Font).
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetDefaultHeadingFont(font)
@@ -544,7 +544,7 @@ function Tooltip:SetHighlightTexCoord(...)
     return self
 end
 
--- Sets the Texture of the highlight when mousing over a Line or Cell that has a script assigned to it.
+-- Sets the Texture of the highlight when mousing over a Row or Cell that has a script assigned to it.
 --
 -- Works identically to the default UI's texture:SetTexture() API.
 ---@param ... string Arguments to pass to texture:SetTexture()

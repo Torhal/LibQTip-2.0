@@ -7,6 +7,6 @@
     <Script file="Components\Cell.lua"/>
     <Script file="Components\CellProvider.lua"/>
     <Script file="Components\Column.lua"/>
-    <Script file="Components\Line.lua"/>
+    <Script file="Components\Row.lua"/>
     <Script file="Components\Tooltip.lua"/>
 </Ui>

@@ -13,11 +13,11 @@ local TooltipManager = QTip.TooltipManager
 ---@field ColumnIndex integer
 ---@field FontString FontString
 ---@field HorizontalJustification JustifyH Cell-specific justification to use ("CENTER", "LEFT" or "RIGHT"). Defaults to the justification of the Column where the Cell resides.
----@field LineIndex integer
 ---@field LeftPadding integer Pixel padding on the left side of the Cell's value. Defaults to 0.
 ---@field MaxWidth? integer The maximum width (in pixels) of the Cell. If the Cell's value is textual and exceeds this width, it will wrap to a new line. Must not be less than the value of MinWidth.
 ---@field MinWidth? integer The minimum width (in pixels) of the Cell. Must not exceed the value of MaxWidth.
 ---@field RightPadding integer Pixel padding on the right side of the Cell's value. Defaults to 0.
+---@field RowIndex integer
 ---@field Tooltip LibQTip-2.0.Tooltip
 local Cell = QTip.DefaultCellPrototype
 
@@ -37,10 +37,10 @@ function Cell:GetContentHeight()
 end
 
 -- Returns the Cell's position within the containing Tooltip.
----@return number lineIndex The Line index of Cell.
+---@return number rowIndex The Row index of Cell.
 ---@return number columnIndex The Column index of Cell.
 function Cell:GetPosition()
-    return self.LineIndex, self.ColumnIndex
+    return self.RowIndex, self.ColumnIndex
 end
 
 -- Returns the size of the Cell.
@@ -120,7 +120,7 @@ end
 -- Invoked when the Cell's content changes.
 function Cell:OnContentChanged()
     local tooltip = self.Tooltip
-    local line = tooltip:GetLine(self.LineIndex)
+    local row = tooltip:GetRow(self.RowIndex)
     local columnIndex = self.ColumnIndex
     local column = tooltip:GetColumn(columnIndex)
     local width, height = self:GetSize()
@@ -135,11 +135,11 @@ function Cell:OnContentChanged()
         TooltipManager:AdjustColumnWidth(column, width)
     end
 
-    if height > line.Height then
-        TooltipManager:SetTooltipSize(self.Tooltip, self.Tooltip.Width, self.Tooltip.Height + height - line.Height)
+    if height > row.Height then
+        TooltipManager:SetTooltipSize(self.Tooltip, self.Tooltip.Width, self.Tooltip.Height + height - row.Height)
 
-        line.Height = height
-        line:SetHeight(height)
+        row.Height = height
+        row:SetHeight(height)
     end
 end
 
@@ -160,7 +160,7 @@ function Cell:OnRelease()
     self.ColSpan = 1
     self.ColumnIndex = 0
     self.HorizontalJustification = "LEFT"
-    self.LineIndex = 0
+    self.RowIndex = 0
     self.LeftPadding = 0
     self.MaxWidth = nil
     self.MinWidth = nil
@@ -193,9 +193,9 @@ end
 ---@param size integer The number of Columns the Cell will span. Providing a negative or zero size will count back from the rightmost Column and update the ColSpan to its effective value.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetColSpan(size)
-    local line = self.Tooltip:GetLine(self.LineIndex)
-    local colSpanCells = line.ColSpanCells
-    local lineCells = line.Cells
+    local row = self.Tooltip:GetRow(self.RowIndex)
+    local colSpanCells = row.ColSpanCells
+    local rowCells = row.Cells
 
     local columnIndex = self.ColumnIndex
 
@@ -203,7 +203,7 @@ function Cell:SetColSpan(size)
 
     -- Remove the previously-defined ColSpan.
     for cellIndex = columnIndex + 1, columnIndex + self.ColSpan - 1 do
-        lineCells[cellIndex] = nil
+        rowCells[cellIndex] = nil
         colSpanCells[cellIndex] = nil
     end
 
@@ -227,7 +227,7 @@ function Cell:SetColSpan(size)
             error(("Overlapping Cells at column %d"):format({ cellIndex }), 3)
         end
 
-        local columnCell = lineCells[cellIndex]
+        local columnCell = rowCells[cellIndex]
 
         if columnCell then
             TooltipManager:ReleaseCell(columnCell)
@@ -254,7 +254,7 @@ function Cell:SetFont(font)
         type(font) == "string" and _G[font]
             or font
             or (
-                self.Tooltip:GetLine(self.LineIndex).IsHeading and self.Tooltip:GetDefaultHeadingFont()
+                self.Tooltip:GetRow(self.RowIndex).IsHeading and self.Tooltip:GetDefaultHeadingFont()
                 or self.Tooltip:GetDefaultFont()
             )
     )

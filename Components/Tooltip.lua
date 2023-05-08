@@ -7,7 +7,7 @@ local QTip = LibStub:GetLibrary("LibQTip-2.0")
 local ScriptManager = QTip.ScriptManager
 local TooltipManager = QTip.TooltipManager
 
----@class LibQTip-2.0.Tooltip: LibQTip-2.0.ScriptFrame
+---@class LibQTip-2.0.Tooltip: BackdropTemplate, Frame
 ---@field AutoHideTimerFrame? LibQTip-2.0.Timer
 ---@field HorizontalCellMargin number
 ---@field VerticalCellMargin number

@@ -101,7 +101,7 @@ function ScriptManager:ClearScripts(frame)
     self.FrameScriptMetadata[frame] = nil
 end
 
----@param frame LibQTip-2.0.ScriptFrame
+---@param frame Frame
 ---@param scriptType ScriptFrame
 ---@param handler? function
 function ScriptManager:RawSetScript(frame, scriptType, handler)

@@ -496,8 +496,8 @@ function TooltipManager:ReleaseTooltip(tooltip)
         tooltip:EnableMouseWheel(false)
     end
 
-    for i, column in ipairs(tooltip.Columns) do
-        tooltip.Columns[i] = self:ReleaseColumn(column)
+    for columnIndex, column in ipairs(tooltip.Columns) do
+        tooltip.Columns[columnIndex] = self:ReleaseColumn(column)
     end
 
     wipe(tooltip.ColSpanWidths)

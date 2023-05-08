@@ -14,13 +14,13 @@ local TooltipManager = QTip.TooltipManager
 ---@field CellProvider LibQTip-2.0.CellProvider
 ---@field ColSpanWidths table<string, number|nil>
 ---@field Columns (LibQTip-2.0.Column|nil)[]
----@field HeaderFont Font
+---@field DefaultHeadingFont Font
 ---@field Height number
 ---@field HighlightFrame Frame
 ---@field HighlightTexture Texture
 ---@field Key string
 ---@field Lines (LibQTip-2.0.Line|nil)[]
----@field RegularFont Font
+---@field DefaultFont Font
 ---@field Scripts? table<LibQTip-2.0.ScriptType, true|nil>
 ---@field ScrollChild Frame
 ---@field ScrollFrame ScrollFrame
@@ -205,17 +205,17 @@ function Tooltip:AddColumn(horizontalJustification)
     return column
 end
 
--- Add a new header Line at the bottom of the Tooltip.
+-- Add a new heading Line at the bottom of the Tooltip.
 --
--- Provided values are displayed on the Line using the header Font. Nil values are ignored.
+-- Provided values are displayed on the Line using the DefaultHeadingFont. Nil values are ignored.
 --
 -- If the number of values is greater than the number of Columns, an error is raised.
 ---@param ... string Value to be displayed in each Column of the Line.
 ---@return LibQTip-2.0.Line line
-function Tooltip:AddHeader(...)
+function Tooltip:AddHeading(...)
     local line = self:AddLine(...)
 
-    line.IsHeader = true
+    line.IsHeading = true
 
     return line
 end
@@ -330,14 +330,14 @@ end
 ---@return Font
 ---@nodiscard
 function Tooltip:GetDefaultFont()
-    return self.RegularFont
+    return self.DefaultFont
 end
 
--- Return the Font used for header lines.
+-- Return the Tooltip's DefaultHeadingFont used for heading Lines.
 ---@return Font
 ---@nodiscard
-function Tooltip:GetDefaultHeaderFont()
-    return self.HeaderFont
+function Tooltip:GetDefaultHeadingFont()
+    return self.DefaultHeadingFont
 end
 
 -- Returns the Line at the given index.
@@ -517,18 +517,18 @@ end
 function Tooltip:SetDefaultFont(font)
     ValidateFont(font, 2)
 
-    self.RegularFont = type(font) == "string" and _G[font] or font --[[@as Font]]
+    self.DefaultFont = type(font) == "string" and _G[font] or font --[[@as Font]]
 
     return self
 end
 
--- Define the Font used when adding new header Lines.
----@param font FontObject|Font The new default header [Font](https://wowpedia.fandom.com/wiki/UIOBJECT_Font).
+-- Define the Font used when adding new heading Lines.
+---@param font FontObject|Font The new default heading [Font](https://wowpedia.fandom.com/wiki/UIOBJECT_Font).
 ---@return LibQTip-2.0.Tooltip
-function Tooltip:SetDefaultHeaderFont(font)
+function Tooltip:SetDefaultHeadingFont(font)
     ValidateFont(font, 2)
 
-    self.HeaderFont = type(font) == "string" and _G[font] or font --[[@as Font]]
+    self.DefaultHeadingFont = type(font) == "string" and _G[font] or font --[[@as Font]]
 
     return self
 end

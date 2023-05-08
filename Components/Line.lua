@@ -12,7 +12,7 @@ local TooltipManager = QTip.TooltipManager
 ---@field ColSpanCells (true|nil)[] A value of true means the Column index is part of a ColSpan.
 ---@field Height number Height, in pixels.
 ---@field Index integer The Line's index on its Tooltip
----@field IsHeader? true Determines whether the Tooltip's normal or header Font should be used for Cells in this Line.
+---@field IsHeading? true Determines whether the Tooltip's DefaultFont or DefaultHeadingFont should be used for Cells in this Line.
 ---@field Tooltip LibQTip-2.0.Tooltip
 local Line = TooltipManager.LinePrototype
 

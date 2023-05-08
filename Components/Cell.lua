@@ -243,7 +243,7 @@ function Cell:SetColSpan(size)
     return self
 end
 
----@param font? FontObject|Font The rendering font. Defaults to regular or header font, depending on the cell's designation.
+---@param font? FontObject|Font The rendering Font. Defaults to the Tooltip's DefaultFont or DefaultHeadingFont, depending on the Cell's designation.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetFont(font)
     if not self.FontString then
@@ -254,7 +254,7 @@ function Cell:SetFont(font)
         type(font) == "string" and _G[font]
             or font
             or (
-                self.Tooltip:GetLine(self.LineIndex).IsHeader and self.Tooltip:GetDefaultHeaderFont()
+                self.Tooltip:GetLine(self.LineIndex).IsHeading and self.Tooltip:GetDefaultHeadingFont()
                 or self.Tooltip:GetDefaultFont()
             )
     )

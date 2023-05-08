@@ -225,11 +225,11 @@ function TooltipManager:AcquireTooltip(key)
     tooltip.CellProvider = QTip.DefaultCellProvider
     tooltip.ColSpanWidths = tooltip.ColSpanWidths or {}
     tooltip.Columns = tooltip.Columns or {}
-    tooltip.HeaderFont = GameTooltipHeaderText
+    tooltip.DefaultHeadingFont = GameTooltipHeaderText
     tooltip.HorizontalCellMargin = tooltip.HorizontalCellMargin or PixelSize.HorizontalCellMargin
     tooltip.Key = key
     tooltip.Lines = tooltip.Lines or {}
-    tooltip.RegularFont = GameTooltipText
+    tooltip.DefaultFont = GameTooltipText
     tooltip.Scripts = tooltip.Scripts or {}
     tooltip.VerticalCellMargin = tooltip.VerticalCellMargin or PixelSize.VerticalCellMargin
 
@@ -428,7 +428,7 @@ function TooltipManager:ReleaseLine(line)
 
     line.Height = 0
     line.Index = 0
-    line.IsHeader = nil
+    line.IsHeading = nil
     line.Tooltip = nil
 
     ScriptManager:ClearScripts(line)

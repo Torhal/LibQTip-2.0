@@ -14,13 +14,13 @@ local TooltipManager = QTip.TooltipManager
 ---@field CellProvider LibQTip-2.0.CellProvider
 ---@field ColSpanWidths table<string, number|nil>
 ---@field Columns (LibQTip-2.0.Column|nil)[]
+---@field DefaultFont Font
 ---@field DefaultHeadingFont Font
 ---@field Height number
 ---@field HighlightFrame Frame
 ---@field HighlightTexture Texture
 ---@field Key string
 ---@field Rows (LibQTip-2.0.Row|nil)[]
----@field DefaultFont Font
 ---@field Scripts? table<LibQTip-2.0.ScriptType, true|nil>
 ---@field ScrollChild Frame
 ---@field ScrollFrame ScrollFrame

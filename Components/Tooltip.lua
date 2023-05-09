@@ -350,7 +350,7 @@ function Tooltip:GetRow(rowIndex)
     local row = self.Rows[rowIndex]
 
     if not row then
-        error(("There is no row at index %d"):format(rowIndex), 2)
+        error(("There is no Row at index %d"):format(rowIndex), 2)
     end
 
     return row

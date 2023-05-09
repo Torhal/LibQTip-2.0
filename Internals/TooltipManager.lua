@@ -418,9 +418,7 @@ function TooltipManager:ReleaseRow(row)
     row:ClearBackdrop()
 
     for _, cell in pairs(row.Cells) do
-        if cell then
-            self:ReleaseCell(cell)
-        end
+        self:ReleaseCell(cell)
     end
 
     wipe(row.Cells)

@@ -362,7 +362,11 @@ function TooltipManager:CleanupLayouts()
     self:Hide()
 
     for tooltip in pairs(self.LayoutRegistry) do
-        TooltipManager:AdjustCellSizes(tooltip)
+        if tooltip:IsVisible() then
+            tooltip:UpdateScrolling()
+        else
+            TooltipManager:AdjustCellSizes(tooltip)
+        end
     end
 
     wipe(self.LayoutRegistry)

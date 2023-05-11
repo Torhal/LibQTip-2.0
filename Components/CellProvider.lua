@@ -5,10 +5,10 @@
 local QTip = LibStub:GetLibrary("LibQTip-2.0")
 
 ---@class LibQTip-2.0.CellProvider
----@field CellHeap LibQTip-2.0.Cell[]
----@field CellMetatable table<"__index", LibQTip-2.0.Cell>
----@field CellPrototype LibQTip-2.0.Cell
----@field Cells table<LibQTip-2.0.Cell, true|nil>
+---@field CellHeap LibQTip-2.0.Cell[] Cells available for reuse.
+---@field CellMetatable table<"__index", LibQTip-2.0.Cell> The metatable for all Cells from this CellProvider.
+---@field CellPrototype LibQTip-2.0.Cell The prototype for all Cells from this CellProvider.
+---@field Cells table<LibQTip-2.0.Cell, true|nil> Cells currently in use.
 local CellProvider = QTip.CellProviderPrototype
 
 --------------------------------------------------------------------------------

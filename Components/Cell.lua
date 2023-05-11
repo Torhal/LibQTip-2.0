@@ -8,7 +8,7 @@ local ScriptManager = QTip.ScriptManager
 local TooltipManager = QTip.TooltipManager
 
 ---@class LibQTip-2.0.Cell: LibQTip-2.0.ScriptFrame, ColorMixin
----@field CellProvider LibQTip-2.0.CellProvider
+---@field CellProvider LibQTip-2.0.CellProvider The CellProvider responsible for Cells of this type.
 ---@field ColSpan integer The number of columns the cell will span. Defaults to 1.
 ---@field ColumnIndex integer The Column index of Cell.
 ---@field FontString FontString The FontString used to set and display textual values on the Cell.
@@ -18,13 +18,14 @@ local TooltipManager = QTip.TooltipManager
 ---@field MinWidth? integer The minimum width (in pixels) of the Cell. Must not exceed the value of MaxWidth.
 ---@field RightPadding integer Pixel padding on the right side of the Cell's value. Defaults to 0.
 ---@field RowIndex integer The Row index of Cell.
----@field Tooltip LibQTip-2.0.Tooltip
+---@field Tooltip LibQTip-2.0.Tooltip The Tooltip this Cell belongs to.
 local Cell = QTip.DefaultCellPrototype
 
 --------------------------------------------------------------------------------
 ---- Methods
 --------------------------------------------------------------------------------
 
+-- Returns the height of the Cell's FontString.
 ---@return number height
 function Cell:GetContentHeight()
     local fontString = self.FontString
@@ -243,6 +244,7 @@ function Cell:SetColSpan(size)
     return self
 end
 
+-- Sets FontObject for the Cell's FontString.
 ---@param font? FontObject|Font The rendering Font. Defaults to the Tooltip's DefaultFont or DefaultHeadingFont, depending on the Cell's designation.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetFont(font)
@@ -262,6 +264,7 @@ function Cell:SetFont(font)
     return self
 end
 
+-- Sets the horizontal justification of the Cell's FontString.
 ---@param horizontalJustification JustifyH Cell-specific justification to use.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetJustifyH(horizontalJustification)
@@ -271,6 +274,7 @@ function Cell:SetJustifyH(horizontalJustification)
     return self
 end
 
+-- Sets the left pixel padding of the Cell.
 ---@param pixels integer
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetLeftPadding(pixels)
@@ -279,6 +283,7 @@ function Cell:SetLeftPadding(pixels)
     return self
 end
 
+-- Sets the maximum width of the Cell.
 ---@param maxWidth? integer
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetMaxWidth(maxWidth)
@@ -304,6 +309,7 @@ function Cell:SetMaxWidth(maxWidth)
     return self
 end
 
+-- Sets the minimum width of the Cell.
 ---@param minWidth? integer
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetMinWidth(minWidth)
@@ -318,6 +324,7 @@ function Cell:SetMinWidth(minWidth)
     return self
 end
 
+-- Sets the right pixel padding of the Cell.
 ---@param pixels integer
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetRightPadding(pixels)
@@ -337,6 +344,7 @@ function Cell:SetScript(scriptType, handler, arg)
     return self
 end
 
+-- Sets the text displayed on the Cell.
 ---@param text string The text to display in the Cell.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetText(text)

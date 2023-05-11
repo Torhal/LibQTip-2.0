@@ -13,7 +13,7 @@ local TooltipManager = QTip.TooltipManager
 ---@field Height number Height, in pixels.
 ---@field Index integer The Row's index on its Tooltip
 ---@field IsHeading? true Determines whether the Tooltip's DefaultFont or DefaultHeadingFont should be used for Cells in this Row.
----@field Tooltip LibQTip-2.0.Tooltip
+---@field Tooltip LibQTip-2.0.Tooltip The Row's Tooltip.
 local Row = TooltipManager.RowPrototype
 
 --------------------------------------------------------------------------------

@@ -9,10 +9,10 @@ local TooltipManager = QTip.TooltipManager
 
 ---@class LibQTip-2.0.Column: LibQTip-2.0.ScriptFrame
 ---@field Cells LibQTip-2.0.Cell[] Cells indexed by Row.
----@field HorizontalJustification JustifyH
+---@field HorizontalJustification JustifyH Default justification to use for Cells in this Column.
 ---@field Index integer The Column's index on its Tooltip
----@field Tooltip LibQTip-2.0.Tooltip
----@field Width number
+---@field Tooltip LibQTip-2.0.Tooltip The Column's Tooltip.
+---@field Width number Width, in pixels.
 local Column = TooltipManager.ColumnPrototype
 
 --------------------------------------------------------------------------------

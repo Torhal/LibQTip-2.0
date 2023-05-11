@@ -46,6 +46,8 @@ local TooltipManager = QTip.TooltipManager
 --------------------------------------------------------------------------------
 
 ---@param templateCellProvider? LibQTip-2.0.CellProvider An existing provider used as a template for the new provider.
+---@return LibQTip-2.0.Cell
+---@return table<"__index", LibQTip-2.0.Cell>
 local function GetCellPrototype(templateCellProvider)
     if templateCellProvider and templateCellProvider.GetCellPrototype then
         return templateCellProvider:GetCellPrototype()

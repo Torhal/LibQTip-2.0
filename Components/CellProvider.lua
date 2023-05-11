@@ -42,7 +42,7 @@ end
 
 -- Return the prototype and metatable used to create new Cells.
 ---@return LibQTip-2.0.Cell cellPrototype The prototype on which Cells are based.
----@return LibQTip-2.0.Cell cellMetatable The metatable used to create a new Cell.
+---@return table<"__index", LibQTip-2.0.Cell> cellMetatable The metatable used to create a new Cell.
 function CellProvider:GetCellPrototype()
     return self.CellPrototype, self.CellMetatable
 end

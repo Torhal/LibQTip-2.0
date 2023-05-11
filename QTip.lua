@@ -10,15 +10,15 @@ local Version = {
 assert(LibStub, ("%s requires LibStub"):format(Version.Major))
 
 ---@class LibQTip-2.0
----@field CellPrototype LibQTip-2.0.Cell
----@field CellMetatable table<"__index", LibQTip-2.0.Cell>
----@field DefaultCellPrototype LibQTip-2.0.Cell
----@field DefaultCellProvider LibQTip-2.0.CellProvider
----@field CellProviderMetatable table<"__index", LibQTip-2.0.CellProvider>
----@field CellProviderPrototype LibQTip-2.0.CellProvider
----@field FrameMetatable table<"__index", Frame>
----@field ScriptManager LibQTip-2.0.ScriptManager
----@field TooltipManager LibQTip-2.0.TooltipManager
+---@field CellPrototype LibQTip-2.0.Cell The prototype all Cells are derived from.
+---@field CellMetatable table<"__index", LibQTip-2.0.Cell> The base metatable for all Cells.
+---@field DefaultCellPrototype LibQTip-2.0.Cell The library default Cell interface.
+---@field DefaultCellProvider LibQTip-2.0.CellProvider The library default CellProvider interface.
+---@field CellProviderMetatable table<"__index", LibQTip-2.0.CellProvider> The base metatable for all CellProviders.
+---@field CellProviderPrototype LibQTip-2.0.CellProvider The prototype all CellProviders are derived from.
+---@field FrameMetatable table<"__index", Frame> Used for default Frame methods.
+---@field ScriptManager LibQTip-2.0.ScriptManager Manages all library Script interactions.
+---@field TooltipManager LibQTip-2.0.TooltipManager Manages all library Tooltip interactions.
 local QTip, oldMinor = LibStub:NewLibrary(Version.Major, Version.Minor)
 
 if not QTip then

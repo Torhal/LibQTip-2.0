@@ -40,18 +40,18 @@ function CellProvider:AcquireCell()
     return cell
 end
 
+-- Return an iterator on currently acquired Cells.
+---@return fun(tooltip: table<LibQTip-2.0.Cell, true|nil>, index?: LibQTip-2.0.Cell): LibQTip-2.0.Cell, true|nil
+---@return table<LibQTip-2.0.Cell, true|nil>
+function CellProvider:CellPairs()
+    return pairs(self.Cells)
+end
+
 -- Return the prototype and metatable used to create new Cells.
 ---@return LibQTip-2.0.Cell cellPrototype The prototype on which Cells are based.
 ---@return table<"__index", LibQTip-2.0.Cell> cellMetatable The metatable used to create a new Cell.
 function CellProvider:GetCellPrototype()
     return self.CellPrototype, self.CellMetatable
-end
-
--- Return an iterator on currently acquired Cells.
----@return fun(tooltip: table<LibQTip-2.0.Cell, true|nil>, index?: LibQTip-2.0.Cell): LibQTip-2.0.Cell, true|nil
----@return table<LibQTip-2.0.Cell, true|nil>
-function CellProvider:IterateCells()
-    return pairs(self.Cells)
 end
 
 -- Release a Cell that LibQTip is no longer using. The Cell has already been hidden, unanchored and orphaned by LibQTip.

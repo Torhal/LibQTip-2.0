@@ -11,9 +11,9 @@ local TooltipManager = QTip.TooltipManager
 ---@field AutoHideTimerFrame? LibQTip-2.0.Timer
 ---@field HorizontalCellMargin number
 ---@field VerticalCellMargin number
----@field CellProvider LibQTip-2.0.CellProvider
 ---@field ColSpanWidths table<string, number|nil>
 ---@field Columns (LibQTip-2.0.Column|nil)[]
+---@field DefaultCellProvider LibQTip-2.0.CellProvider
 ---@field DefaultFont Font
 ---@field DefaultHeadingFont Font
 ---@field Height number
@@ -323,7 +323,7 @@ end
 ---@return LibQTip-2.0.CellProvider
 ---@nodiscard
 function Tooltip:GetDefaultCellProvider()
-    return self.CellProvider
+    return self.DefaultCellProvider
 end
 
 -- Return the Font used for regular Rows.
@@ -505,7 +505,7 @@ end
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetDefaultCellProvider(cellProvider)
     if cellProvider then
-        self.CellProvider = cellProvider
+        self.DefaultCellProvider = cellProvider
     end
 
     return self

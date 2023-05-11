@@ -222,7 +222,7 @@ function TooltipManager:AcquireTooltip(key)
         tooltip.ScrollChild = scrollChild
     end
 
-    tooltip.CellProvider = QTip.DefaultCellProvider
+    tooltip.DefaultCellProvider = QTip.DefaultCellProvider
     tooltip.ColSpanWidths = tooltip.ColSpanWidths or {}
     tooltip.Columns = tooltip.Columns or {}
     tooltip.DefaultHeadingFont = GameTooltipHeaderText

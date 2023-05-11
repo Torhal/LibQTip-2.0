@@ -44,7 +44,7 @@ function Row:GetCell(columnIndex, cellProvider)
         self.Tooltip,
         self,
         self.Tooltip:GetColumn(columnIndex),
-        cellProvider or self.Tooltip.CellProvider
+        cellProvider or self.Tooltip:GetDefaultCellProvider()
     )
 end
 

@@ -10,14 +10,14 @@ local TooltipManager = QTip.TooltipManager
 ---@class LibQTip-2.0.Cell: LibQTip-2.0.ScriptFrame, ColorMixin
 ---@field CellProvider LibQTip-2.0.CellProvider
 ---@field ColSpan integer The number of columns the cell will span. Defaults to 1.
----@field ColumnIndex integer
----@field FontString FontString
+---@field ColumnIndex integer The Column index of Cell.
+---@field FontString FontString The FontString used to set and display textual values on the Cell.
 ---@field HorizontalJustification JustifyH Cell-specific justification to use ("CENTER", "LEFT" or "RIGHT"). Defaults to the justification of the Column where the Cell resides.
 ---@field LeftPadding integer Pixel padding on the left side of the Cell's value. Defaults to 0.
 ---@field MaxWidth? integer The maximum width (in pixels) of the Cell. If the Cell's value is textual and exceeds this width, it will wrap to a new line. Must not be less than the value of MinWidth.
 ---@field MinWidth? integer The minimum width (in pixels) of the Cell. Must not exceed the value of MaxWidth.
 ---@field RightPadding integer Pixel padding on the right side of the Cell's value. Defaults to 0.
----@field RowIndex integer
+---@field RowIndex integer The Row index of Cell.
 ---@field Tooltip LibQTip-2.0.Tooltip
 local Cell = QTip.DefaultCellPrototype
 

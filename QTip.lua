@@ -63,11 +63,11 @@ end
 -- Create or retrieve the Tooltip with the given key.
 --
 -- If additional arguments are passed, they are passed to :SetColumnLayout for the acquired Tooltip.
----@param key string The Tooltip key. Any value that can be used as a table key is accepted though you should try to provide unique keys to avoid conflicts.<br>Numbers and booleans should be avoided and strings should be carefully chosen to avoid namespace clashes - no "MyTooltip" - you have been warned!
----@param numColumns? number Minimum number of columns
+---@param key string The Tooltip key. A key unique to this Tooltip should be provided to avoid conflicts.
+---@param numColumns? number Minimum number of Columns
 ---@param ... JustifyH Column horizontal justifications ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
 -- ***
--- Example Tooltip with 5 columns justified as left, center, left, left, left:
+-- Example Tooltip with 5 Columns justified as left, center, left, left, left:
 -- ``` lua
 -- local tooltip = LibStub('LibQTip-2.0'):Acquire('MyFooBarTooltip', 5, "LEFT", "CENTER")
 -- ```
@@ -85,7 +85,6 @@ function QTip:Acquire(key, numColumns, ...)
         TooltipManager.ActiveTooltips[key] = tooltip
     end
 
-    -- Here we catch any error to properly report it for the calling code
     local isOk, message = pcall(tooltip.SetColumnLayout, tooltip, numColumns, ...)
 
     if not isOk then
@@ -120,7 +119,7 @@ function QTip:CreateCellProvider(templateCellProvider)
 end
 
 -- Check if a Tooltip has been acquired with the specified key.
----@param key string - The tooltip key.
+---@param key string The tooltip key.
 ---@return boolean
 function QTip:IsAcquired(key)
     if key == nil then

@@ -129,11 +129,6 @@ function QTip:IsAcquired(key)
     return not not TooltipManager.ActiveTooltips[key]
 end
 
--- Return an iterator on the acquired Tooltips.
-function QTip:IterateTooltips()
-    return pairs(TooltipManager.ActiveTooltips)
-end
-
 -- Return an acquired Tooltip to the heap. The Tooltip is cleared and hidden.
 ---@param tooltip LibQTip-2.0.Tooltip The Tooltip to release. Any invalid values are silently ignored.
 function QTip:Release(tooltip)
@@ -144,6 +139,11 @@ function QTip:Release(tooltip)
     end
 
     TooltipManager:ReleaseTooltip(tooltip)
+end
+
+-- Return an iterator on the acquired Tooltips.
+function QTip:TooltipPairs()
+    return pairs(TooltipManager.ActiveTooltips)
 end
 
 ------------------------------------------------------------------------------

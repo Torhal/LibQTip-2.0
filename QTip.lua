@@ -17,8 +17,11 @@ assert(LibStub, ("%s requires LibStub"):format(Version.Major))
 ---@field CellProviderMetatable table<"__index", LibQTip-2.0.CellProvider> The base metatable for all CellProviders.
 ---@field CellProviderPrototype LibQTip-2.0.CellProvider The prototype all CellProviders are derived from.
 ---@field FrameMetatable table<"__index", Frame> Used for default Frame methods.
+---@field CallbackHandlers LibQTip-2.0.HandlerRegistry
+---@field RegisterCallback fun(target: table, eventName: LibQTip-2.0.EventName, handler: string|fun(eventName: LibQTip-2.0.EventName, ...: unknown))
 ---@field ScriptManager LibQTip-2.0.ScriptManager Manages all library Script interactions.
 ---@field TooltipManager LibQTip-2.0.TooltipManager Manages all library Tooltip interactions.
+---@field UnregisterCallback fun(target: table, eventName: LibQTip-2.0.EventName)
 local QTip, oldMinor = LibStub:NewLibrary(Version.Major, Version.Minor)
 
 if not QTip then
@@ -39,7 +42,7 @@ QTip.CellMetatable = QTip.CellMetatable or { __index = QTip.CellPrototype }
 QTip.ScriptManager = QTip.ScriptManager or {}
 QTip.TooltipManager = QTip.TooltipManager or CreateFrame("Frame")
 
-local TooltipManager = QTip.TooltipManager
+QTip.CallbackHandlers = QTip.CallbackHandlers or LibStub:GetLibrary("CallbackHandler-1.0"):New(QTip)
 
 --------------------------------------------------------------------------------
 ---- Internal Functions
@@ -59,6 +62,8 @@ end
 --------------------------------------------------------------------------------
 ---- Methods
 --------------------------------------------------------------------------------
+
+local TooltipManager = QTip.TooltipManager
 
 -- Create or retrieve the Tooltip with the given key.
 --
@@ -153,3 +158,13 @@ end
 if not QTip.DefaultCellProvider then
     QTip.DefaultCellProvider, QTip.DefaultCellPrototype = QTip:CreateCellProvider()
 end
+
+--------------------------------------------------------------------------------
+---- Types
+--------------------------------------------------------------------------------
+
+---@class LibQTip-2.0.HandlerRegistry: CallbackHandlerRegistry
+---@field Fire fun(self: LibQTip-2.0.HandlerRegistry, eventName: LibQTip-2.0.EventName, ...: unknown)
+
+---@alias LibQTip-2.0.EventName
+---|"OnReleaseTooltip"

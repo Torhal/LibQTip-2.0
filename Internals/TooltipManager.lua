@@ -18,7 +18,6 @@ local ScriptManager = QTip.ScriptManager
 ---@field DefaultHighlightTexturePath string
 ---@field PixelSize TooltipPixelSize
 ---@field LayoutRegistry table<LibQTip-2.0.Tooltip, true|nil>
----@field OnReleaseHandlers table<LibQTip-2.0.Tooltip, LibQTip-2.0.ReleaseHandler>
 ---@field RowHeap LibQTip-2.0.Row[]
 ---@field RowMetatable table<"__index", LibQTip-2.0.Row>
 ---@field RowPrototype LibQTip-2.0.Row
@@ -35,7 +34,6 @@ TooltipManager.ColumnHeap = TooltipManager.ColumnHeap or {}
 TooltipManager.ColumnPrototype = TooltipManager.ColumnPrototype or setmetatable({}, QTip.FrameMetatable)
 TooltipManager.ColumnMetatable = TooltipManager.ColumnMetatable or { __index = TooltipManager.ColumnPrototype }
 TooltipManager.LayoutRegistry = TooltipManager.LayoutRegistry or {}
-TooltipManager.OnReleaseHandlers = TooltipManager.OnReleaseHandlers or {}
 TooltipManager.RowHeap = TooltipManager.RowHeap or {}
 TooltipManager.RowPrototype = TooltipManager.RowPrototype or setmetatable({}, QTip.FrameMetatable)
 TooltipManager.RowMetatable = TooltipManager.RowMetatable or { __index = TooltipManager.RowPrototype }
@@ -463,24 +461,7 @@ function TooltipManager:ReleaseTooltip(tooltip)
 
     tooltip:Hide()
 
-    local releaseHandler = self.OnReleaseHandlers[tooltip]
-
-    if releaseHandler then
-        self.OnReleaseHandlers[tooltip] = nil
-
-        local success, errorMessage = pcall(releaseHandler, tooltip)
-
-        if not success then
-            geterrorhandler()(errorMessage)
-        end
-    elseif tooltip.OnRelease then
-        local success, errorMessage = pcall(tooltip.OnRelease, tooltip)
-        if not success then
-            geterrorhandler()(errorMessage)
-        end
-
-        tooltip.OnRelease = nil
-    end
+    QTip.CallbackHandlers:Fire("OnReleaseTooltip", tooltip)
 
     self.ActiveReleases[tooltip] = nil
 

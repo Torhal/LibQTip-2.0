@@ -393,17 +393,9 @@ end
 --
 -- :SetAutoHideDelay() => disable auto-hiding (default)
 ---@return LibQTip-2.0.Tooltip
-function Tooltip:SetAutoHideDelay(delay, alternateFrame, releaseHandler)
+function Tooltip:SetAutoHideDelay(delay, alternateFrame)
     local timerFrame = self.AutoHideTimerFrame
     delay = tonumber(delay) or 0
-
-    if releaseHandler then
-        if type(releaseHandler) ~= "function" then
-            error("releaseHandler must be a function", 2)
-        end
-
-        TooltipManager.OnReleaseHandlers[self] = releaseHandler
-    end
 
     if delay > 0 then
         if not timerFrame then

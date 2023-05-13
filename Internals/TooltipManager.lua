@@ -469,8 +469,10 @@ function TooltipManager:ReleaseTooltip(tooltip)
     tooltip.ScrollStep = nil
 
     tooltip:SetAutoHideDelay(nil)
-    tooltip:ClearAllPoints()
     tooltip:Clear()
+    tooltip:ClearAllPoints()
+    tooltip:SetHighlightTexture(self.DefaultHighlightTexturePath)
+    tooltip:SetHighlightTexCoord(0, 1, 0, 1)
 
     if tooltip.Slider then
         tooltip.Slider:SetValue(0)
@@ -496,9 +498,6 @@ function TooltipManager:ReleaseTooltip(tooltip)
     self.LayoutRegistry[tooltip] = nil
 
     tinsert(self.TooltipHeap, tooltip)
-
-    tooltip:SetHighlightTexture(self.DefaultHighlightTexturePath)
-    tooltip:SetHighlightTexCoord(0, 1, 0, 1)
 end
 
 -- Sets the Tooltip's width and height.

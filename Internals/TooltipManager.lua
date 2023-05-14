@@ -224,6 +224,7 @@ function TooltipManager:AcquireTooltip(key)
     tooltip.ColSpanWidths = tooltip.ColSpanWidths or {}
     tooltip.Columns = tooltip.Columns or {}
     tooltip.DefaultHeadingFont = GameTooltipHeaderText
+    tooltip.Height = 0
     tooltip.HorizontalCellMargin = tooltip.HorizontalCellMargin or PixelSize.HorizontalCellMargin
     tooltip.Key = key
     tooltip.Rows = tooltip.Rows or {}
@@ -231,6 +232,7 @@ function TooltipManager:AcquireTooltip(key)
     tooltip.Scripts = tooltip.Scripts or {}
     tooltip.ScrollStep = 10
     tooltip.VerticalCellMargin = tooltip.VerticalCellMargin or PixelSize.VerticalCellMargin
+    tooltip.Width = 0
 
     tooltip.layoutType = GameTooltip.layoutType
 

@@ -9,8 +9,6 @@ local TooltipManager = QTip.TooltipManager
 
 ---@class LibQTip-2.0.Tooltip: BackdropTemplate, Frame
 ---@field AutoHideTimerFrame? LibQTip-2.0.Timer Allocated when :SetAutoHideDelay is used.
----@field HorizontalCellMargin number Horizontal Cell margin, in pixels.
----@field VerticalCellMargin number Vertical Cell margin, in pixels.
 ---@field ColSpanWidths table<string, number|nil> Widths of ColSpans, keyed by index range.
 ---@field Columns (LibQTip-2.0.Column|nil)[] Columns allocated to the Tooltip.
 ---@field DefaultCellProvider LibQTip-2.0.CellProvider The default CellProvider to use for Cells allocated to the Tooltip.
@@ -19,6 +17,7 @@ local TooltipManager = QTip.TooltipManager
 ---@field Height number Height, in pixels.
 ---@field HighlightFrame Frame The Frame for the HighlightTexture. Used for mouse-enabled Scripts.
 ---@field HighlightTexture Texture The texture used for Frames with mouse-enabled Scripts set on them.
+---@field HorizontalCellMargin number Horizontal Cell margin, in pixels.
 ---@field Key string The key used to acquire the Tooltip.
 ---@field Rows (LibQTip-2.0.Row|nil)[] Rows allocated to the Tooltip.
 ---@field Scripts? table<LibQTip-2.0.ScriptType, true|nil> Currently-set Scripts on the Tooltip.
@@ -26,6 +25,7 @@ local TooltipManager = QTip.TooltipManager
 ---@field ScrollFrame ScrollFrame
 ---@field ScrollStep number
 ---@field Slider LibQTip-2.0.Slider The Slider used to control scrolling within the Tooltip.
+---@field VerticalCellMargin number Vertical Cell margin, in pixels.
 ---@field Width number Width, in pixels.
 local Tooltip = TooltipManager.TooltipPrototype
 

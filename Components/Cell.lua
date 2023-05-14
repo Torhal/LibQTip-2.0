@@ -125,7 +125,7 @@ function Cell:OnContentChanged()
     end
 
     if height > row.Height then
-        TooltipManager:SetTooltipSize(self.Tooltip, self.Tooltip.Width, self.Tooltip.Height + height - row.Height)
+        TooltipManager:SetTooltipSize(tooltip, tooltip.Width, tooltip.Height + height - row.Height)
 
         row.Height = height
         row:SetHeight(height)

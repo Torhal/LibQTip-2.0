@@ -229,6 +229,7 @@ function TooltipManager:AcquireTooltip(key)
     tooltip.Rows = tooltip.Rows or {}
     tooltip.DefaultFont = GameTooltipText
     tooltip.Scripts = tooltip.Scripts or {}
+    tooltip.ScrollStep = 10
     tooltip.VerticalCellMargin = tooltip.VerticalCellMargin or PixelSize.VerticalCellMargin
 
     tooltip.layoutType = GameTooltip.layoutType
@@ -466,7 +467,6 @@ function TooltipManager:ReleaseTooltip(tooltip)
     self.ActiveReleases[tooltip] = nil
 
     tooltip.Key = nil
-    tooltip.ScrollStep = nil
 
     tooltip:SetAutoHideDelay(nil)
     tooltip:Clear()

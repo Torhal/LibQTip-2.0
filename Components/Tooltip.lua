@@ -177,7 +177,7 @@ local function Tooltip_OnMouseWheel(self, delta)
     local slider = self.Slider
     local currentValue = slider:GetValue()
     local minValue, maxValue = slider:GetMinMaxValues()
-    local stepValue = self.ScrollStep or 10
+    local stepValue = self.ScrollStep
 
     if delta < 0 and currentValue < maxValue then
         slider:SetValue(min(maxValue, currentValue + stepValue))

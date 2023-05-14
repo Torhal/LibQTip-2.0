@@ -220,15 +220,15 @@ function TooltipManager:AcquireTooltip(key)
         tooltip.ScrollChild = scrollChild
     end
 
-    tooltip.DefaultCellProvider = QTip.DefaultCellProvider
     tooltip.ColSpanWidths = tooltip.ColSpanWidths or {}
     tooltip.Columns = tooltip.Columns or {}
+    tooltip.DefaultCellProvider = QTip.DefaultCellProvider
+    tooltip.DefaultFont = GameTooltipText
     tooltip.DefaultHeadingFont = GameTooltipHeaderText
     tooltip.Height = 0
     tooltip.HorizontalCellMargin = tooltip.HorizontalCellMargin or PixelSize.HorizontalCellMargin
     tooltip.Key = key
     tooltip.Rows = tooltip.Rows or {}
-    tooltip.DefaultFont = GameTooltipText
     tooltip.Scripts = tooltip.Scripts or {}
     tooltip.ScrollStep = 10
     tooltip.VerticalCellMargin = tooltip.VerticalCellMargin or PixelSize.VerticalCellMargin

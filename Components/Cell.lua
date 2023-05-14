@@ -48,10 +48,6 @@ end
 ---@return number width The width of the Cell.
 ---@return number height The height of the Cell.
 function Cell:GetSize()
-    if not self.FontString then
-        error("The Cell's CellProvider did not assign a FontString field", 2)
-    end
-
     local fontString = self.FontString
 
     -- Detatch the FontString from the Cell to calculate size
@@ -88,10 +84,6 @@ end
 -- Returns the text of the Cell.
 ---@return string
 function Cell:GetText()
-    if not self.FontString then
-        error("The Cell's CellProvider did not assign a FontString field", 2)
-    end
-
     return self.FontString:GetText()
 end
 
@@ -101,10 +93,6 @@ end
 ---@return number b Blue color value of the Cell's text.
 ---@return number a Alpha level of the Cell's text.
 function Cell:GetTextColor()
-    if not self.FontString then
-        error("The Cell's CellProvider did not assign a FontString field", 2)
-    end
-
     return self.FontString:GetTextColor()
 end
 
@@ -248,10 +236,6 @@ end
 ---@param font? FontObject|Font The rendering Font. Defaults to the Tooltip's DefaultFont or DefaultHeadingFont, depending on the Cell's designation.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetFont(font)
-    if not self.FontString then
-        error("The Cell's CellProvider did not assign a FontString field", 2)
-    end
-
     self.FontString:SetFontObject(
         type(font) == "string" and _G[font]
             or font
@@ -348,10 +332,6 @@ end
 ---@param text string The text to display in the Cell.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetText(text)
-    if not self.FontString then
-        error("The Cell's CellProvider did not assign a FontString field", 2)
-    end
-
     self.FontString:SetText(tostring(text))
     self:OnContentChanged()
 
@@ -365,10 +345,6 @@ end
 ---@param a? number Alpha level of the Cell's text. Defaults to 1.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetTextColor(r, g, b, a)
-    if not self.FontString then
-        error("The Cell's CellProvider did not assign a FontString field", 2)
-    end
-
     if not self.r then
         self:SetRGBA(self.FontString:GetTextColor())
     end

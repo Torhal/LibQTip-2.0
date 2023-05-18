@@ -17,7 +17,7 @@ assert(LibStub, ("%s requires LibStub"):format(Version.Major))
 ---@field CellProviderMetatable table<"__index", LibQTip-2.0.CellProvider> The base metatable for all CellProviders.
 ---@field CellProviderPrototype LibQTip-2.0.CellProvider The prototype all CellProviders are derived from.
 ---@field FrameMetatable table<"__index", Frame> Used for default Frame methods.
----@field CallbackHandlers LibQTip-2.0.HandlerRegistry
+---@field CallbackRegistry LibQTip-2.0.HandlerRegistry
 ---@field RegisterCallback fun(target: table, eventName: LibQTip-2.0.EventName, handler: string|fun(eventName: LibQTip-2.0.EventName, ...: unknown))
 ---@field ScriptManager LibQTip-2.0.ScriptManager Manages all library Script interactions.
 ---@field TooltipManager LibQTip-2.0.TooltipManager Manages all library Tooltip interactions.
@@ -51,7 +51,7 @@ QTip.DefaultCellProvider = QTip.DefaultCellProvider
 QTip.ScriptManager = QTip.ScriptManager or {}
 QTip.TooltipManager = QTip.TooltipManager or CreateFrame("Frame")
 
-QTip.CallbackHandlers = QTip.CallbackHandlers or LibStub:GetLibrary("CallbackHandler-1.0"):New(QTip)
+QTip.CallbackRegistry = QTip.CallbackRegistry or LibStub:GetLibrary("CallbackHandler-1.0"):New(QTip)
 
 --------------------------------------------------------------------------------
 ---- Methods

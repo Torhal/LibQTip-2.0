@@ -464,7 +464,7 @@ function TooltipManager:ReleaseTooltip(tooltip)
 
     tooltip:Hide()
 
-    QTip.CallbackHandlers:Fire("OnReleaseTooltip", tooltip)
+    QTip.CallbackRegistry:Fire("OnReleaseTooltip", tooltip)
 
     self.ActiveReleases[tooltip] = nil
 

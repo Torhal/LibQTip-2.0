@@ -158,7 +158,7 @@ local function AutoHideTimerFrame_OnUpdate(timer, elapsed)
             timer.Elapsed = timer.Elapsed + timer.CheckElapsed
 
             if timer.Elapsed >= timer.Delay then
-                QTip:Release(timer.Tooltip)
+                QTip:ReleaseTooltip(timer.Tooltip)
             end
         end
 
@@ -378,7 +378,7 @@ end
 
 -- Convenience wrapper on LibQTip to release the Tooltip.
 function Tooltip:Release()
-    QTip:Release(self)
+    QTip:ReleaseTooltip(self)
 end
 
 -- Sets the length of time in which the mouse pointer can be outside of the Tooltip, or an alternate Frame, before the Tooltip is automatically hidden and then released.

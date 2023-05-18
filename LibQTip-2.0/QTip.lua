@@ -72,7 +72,7 @@ local TooltipManager = QTip.TooltipManager
 -- ```
 -- ***
 ---@return LibQTip-2.0.Tooltip
-function QTip:Acquire(key, numColumns, ...)
+function QTip:AcquireTooltip(key, numColumns, ...)
     if type(key) ~= "string" then
         error(("Paremeter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
     end
@@ -147,7 +147,7 @@ end
 
 -- Return an acquired Tooltip to the heap. The Tooltip is cleared and hidden.
 ---@param tooltip LibQTip-2.0.Tooltip The Tooltip to release. Any invalid values are silently ignored.
-function QTip:Release(tooltip)
+function QTip:ReleaseTooltip(tooltip)
     local key = tooltip and tooltip.Key
 
     if not key or TooltipManager.ActiveTooltips[key] ~= tooltip then

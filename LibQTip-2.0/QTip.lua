@@ -73,8 +73,8 @@ local TooltipManager = QTip.TooltipManager
 -- ***
 ---@return LibQTip-2.0.Tooltip
 function QTip:Acquire(key, numColumns, ...)
-    if key == nil then
-        error("attempt to use a nil key", 2)
+    if type(key) ~= "string" then
+        error(("Paremeter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
     end
 
     local tooltip = TooltipManager.ActiveTooltips[key]
@@ -135,11 +135,11 @@ do
 end
 
 -- Check if a Tooltip has been acquired with the specified key.
----@param key string The tooltip key.
+---@param key string The Tooltip key.
 ---@return boolean
 function QTip:IsAcquired(key)
-    if key == nil then
-        error("attempt to use a nil key", 2)
+    if type(key) ~= "string" then
+        error(("Paremeter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
     end
 
     return not not TooltipManager.ActiveTooltips[key]

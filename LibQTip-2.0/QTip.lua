@@ -10,13 +10,15 @@ local Version = {
 assert(LibStub, ("%s requires LibStub"):format(Version.Major))
 
 ---@class LibQTip-2.0
----@field CallbackRegistry LibQTip-2.0.CallbackRegistry
----@field CellPrototype LibQTip-2.0.Cell The prototype all Cells are derived from.
+---@field CallbackRegistry LibQTip-2.0.CallbackRegistry CallbackHandler-1.0 interface.
 ---@field CellMetatable table<"__index", LibQTip-2.0.Cell> The base metatable for all Cells.
----@field DefaultCellPrototype LibQTip-2.0.Cell The library default Cell interface.
----@field DefaultCellProvider LibQTip-2.0.CellProvider The library default CellProvider interface.
+---@field CellPrototype LibQTip-2.0.Cell The prototype all Cells are derived from.
+---@field CellProviderKeys string[] List of registered CellProviders, sorted alphabetically.
 ---@field CellProviderMetatable table<"__index", LibQTip-2.0.CellProvider> The base metatable for all CellProviders.
 ---@field CellProviderPrototype LibQTip-2.0.CellProvider The prototype all CellProviders are derived from.
+---@field CellProviderRegistry table<string, LibQTip-2.0.CellProvider|nil> Registered CellProviders.
+---@field DefaultCellPrototype LibQTip-2.0.Cell The library default Cell interface.
+---@field DefaultCellProvider LibQTip-2.0.CellProvider The library default CellProvider interface.
 ---@field FrameMetatable table<"__index", Frame> Used for default Frame methods.
 ---@field RegisterCallback fun(target: table, eventName: LibQTip-2.0.EventName, handler: string|fun(eventName: LibQTip-2.0.EventName, ...: unknown))
 ---@field ScriptManager LibQTip-2.0.ScriptManager Manages all library Script interactions.
@@ -49,6 +51,11 @@ QTip.DefaultCellProvider = QTip.DefaultCellProvider
         CellPrototype = QTip.DefaultCellPrototype,
         Cells = {},
     }, QTip.CellProviderMetatable)
+
+QTip.CellProviderKeys = QTip.CellProviderKeys or { "LibQTip-2.0 Default" }
+QTip.CellProviderRegistry = QTip.CellProviderRegistry or {
+    ["LibQTip-2.0 Default"] = QTip.DefaultCellProvider,
+}
 
 QTip.ScriptManager = QTip.ScriptManager or {}
 QTip.TooltipManager = QTip.TooltipManager or CreateFrame("Frame")
@@ -91,6 +98,11 @@ function QTip:AcquireTooltip(key, numColumns, ...)
     end
 
     return tooltip
+end
+
+-- Return an iterator on the registered CellProviders.
+function QTip:CellProviderPairs()
+    return pairs(self.CellProviderRegistry)
 end
 
 do
@@ -136,6 +148,22 @@ do
     end
 end
 
+---@param key string The CellProvider key.
+---@return LibQTip-2.0.CellProvider|nil
+function QTip:GetCellProvider(key)
+    if type(key) ~= "string" then
+        error(("Paremeter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
+    end
+
+    return self.CellProviderRegistry[key]
+end
+
+-- Returns an alphabetically-sorted list of all registered CellProvider keys.
+---@return LibQTip-2.0.CellProvider[]
+function QTip:GetCellProviderKeys()
+    return self.CellProviderKeys
+end
+
 -- Check if a Tooltip has been acquired with the specified key.
 ---@param key string The Tooltip key.
 ---@return boolean
@@ -145,6 +173,37 @@ function QTip:IsAcquired(key)
     end
 
     return not not TooltipManager.ActiveTooltips[key]
+end
+
+---@param key string The CellProvider key.
+---@param cellProvider LibQTip-2.0.CellProvider The CellProvider to register.
+---@return boolean isSuccess Whether or not the CellProvider was successfully registered.
+function QTip:RegisterCellProvider(key, cellProvider)
+    if type(key) ~= "string" then
+        error(("Paremeter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
+    end
+
+    local registry = self.CellProviderRegistry
+
+    if registry[key] then
+        return false
+    end
+
+    registry[key] = cellProvider
+
+    local list = self.CellProviderKeys
+
+    table.wipe(list)
+
+    for registryKey in pairs(registry) do
+        table.insert(list, registryKey)
+    end
+
+    table.sort(list)
+
+    self.CallbackRegistry:Fire("OnRegisterCellProvider", key)
+
+    return true
 end
 
 -- Return an acquired Tooltip to the heap. The Tooltip is cleared and hidden.
@@ -172,6 +231,7 @@ end
 ---@field Fire fun(self: LibQTip-2.0.CallbackRegistry, eventName: LibQTip-2.0.EventName, ...: unknown)
 
 ---@alias LibQTip-2.0.EventName
+---|"OnRegisterCellProvider"
 ---|"OnReleaseTooltip"
 
 ---@class CreateCellProviderValues

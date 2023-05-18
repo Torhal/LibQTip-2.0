@@ -39,25 +39,19 @@ QTip.CellProviderMetatable = QTip.CellProviderMetatable or { __index = QTip.Cell
 QTip.CellPrototype = QTip.CellPrototype or setmetatable({}, QTip.FrameMetatable)
 QTip.CellMetatable = QTip.CellMetatable or { __index = QTip.CellPrototype }
 
+QTip.DefaultCellPrototype = QTip.DefaultCellPrototype or setmetatable({}, QTip.CellMetatable)
+QTip.DefaultCellProvider = QTip.DefaultCellProvider
+    or setmetatable({
+        CellHeap = {},
+        CellMetatable = { __index = QTip.DefaultCellPrototype },
+        CellPrototype = QTip.DefaultCellPrototype,
+        Cells = {},
+    }, QTip.CellProviderMetatable)
+
 QTip.ScriptManager = QTip.ScriptManager or {}
 QTip.TooltipManager = QTip.TooltipManager or CreateFrame("Frame")
 
 QTip.CallbackHandlers = QTip.CallbackHandlers or LibStub:GetLibrary("CallbackHandler-1.0"):New(QTip)
-
---------------------------------------------------------------------------------
----- Internal Functions
---------------------------------------------------------------------------------
-
----@param templateCellProvider? LibQTip-2.0.CellProvider An existing provider used as a template for the new provider.
----@return LibQTip-2.0.Cell
----@return table<"__index", LibQTip-2.0.Cell>
-local function GetCellPrototype(templateCellProvider)
-    if templateCellProvider and templateCellProvider.GetCellPrototype then
-        return templateCellProvider:GetCellPrototype()
-    else
-        return QTip.CellPrototype, QTip.CellMetatable
-    end
-end
 
 --------------------------------------------------------------------------------
 ---- Methods
@@ -99,28 +93,45 @@ function QTip:Acquire(key, numColumns, ...)
     return tooltip
 end
 
--- Convenience method to create a new cell provider.
---
--- Although one can use anything that matches the CellProvider and Cell interfaces, this method provides an easy way to create new providers.
----@param templateCellProvider? LibQTip-2.0.CellProvider An existing provider used as a template for the new provider.
----@return LibQTip-2.0.CellProvider newCellProvider The new CellProvider.
----@return LibQTip-2.0.Cell newCellPrototype The prototype of the new cell. It must be extended with the mandatory :Initialize() and :Setup() methods.
----@return LibQTip-2.0.Cell baseCellPrototype The prototype of baseProvider cells. It may be used to call base cell methods.
-function QTip:CreateCellProvider(templateCellProvider)
-    local baseCellPrototype, baseCellMetatable = GetCellPrototype(templateCellProvider)
+do
+    ---@param templateCellProvider? LibQTip-2.0.CellProvider An existing provider used as a template for the new provider.
+    ---@return LibQTip-2.0.Cell
+    ---@return table<"__index", LibQTip-2.0.Cell>
+    local function GetCellPrototype(templateCellProvider)
+        if not templateCellProvider then
+            return QTip.DefaultCellProvider:GetCellPrototype()
+        end
 
-    ---@type LibQTip-2.0.Cell
-    local newCellPrototype = setmetatable({}, baseCellMetatable)
+        if not templateCellProvider.GetCellPrototype then
+            error("The supplied CellProvider has no 'GetCellPrototype' method.", 3)
+        end
 
-    ---@type LibQTip-2.0.CellProvider
-    local newCellProvider = setmetatable({}, self.CellProviderMetatable)
+        return templateCellProvider:GetCellPrototype()
+    end
 
-    newCellProvider.CellHeap = {}
-    newCellProvider.Cells = {}
-    newCellProvider.CellPrototype = newCellPrototype
-    newCellProvider.CellMetatable = { __index = newCellPrototype }
+    -- Convenience method to create a new cell provider.
+    --
+    -- Although one can use anything that matches the CellProvider and Cell interfaces, this method provides an easy way to create new providers.
+    ---@param templateCellProvider? LibQTip-2.0.CellProvider An existing provider used as a template for the new provider.
+    ---@return LibQTip-2.0.CellProvider newCellProvider The new CellProvider.
+    ---@return LibQTip-2.0.Cell newCellPrototype The prototype of the new cell. It must be extended with the mandatory :Initialize() and :Setup() methods.
+    ---@return LibQTip-2.0.Cell baseCellPrototype The prototype of baseProvider cells. It may be used to call base cell methods.
+    function QTip:CreateCellProvider(templateCellProvider)
+        local baseCellPrototype, baseCellMetatable = GetCellPrototype(templateCellProvider)
 
-    return newCellProvider, newCellPrototype, baseCellPrototype
+        ---@type LibQTip-2.0.Cell
+        local newCellPrototype = setmetatable({}, baseCellMetatable)
+
+        ---@type LibQTip-2.0.CellProvider
+        local newCellProvider = setmetatable({}, self.CellProviderMetatable)
+
+        newCellProvider.CellHeap = {}
+        newCellProvider.Cells = {}
+        newCellProvider.CellPrototype = newCellPrototype
+        newCellProvider.CellMetatable = { __index = newCellPrototype }
+
+        return newCellProvider, newCellPrototype, baseCellPrototype
+    end
 end
 
 -- Check if a Tooltip has been acquired with the specified key.
@@ -149,14 +160,6 @@ end
 -- Return an iterator on the acquired Tooltips.
 function QTip:TooltipPairs()
     return pairs(TooltipManager.ActiveTooltips)
-end
-
-------------------------------------------------------------------------------
--- Default CellProvider and Cell
-------------------------------------------------------------------------------
-
-if not QTip.DefaultCellProvider then
-    QTip.DefaultCellProvider, QTip.DefaultCellPrototype = QTip:CreateCellProvider()
 end
 
 --------------------------------------------------------------------------------

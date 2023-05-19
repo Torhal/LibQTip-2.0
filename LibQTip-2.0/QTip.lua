@@ -148,6 +148,7 @@ do
     end
 end
 
+-- Retrieves a registered CellProvider using the provided key.
 ---@param key string The CellProvider key.
 ---@return LibQTip-2.0.CellProvider|nil
 function QTip:GetCellProvider(key)
@@ -175,6 +176,7 @@ function QTip:IsAcquired(key)
     return not not TooltipManager.ActiveTooltips[key]
 end
 
+-- Registers a CellProvider using the provided key. Registration fails if the key has already been used.
 ---@param key string The CellProvider key.
 ---@param cellProvider LibQTip-2.0.CellProvider The CellProvider to register.
 ---@return boolean isSuccess Whether or not the CellProvider was successfully registered.

@@ -6,8 +6,6 @@ local QTip = LibStub:GetLibrary("LibQTip-2.0")
 
 local ScriptManager = QTip.ScriptManager
 
----@alias LibQTip-2.0.ReleaseHandler fun(frame: Frame, delay: number)
-
 ---@class LibQTip-2.0.TooltipManager: Frame
 ---@field ActiveReleases table<LibQTip-2.0.Tooltip, true|nil>
 ---@field ActiveTooltips table<string, LibQTip-2.0.Tooltip|nil>

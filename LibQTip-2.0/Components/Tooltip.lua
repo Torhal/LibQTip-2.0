@@ -384,7 +384,6 @@ end
 -- Sets the length of time in which the mouse pointer can be outside of the Tooltip, or an alternate Frame, before the Tooltip is automatically hidden and then released.
 ---@param delay? number Whole or fractional seconds.
 ---@param alternateFrame? Frame If specified, the Tooltip will not be automatically hidden while the mouse pointer is over it.
----@param releaseHandler? LibQTip-2.0.ReleaseHandler Called when the Tooltip is released. Generally used to clean up a reference an AddOn has to the Tooltip, since another AddOn can subsequently acquire it.
 -- Usage:
 --
 -- :SetAutoHideDelay(0.25) => hides after 0.25sec outside of the tooltip

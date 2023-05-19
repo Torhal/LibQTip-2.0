@@ -20,10 +20,10 @@ assert(LibStub, ("%s requires LibStub"):format(Version.Major))
 ---@field DefaultCellPrototype LibQTip-2.0.Cell The library default Cell interface.
 ---@field DefaultCellProvider LibQTip-2.0.CellProvider The library default CellProvider interface.
 ---@field FrameMetatable table<"__index", Frame> Used for default Frame methods.
----@field RegisterCallback fun(target: table, eventName: LibQTip-2.0.EventName, handler: string|fun(eventName: LibQTip-2.0.EventName, ...: unknown))
+---@field RegisterCallback fun(target: table, eventName: LibQTip-2.0.EventName, handler: string|fun(eventName: LibQTip-2.0.EventName, ...: unknown)) CallbackHandler-1.0 interface.
 ---@field ScriptManager LibQTip-2.0.ScriptManager Manages all library Script interactions.
 ---@field TooltipManager LibQTip-2.0.TooltipManager Manages all library Tooltip interactions.
----@field UnregisterCallback fun(target: table, eventName: LibQTip-2.0.EventName)
+---@field UnregisterCallback fun(target: table, eventName: LibQTip-2.0.EventName) CallbackHandler-1.0 interface.
 local QTip, oldMinor = LibStub:NewLibrary(Version.Major, Version.Minor)
 
 if not QTip then

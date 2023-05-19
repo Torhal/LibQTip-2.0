@@ -121,10 +121,8 @@ do
         return templateCellProvider:GetCellPrototype()
     end
 
-    -- Convenience method to create a new cell provider.
-    --
-    -- Although one can use anything that matches the CellProvider and Cell interfaces, this method provides an easy way to create new providers.
-    ---@param templateCellProvider? LibQTip-2.0.CellProvider An existing provider used as a template for the new provider.
+    -- Creates a new CellProvider, using an existing CellProvider or the LibQTip-2.0 default CellProvider as a template.
+    ---@param templateCellProvider? LibQTip-2.0.CellProvider An existing CellProvider used as a template for the new CellProvider.
     ---@return CreateCellProviderValues values The new CellProvider, new Cell prototype, and base Cell prototype.
     function QTip:CreateCellProvider(templateCellProvider)
         local baseCellPrototype, baseCellMetatable = GetCellPrototype(templateCellProvider)

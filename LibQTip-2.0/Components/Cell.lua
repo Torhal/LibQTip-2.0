@@ -328,7 +328,7 @@ function Cell:SetScript(scriptType, handler, arg)
     return self
 end
 
--- Sets the text displayed on the Cell.
+-- Sets the text displayed in the Cell.
 ---@param text string The text to display in the Cell.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetText(text)

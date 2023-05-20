@@ -13,6 +13,7 @@
         "PROFESSIONS_TRACKER_REAGENT_FORMAT",
         "PROFESSIONS_TRACKER_REAGENT_COUNT_FORMAT",
         "BACKDROP_SLIDER_8_8",
-        "NineSlicePanelMixin"
+        "NineSlicePanelMixin",
+        "CLASS_ICON_TCOORDS"
     ]
 }

@@ -274,7 +274,7 @@ end
 -- Reset the contents of the Tootip. The Column layout is preserved but all Rows are removed.
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:Clear()
-    for _, row in pairs(self.Rows) do
+    for _, row in ipairs(self.Rows) do
         TooltipManager:ReleaseRow(row)
     end
 

@@ -420,7 +420,7 @@ function TooltipManager:ReleaseRow(row)
     row:ClearAllPoints()
     row:ClearBackdrop()
 
-    for _, cell in pairs(row.Cells) do
+    for _, cell in ipairs(row.Cells) do
         self:ReleaseCell(cell)
     end
 

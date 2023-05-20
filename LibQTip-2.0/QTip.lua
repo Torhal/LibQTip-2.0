@@ -81,7 +81,7 @@ local TooltipManager = QTip.TooltipManager
 ---@return LibQTip-2.0.Tooltip
 function QTip:AcquireTooltip(key, numColumns, ...)
     if type(key) ~= "string" then
-        error(("Paremeter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
+        error(("Parameter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
     end
 
     local tooltip = TooltipManager.ActiveTooltips[key]
@@ -152,7 +152,7 @@ end
 ---@return LibQTip-2.0.CellProvider|nil
 function QTip:GetCellProvider(key)
     if type(key) ~= "string" then
-        error(("Paremeter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
+        error(("Parameter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
     end
 
     return self.CellProviderRegistry[key]
@@ -169,7 +169,7 @@ end
 ---@return boolean
 function QTip:IsAcquired(key)
     if type(key) ~= "string" then
-        error(("Paremeter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
+        error(("Parameter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
     end
 
     return not not TooltipManager.ActiveTooltips[key]
@@ -181,7 +181,7 @@ end
 ---@return boolean isSuccess Whether or not the CellProvider was successfully registered.
 function QTip:RegisterCellProvider(key, cellProvider)
     if type(key) ~= "string" then
-        error(("Paremeter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
+        error(("Parameter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
     end
 
     local registry = self.CellProviderRegistry

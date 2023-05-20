@@ -248,6 +248,26 @@ function Cell:SetFont(font)
     return self
 end
 
+-- Sets the text displayed in the Cell using format specifiers.
+-- ***
+-- Equivalent to:
+--
+-- ``` lua
+-- cell:SetText(string.format("format", value))
+-- ```
+--
+-- ...but does not create a throwaway Lua string object, resulting in greater memory-usage efficiency.
+-- ***
+---@param format string The format specifiers for the text to display in the Cell.
+---@param ... unknown A list of values to be included in the formatted string.
+---@return LibQTip-2.0.Cell cell
+function Cell:SetFormattedText(format, ...)
+    self.FontString:SetFormattedText(tostring(format), ...)
+    self:OnContentChanged()
+
+    return self
+end
+
 -- Sets the horizontal justification of the Cell's FontString.
 ---@param horizontalJustification JustifyH Cell-specific justification to use.
 ---@return LibQTip-2.0.Cell cell

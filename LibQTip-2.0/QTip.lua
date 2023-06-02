@@ -167,7 +167,7 @@ end
 -- Check if a Tooltip has been acquired with the specified key.
 ---@param key string The Tooltip key.
 ---@return boolean
-function QTip:IsAcquired(key)
+function QTip:IsAcquiredTooltip(key)
     if type(key) ~= "string" then
         error(("Parameter 'key' must be of type 'string', not '%s'"):format(type(key)), 2)
     end

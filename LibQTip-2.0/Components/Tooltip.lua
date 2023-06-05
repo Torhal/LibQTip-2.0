@@ -594,9 +594,8 @@ function Tooltip:SmartAnchorTo(frame)
 end
 
 -- Resizes the Tooltip to fit the screen and show a scrollbar if needed.
----@param maxHeight? number Maximum Tooltip height, in pixels.
 ---@return LibQTip-2.0.Tooltip
-function Tooltip:UpdateScrolling(maxHeight)
+function Tooltip:UpdateLayout()
     self:SetClampedToScreen(false)
 
     -- All data is in the Tooltip; fix ColSpan width and prevent the TooltipManager from messing up the Tooltip later.
@@ -604,15 +603,16 @@ function Tooltip:UpdateScrolling(maxHeight)
     TooltipManager.LayoutRegistry[self] = nil
 
     local scale = self:GetScale()
-    local topSide = self:GetTop()
-    local bottomSide = self:GetBottom()
+    local topOffset = self:GetTop()
+    local bottomOffset = self:GetBottom()
     local screenSize = UIParent:GetHeight() / scale
-    local tooltipSize = (topSide - bottomSide)
+    local tooltipSize = (topOffset - bottomOffset)
+    local maxHeight = self.MaxHeight
 
     -- If the Tooltip would be too high, limit its height and show the slider.
-    if bottomSide < 0 or topSide > screenSize or (maxHeight and tooltipSize > maxHeight) then
-        local shrink = (bottomSide < 0 and (5 - bottomSide) or 0)
-            + (topSide > screenSize and (topSide - screenSize + 5) or 0)
+    if bottomOffset < 0 or topOffset > screenSize or (maxHeight and tooltipSize > maxHeight) then
+        local shrink = (bottomOffset < 0 and (5 - bottomOffset) or 0)
+            + (topOffset > screenSize and (topOffset - screenSize + 5) or 0)
 
         if maxHeight and tooltipSize - shrink > maxHeight then
             shrink = tooltipSize - maxHeight

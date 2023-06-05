@@ -467,6 +467,7 @@ function TooltipManager:ReleaseTooltip(tooltip)
     self.ActiveReleases[tooltip] = nil
 
     tooltip.Key = nil
+    tooltip.MaxHeight = nil
 
     tooltip:SetAutoHideDelay(nil)
     tooltip:Clear()

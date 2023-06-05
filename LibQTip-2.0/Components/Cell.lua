@@ -25,6 +25,20 @@ local Cell = QTip.DefaultCellPrototype
 ---- Methods
 --------------------------------------------------------------------------------
 
+-- Returns the RGBA numbers for the Cell.
+---@return number red Red color, from 0 to 1
+---@return number green Green color, from 0 to 1
+---@return number blue Blue color, from 0 to 1
+---@return number alpha Alpha level, from 0 to 1
+function Cell:GetColor()
+    return self:GetBackdropColor()
+end
+
+-- Returns the ColSpan value of the Cell.
+function Cell:GetColSpan()
+    return self.ColSpan
+end
+
 -- Returns the height of the Cell's FontString.
 ---@return number height
 function Cell:GetContentHeight()
@@ -37,11 +51,48 @@ function Cell:GetContentHeight()
     return height
 end
 
+-- Returns the Cell's font path, height, and flags.
+function Cell:GetFont()
+    return self.FontString:GetFont()
+end
+
+-- Returns the FontObject assigned to the Cell.
+function Cell:GetFontObject()
+    return self.FontString:GetFontObject()
+end
+
+function Cell:GetJustifyH()
+    return self.HorizontalJustification
+end
+
+-- Returns the left pixel padding of the Cell.
+function Cell:GetLeftPadding()
+    return self.LeftPadding
+end
+
+-- Returns the maximum width of the Cell.
+---@return integer|nil
+function Cell:GetMaxWidth()
+    return self.MaxWidth
+end
+
+-- Returns the minimum width of the Cell.
+---@return integer|nil
+function Cell:GetMinWidth()
+    return self.MinWidth
+end
+
 -- Returns the Cell's position within the containing Tooltip.
 ---@return number rowIndex The Row index of Cell.
 ---@return number columnIndex The Column index of Cell.
 function Cell:GetPosition()
     return self.RowIndex, self.ColumnIndex
+end
+
+-- Returns the right pixel padding of the Cell.
+---@return integer
+function Cell:GetRightPadding()
+    return self.RightPadding
 end
 
 -- Returns the size of the Cell.
@@ -228,6 +279,17 @@ function Cell:SetColSpan(size)
     self.ColSpan = size
 
     self:SetPoint("RIGHT", self.Tooltip.Columns[rightColumnIndex])
+
+    return self
+end
+
+-- Sets the Cell's basic font properties.
+---@param path string Path to the font file.
+---@param height number Size in points.
+---@param flags string Any comma-delimited combination of OUTLINE, THICK and MONOCHROME; otherwise must be at least an empty string.
+---@return LibQTip-2.0.Cell cell
+function Cell:SetFont(path, height, flags)
+    self.FontString:SetFont(path, height, flags)
 
     return self
 end

@@ -232,10 +232,10 @@ function Cell:SetColSpan(size)
     return self
 end
 
--- Sets FontObject for the Cell's FontString.
+-- Sets the FontObject for the Cell's FontString.
 ---@param font? FontObject|Font The rendering Font. Defaults to the Tooltip's DefaultFont or DefaultHeadingFont, depending on the Cell's designation.
 ---@return LibQTip-2.0.Cell cell
-function Cell:SetFont(font)
+function Cell:SetFontObject(font)
     self.FontString:SetFontObject(
         type(font) == "string" and _G[font]
             or font

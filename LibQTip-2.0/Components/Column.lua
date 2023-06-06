@@ -26,6 +26,15 @@ function Column:GetCell(rowIndex, cellProvider)
     return self.Tooltip:GetRow(rowIndex):GetCell(self.Index, cellProvider)
 end
 
+-- Returns the RGBA numbers for the Column.
+---@return number red Red color, from 0 to 1
+---@return number green Green color, from 0 to 1
+---@return number blue Blue color, from 0 to 1
+---@return number alpha Alpha level, from 0 to 1
+function Column:GetColor()
+    return self:GetBackdropColor()
+end
+
 -- Sets the background color for the Column.
 ---@param r? number Red color value of the Column. Defaults to the Tooltip's current red value.
 ---@param g? number Green color value of the Column. Defaults to the Tooltip's current green value.

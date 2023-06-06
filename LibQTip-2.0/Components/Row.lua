@@ -48,6 +48,15 @@ function Row:GetCell(columnIndex, cellProvider)
     )
 end
 
+-- Returns the RGBA numbers for the Row.
+---@return number red Red color, from 0 to 1
+---@return number green Green color, from 0 to 1
+---@return number blue Blue color, from 0 to 1
+---@return number alpha Alpha level, from 0 to 1
+function Row:GetColor()
+    return self:GetBackdropColor()
+end
+
 -- Sets the background color for the Row.
 ---@param r? number Red color value of the Row. Defaults to the Tooltip's current red value.
 ---@param g? number Green color value of the Row. Defaults to the Tooltip's current green value.

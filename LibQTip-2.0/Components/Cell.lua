@@ -133,7 +133,7 @@ function Cell:GetSize()
 end
 
 -- Returns the text of the Cell.
----@return string
+---@return string?
 function Cell:GetText()
     return self.FontString:GetText()
 end

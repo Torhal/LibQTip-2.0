@@ -539,11 +539,13 @@ end
 -- Sets the Texture of the highlight when mousing over a Row or Cell that has a script assigned to it.
 --
 -- Works identically to the default UI's texture:SetTexture() API.
----@param ... string Arguments to pass to texture:SetTexture()
----@overload fun(file: string|number, horizWrap?: HorizWrap, vertWrap?: string, filterMode?: FilterMode)
+---@param filePath string|number Path to a texture (usually in Interface\\) or a FileDataID.
+---@param horizontalWrap? HorizWrap How to sample texture coordinates beyond the (0, 1) range horizontally.
+---@param verticalWrap? string How to sample texture coordinates beyond the (0, 1) range vertically.
+---@param filterMode? FilterMode
 ---@return LibQTip-2.0.Tooltip
-function Tooltip:SetHighlightTexture(...)
-    self.HighlightTexture:SetTexture(...)
+function Tooltip:SetHighlightTexture(filePath, horizontalWrap, verticalWrap, filterMode)
+    self.HighlightTexture:SetTexture(filePath, horizontalWrap, verticalWrap, filterMode)
 
     return self
 end

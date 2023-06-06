@@ -341,6 +341,24 @@ function Tooltip:GetDefaultHeadingFont()
     return self.DefaultHeadingFont
 end
 
+-- Works identically to the default UI's texture:GetTexCoord() API, for the Tooltip's highlight Texture.
+---@return number ULx
+---@return number ULy
+---@return number LLx
+---@return number LLy
+---@return number URx
+---@return number URy
+---@return number LRx
+---@return number LRy
+function Tooltip:GetHighlightTexCoord()
+    return self.HighlightTexture:GetTexCoord()
+end
+
+-- Returns the Tooltip's highlight Texture.
+function Tooltip:GetHighlightTexture()
+    return self.HighlightTexture:GetTexture()
+end
+
 -- Returns the Row at the given index.
 ---@param rowIndex integer
 ---@return LibQTip-2.0.Row

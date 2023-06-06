@@ -382,6 +382,12 @@ function Tooltip:GetRowCount()
     return #self.Rows
 end
 
+-- Returns the step size for the Tooltip's scroll bar.
+---@return number
+function Tooltip:GetScrollStep()
+    return self.ScrollStep
+end
+
 -- Disallow the use of the HookScript method to avoid one AddOn breaking all others.
 function Tooltip:HookScript()
     geterrorhandler()(":HookScript is not allowed on LibQTip tooltips")
@@ -589,7 +595,7 @@ function Tooltip:SetScript(scriptType, handler)
     return self
 end
 
--- Set the step size for the scroll bar
+-- Set the step size for the scroll bar.
 ---@param step number The new step size.
 ---@return LibQTip-2.0.Tooltip
 function Tooltip:SetScrollStep(step)

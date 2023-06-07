@@ -49,6 +49,7 @@ function IconCell:OnRelease()
     BaseCell.OnRelease(self)
 
     self.IconTexture:SetSize(DefaultIconSize, DefaultIconSize)
+    self.IconTexture:SetTexture(nil)
 end
 
 ---@param width number

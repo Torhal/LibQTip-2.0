@@ -17,10 +17,14 @@ local ClassIconCell = providerValues.newCellPrototype
 
 ---@param className string
 function ClassIconCell:SetIconTexture(className)
-    self.IconTexture:SetTexture([[Interface\TargetingFrame\UI-Classes-Circles]])
-    self.IconTexture:SetTexCoord(unpack(CLASS_ICON_TCOORDS[className]))
+    local texCoords = CLASS_ICON_TCOORDS[className]
 
-    self:OnContentChanged()
+    if texCoords then
+        self.IconTexture:SetTexture([[Interface\TargetingFrame\UI-Classes-Circles]])
+        self.IconTexture:SetTexCoord(unpack(texCoords))
+
+        self:OnContentChanged()
+    end
 
     return self
 end

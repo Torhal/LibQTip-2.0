@@ -331,7 +331,7 @@ function Cell:SetFormattedText(format, ...)
 end
 
 -- Sets the horizontal justification of the Cell's FontString.
----@param horizontalJustification JustifyH Cell-specific justification to use.
+---@param horizontalJustification JustifyHorizontal Cell-specific justification to use.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetJustifyH(horizontalJustification)
     self.HorizontalJustification = horizontalJustification

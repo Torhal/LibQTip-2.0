@@ -95,7 +95,7 @@ end
 -- Returns a Column at the given index for the given Tooltip.
 ---@param tooltip LibQTip-2.0.Tooltip The tooltip for which the Column is being acquired
 ---@param columnIndex integer Column number to set.
----@param horizontalJustification JustifyH The horizontal justification of cells in this column ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
+---@param horizontalJustification JustifyHorizontal The horizontal justification of cells in this column ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
 ---@return LibQTip-2.0.Column
 function TooltipManager:AcquireColumn(tooltip, columnIndex, horizontalJustification)
     ---@type LibQTip-2.0.Column|nil

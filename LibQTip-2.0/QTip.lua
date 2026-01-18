@@ -71,7 +71,7 @@ local TooltipManager = QTip.TooltipManager
 -- If additional arguments are passed, they are passed to :SetColumnLayout for the acquired Tooltip.
 ---@param key string The Tooltip key. A key unique to this Tooltip should be provided to avoid conflicts.
 ---@param numColumns? number Minimum number of Columns
----@param ... JustifyH Column horizontal justifications ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
+---@param ... JustifyHorizontal Column horizontal justifications ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
 -- ***
 -- Example Tooltip with 5 Columns justified as left, center, left, left, left:
 -- ``` lua

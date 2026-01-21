@@ -91,7 +91,7 @@ local function ValidateFont(font, level, silent)
     return true
 end
 
----@param justification JustifyH
+---@param justification JustifyHorizontal
 ---@param level integer
 ---@param silent? boolean
 local function ValidateJustification(justification, level, silent)
@@ -192,7 +192,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Add a new Column to the right of the Tooltip.
----@param horizontalJustification? JustifyH The horizontal justification of Cells in this Column ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
+---@param horizontalJustification? JustifyHorizontal The horizontal justification of Cells in this Column ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
 ---@return LibQTip-2.0.Column
 function Tooltip:AddColumn(horizontalJustification)
     horizontalJustification = horizontalJustification or "LEFT"
@@ -487,7 +487,7 @@ end
 --
 -- The justification of existing Columns is reset to any passed values, or to "LEFT" if none are provided.
 ---@param columnCount number Minimum number of columns
----@param ...? JustifyH Column horizontal justifications ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
+---@param ...? JustifyHorizontal Column horizontal justifications ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
 -- ***
 -- Example Tooltip with 5 columns justified as left, center, left, left, left:
 -- ``` lua
@@ -501,7 +501,7 @@ function Tooltip:SetColumnLayout(columnCount, ...)
     end
 
     for columnIndex = 1, columnCount do
-        ---@type JustifyH
+        ---@type JustifyHorizontal
         local horizontalJustification = select(columnIndex, ...) or "LEFT"
 
         ValidateJustification(horizontalJustification, 2)

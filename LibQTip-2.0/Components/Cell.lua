@@ -12,7 +12,7 @@ local TooltipManager = QTip.TooltipManager
 ---@field ColSpan integer The number of columns the cell will span. Defaults to 1.
 ---@field ColumnIndex integer The Column index of Cell.
 ---@field FontString FontString The FontString used to set and display textual values on the Cell.
----@field HorizontalJustification JustifyH Cell-specific justification to use ("CENTER", "LEFT" or "RIGHT"). Defaults to the justification of the Column where the Cell resides.
+---@field HorizontalJustification JustifyHorizontal Cell-specific justification to use ("CENTER", "LEFT" or "RIGHT"). Defaults to the justification of the Column where the Cell resides.
 ---@field LeftPadding integer Pixel padding on the left side of the Cell's value. Defaults to 0.
 ---@field MaxWidth? integer The maximum width (in pixels) of the Cell. If the Cell's value is textual and exceeds this width, it will wrap to a new line. Must not be less than the value of MinWidth.
 ---@field MinWidth? integer The minimum width (in pixels) of the Cell. Must not exceed the value of MaxWidth.
@@ -331,7 +331,7 @@ function Cell:SetFormattedText(format, ...)
 end
 
 -- Sets the horizontal justification of the Cell's FontString.
----@param horizontalJustification JustifyH Cell-specific justification to use.
+---@param horizontalJustification JustifyHorizontal Cell-specific justification to use.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetJustifyH(horizontalJustification)
     self.HorizontalJustification = horizontalJustification

@@ -1,4 +1,4 @@
-## Interface: 110207
+## Interface: 120000
 ## Title: Lib: QTip-2.0
 ## Notes: LibQTip-2.0 is a library that provides multiple-column, highly-configurable tooltips.
 ## Author: Torhal

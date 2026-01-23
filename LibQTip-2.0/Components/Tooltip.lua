@@ -564,7 +564,7 @@ end
 --
 -- Works identically to the default UI's texture:SetTexture() API.
 ---@param filePath string|number Path to a texture (usually in Interface\\) or a FileDataID.
----@param horizontalWrap? HorizWrap How to sample texture coordinates beyond the (0, 1) range horizontally.
+---@param horizontalWrap? WrapMode How to sample texture coordinates beyond the (0, 1) range horizontally.
 ---@param verticalWrap? string How to sample texture coordinates beyond the (0, 1) range vertically.
 ---@param filterMode? FilterMode
 ---@return LibQTip-2.0.Tooltip

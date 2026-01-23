@@ -435,7 +435,7 @@ function Cell:SetTextColor(r, g, b, a)
         r, g, b, a = self:GetRGBA()
     end
 
-    self.FontString:SetTextColor(r, g, b, a)
+    self.FontString:SetTextColor(r or 0, g or 0, b or 0, a or 1)
 
     return self
 end

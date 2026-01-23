@@ -101,7 +101,7 @@ end
 function Cell:GetSize()
     local fontString = self.FontString
 
-    -- Detatch the FontString from the Cell to calculate size
+    -- Detach the FontString from the Cell to calculate size
     fontString:ClearAllPoints()
 
     local leftPadding = self.LeftPadding

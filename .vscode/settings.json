@@ -6,7 +6,9 @@
         "Tootip",
         "Torhal"
     ],
-    "editor.defaultFormatter": "JohnnyMorganz.stylua",
+    "[lua]": {
+        "editor.defaultFormatter": "JohnnyMorganz.stylua"
+    },
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "Lua.diagnostics.globals": [

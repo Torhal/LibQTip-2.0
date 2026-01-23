@@ -131,16 +131,15 @@ do
         ---@type LibQTip-2.0.Cell
         local newCellPrototype = setmetatable({}, baseCellMetatable)
 
-        ---@type LibQTip-2.0.CellProvider
-        local newCellProvider = setmetatable({}, self.CellProviderMetatable)
-
-        newCellProvider.CellHeap = {}
-        newCellProvider.Cells = {}
-        newCellProvider.CellPrototype = newCellPrototype
-        newCellProvider.CellMetatable = { __index = newCellPrototype }
-
         return {
-            newCellProvider = newCellProvider,
+            newCellProvider =
+                ---@type LibQTip-2.0.CellProvider
+                setmetatable({
+                    CellHeap = {},
+                    Cells = {},
+                    CellPrototype = newCellPrototype,
+                    CellMetatable = { __index = newCellPrototype },
+                }, self.CellProviderMetatable),
             newCellPrototype = newCellPrototype,
             baseCellPrototype = baseCellPrototype,
         }

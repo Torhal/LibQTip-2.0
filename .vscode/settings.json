@@ -34,5 +34,11 @@
         "~/.vscode/extensions/ketho.wow-api-0.21.0/Annotations/FrameXML"
     ],
     "stylua.targetReleaseVersion": "latest",
-    "cSpell.words": ["Metatable", "nodiscard"]
+    "cSpell.words": [
+        "geterrorhandler",
+        "Metatable",
+        "nodiscard",
+        "Tootip",
+        "Torhal"
+    ]
 }

@@ -1,4 +1,7 @@
 {
+    "[lua]": {
+        "editor.defaultFormatter": "JohnnyMorganz.stylua"
+    },
     "cSpell.words": [
         "geterrorhandler",
         "Metatable",
@@ -6,9 +9,6 @@
         "Tootip",
         "Torhal"
     ],
-    "[lua]": {
-        "editor.defaultFormatter": "JohnnyMorganz.stylua"
-    },
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "Lua.diagnostics.globals": [

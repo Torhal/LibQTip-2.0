@@ -4,5 +4,4 @@
     <Script file="QTip.lua"/>
     <Include file="Internals\Manifest.xml"/>
     <Include file="Components\Manifest.xml"/>
-    <Include file="SpecializedCells\Manifest.xml"/>
 </Ui>

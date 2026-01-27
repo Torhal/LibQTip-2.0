@@ -21,9 +21,6 @@
         "ObjectiveTrackerFrame",
         "PROFESSIONS_TRACKING_VIEW_RECIPE",
         "ProfessionsFrame",
-        "PROFESSIONS_CRAFTING_FORM_RECRAFTING_HEADER",
-        "PROFESSIONS_TRACKER_REAGENT_FORMAT",
-        "PROFESSIONS_TRACKER_REAGENT_COUNT_FORMAT",
         "BACKDROP_SLIDER_8_8",
         "NineSlicePanelMixin",
         "CLASS_ICON_TCOORDS",
@@ -42,8 +39,8 @@
     },
     "Lua.runtime.version": "Lua 5.1",
     "Lua.workspace.library": [
-        "~/.vscode/extensions/ketho.wow-api-0.21.0/Annotations/Core",
-        "~/.vscode/extensions/ketho.wow-api-0.21.0/Annotations/FrameXML"
+        "~/.vscode/extensions/ketho.wow-api-0.22.1/Annotations/Core",
+        "~/.vscode/extensions/ketho.wow-api-0.22.1/Annotations/FrameXML"
     ],
     "stylua.targetReleaseVersion": "latest"
 }

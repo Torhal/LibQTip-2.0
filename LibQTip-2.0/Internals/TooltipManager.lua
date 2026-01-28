@@ -89,6 +89,11 @@ function TooltipManager:AcquireCell(tooltip, row, column, cellProvider)
     column.Cells[row.Index] = cell
     row.Cells[column.Index] = cell
 
+    cell.FontString:SetFontObject(
+        cell.Tooltip:GetRow(cell.RowIndex).IsHeading and cell.Tooltip:GetDefaultHeadingFont()
+            or cell.Tooltip:GetDefaultFont()
+    )
+
     return cell
 end
 

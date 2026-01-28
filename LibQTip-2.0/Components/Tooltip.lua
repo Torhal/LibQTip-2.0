@@ -125,6 +125,33 @@ end
 ---- Internal Functions
 --------------------------------------------------------------------------------
 
+---@param tooltip LibQTip-2.0.Tooltip The Tooltip we're adding the Row to.
+---@param isHeading boolean Whether or not this Row is a Heading.
+---@param ... string Value to be displayed in each Column of the Row.
+---@return LibQTip-2.0.Row row
+local function BaseAddRow(tooltip, isHeading, ...)
+    if #tooltip.Columns == 0 then
+        error("Column layout should be defined before adding a Row", 3)
+    end
+
+    local rowIndex = #tooltip.Rows + 1
+    local row = tooltip.Rows[rowIndex] or TooltipManager:AcquireRow(tooltip, rowIndex)
+
+    tooltip.Rows[rowIndex] = row
+
+    row.IsHeading = isHeading
+
+    for columnIndex = 1, #tooltip.Columns do
+        local value = select(columnIndex, ...)
+
+        if value ~= nil then
+            row:GetCell(columnIndex):SetText(value)
+        end
+    end
+
+    return row
+end
+
 ---@param frame Frame The Frame that will serve as the Tooltip anchor.
 local function GetTooltipAnchor(frame)
     local x, y = frame:GetCenter()
@@ -214,9 +241,7 @@ end
 ---@param ... string Value to be displayed in each Column of the Row.
 ---@return LibQTip-2.0.Row row
 function Tooltip:AddHeadingRow(...)
-    local row = self:AddRow(...)
-
-    row.IsHeading = true
+    local row = BaseAddRow(self, true, ...)
 
     return row
 end
@@ -229,24 +254,7 @@ end
 ---@param ... string Value to be displayed in each Column of the Row.
 ---@return LibQTip-2.0.Row row
 function Tooltip:AddRow(...)
-    if #self.Columns == 0 then
-        error("Column layout should be defined before adding a Row", 3)
-    end
-
-    local rowIndex = #self.Rows + 1
-    local row = self.Rows[rowIndex] or TooltipManager:AcquireRow(self, rowIndex)
-
-    self.Rows[rowIndex] = row
-
-    for columnIndex = 1, #self.Columns do
-        local value = select(columnIndex, ...)
-
-        if value ~= nil then
-            row:GetCell(columnIndex):SetText(value)
-        end
-    end
-
-    return row
+    return BaseAddRow(self, false, ...)
 end
 
 -- Adds a graphical separator Row at the bottom of the Tooltip.

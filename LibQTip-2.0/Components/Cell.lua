@@ -25,7 +25,7 @@ local Cell = QTip.DefaultCellPrototype
 ---- Methods
 --------------------------------------------------------------------------------
 
--- Returns the RGBA numbers for the Cell.
+--- Returns the RGBA numbers for the Cell.
 ---@return number red Red color, from 0 to 1
 ---@return number green Green color, from 0 to 1
 ---@return number blue Blue color, from 0 to 1
@@ -34,12 +34,12 @@ function Cell:GetColor()
     return self:GetBackdropColor()
 end
 
--- Returns the ColSpan value of the Cell.
+--- Returns the ColSpan value of the Cell.
 function Cell:GetColSpan()
     return self.ColSpan
 end
 
--- Returns the height of the Cell's FontString.
+--- Returns the height of the Cell's FontString.
 ---@return number height
 function Cell:GetContentHeight()
     local fontString = self.FontString
@@ -51,12 +51,12 @@ function Cell:GetContentHeight()
     return height
 end
 
--- Returns the Cell's font path, height, and flags.
+--- Returns the Cell's font path, height, and flags.
 function Cell:GetFont()
     return self.FontString:GetFont()
 end
 
--- Returns the FontObject assigned to the Cell.
+--- Returns the FontObject assigned to the Cell.
 function Cell:GetFontObject()
     return self.FontString:GetFontObject()
 end
@@ -65,37 +65,37 @@ function Cell:GetJustifyH()
     return self.HorizontalJustification
 end
 
--- Returns the left pixel padding of the Cell.
+--- Returns the left pixel padding of the Cell.
 function Cell:GetLeftPadding()
     return self.LeftPadding
 end
 
--- Returns the maximum width of the Cell.
+--- Returns the maximum width of the Cell.
 ---@return integer|nil
 function Cell:GetMaxWidth()
     return self.MaxWidth
 end
 
--- Returns the minimum width of the Cell.
+--- Returns the minimum width of the Cell.
 ---@return integer|nil
 function Cell:GetMinWidth()
     return self.MinWidth
 end
 
--- Returns the Cell's position within the containing Tooltip.
+--- Returns the Cell's position within the containing Tooltip.
 ---@return number rowIndex The Row index of Cell.
 ---@return number columnIndex The Column index of Cell.
 function Cell:GetPosition()
     return self.RowIndex, self.ColumnIndex
 end
 
--- Returns the right pixel padding of the Cell.
+--- Returns the right pixel padding of the Cell.
 ---@return integer
 function Cell:GetRightPadding()
     return self.RightPadding
 end
 
--- Returns the size of the Cell.
+--- Returns the size of the Cell.
 ---@return number width The width of the Cell.
 ---@return number height The height of the Cell.
 function Cell:GetSize()
@@ -132,13 +132,13 @@ function Cell:GetSize()
     return width, height
 end
 
--- Returns the text of the Cell.
+--- Returns the text of the Cell.
 ---@return string?
 function Cell:GetText()
     return self.FontString:GetText()
 end
 
--- Returns the text color of the Cell.
+--- Returns the text color of the Cell.
 ---@return number r Red color value of the Cell's text.
 ---@return number g Green color value of the Cell's text.
 ---@return number b Blue color value of the Cell's text.
@@ -147,7 +147,7 @@ function Cell:GetTextColor()
     return self.FontString:GetTextColor()
 end
 
--- This method is called on newly created Cells for initialization.
+--- Invoked on newly created Cells for initialization.
 function Cell:OnCreation()
     self.ColSpan = 1
     self.LeftPadding = 0
@@ -157,7 +157,7 @@ function Cell:OnCreation()
     self:SetJustifyH("LEFT")
 end
 
--- Invoked when the Cell's content changes.
+--- Invoked when the Cell's content changes.
 function Cell:OnContentChanged()
     local tooltip = self.Tooltip
     local row = tooltip:GetRow(self.RowIndex)
@@ -183,7 +183,7 @@ function Cell:OnContentChanged()
     end
 end
 
--- Invoked when the Cell is released back to its CellProvider.
+--- Invoked when the Cell is released back to its CellProvider.
 function Cell:OnRelease()
     self:SetJustifyH("LEFT")
     self:ClearAllPoints()
@@ -208,7 +208,7 @@ function Cell:OnRelease()
     self.Tooltip = nil
 end
 
--- Sets the background color for the Cell.
+--- Sets the background color for the Cell.
 ---@param r? number Red color value of the Cell. Defaults to the Tooltip's current red value.
 ---@param g? number Green color value of the Cell. Defaults to the Tooltip's current green value.
 ---@param b? number Blue color value of the Cell. Defaults to the Tooltip's current blue value.
@@ -229,7 +229,7 @@ function Cell:SetColor(r, g, b, a)
     return self
 end
 
--- Sets the number of Columns the Cell will span. Defaults to 1.
+--- Sets the number of Columns the Cell will span. Defaults to 1.
 ---@param size integer The number of Columns the Cell will span. Providing a negative or zero size will count back from the rightmost Column and update the ColSpan to its effective value.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetColSpan(size)
@@ -283,7 +283,7 @@ function Cell:SetColSpan(size)
     return self
 end
 
--- Sets the Cell's basic font properties.
+--- Sets the Cell's basic font properties.
 ---@param path string Path to the font file.
 ---@param height number Size in points.
 ---@param flags string Any comma-delimited combination of OUTLINE, THICK and MONOCHROME; otherwise must be at least an empty string.
@@ -294,7 +294,7 @@ function Cell:SetFont(path, height, flags)
     return self
 end
 
--- Sets the FontObject for the Cell's FontString.
+--- Sets the FontObject for the Cell's FontString.
 ---@param font? FontObject|Font The rendering Font. Defaults to the Tooltip's DefaultFont or DefaultHeadingFont, depending on the Cell's designation.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetFontObject(font)
@@ -310,16 +310,16 @@ function Cell:SetFontObject(font)
     return self
 end
 
--- Sets the text displayed in the Cell using format specifiers.
--- ***
--- Equivalent to:
+--- Sets the text displayed in the Cell using format specifiers.
+--- ***
+--- Equivalent to:
 --
--- ``` lua
--- cell:SetText(string.format("format", value))
--- ```
+--- ``` lua
+--- cell:SetText(string.format("format", value))
+--- ```
 --
--- ...but does not create a throwaway Lua string object, resulting in greater memory-usage efficiency.
--- ***
+--- ...but does not create a throwaway Lua string object, resulting in greater memory-usage efficiency.
+--- ***
 ---@param format string The format specifiers for the text to display in the Cell.
 ---@param ... unknown A list of values to be included in the formatted string.
 ---@return LibQTip-2.0.Cell cell
@@ -330,7 +330,7 @@ function Cell:SetFormattedText(format, ...)
     return self
 end
 
--- Sets the horizontal justification of the Cell's FontString.
+--- Sets the horizontal justification of the Cell's FontString.
 ---@param horizontalJustification JustifyHorizontal Cell-specific justification to use.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetJustifyH(horizontalJustification)
@@ -340,7 +340,7 @@ function Cell:SetJustifyH(horizontalJustification)
     return self
 end
 
--- Sets the left pixel padding of the Cell.
+--- Sets the left pixel padding of the Cell.
 ---@param pixels integer
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetLeftPadding(pixels)
@@ -349,7 +349,7 @@ function Cell:SetLeftPadding(pixels)
     return self
 end
 
--- Sets the maximum width of the Cell.
+--- Sets the maximum width of the Cell.
 ---@param maxWidth? integer
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetMaxWidth(maxWidth)
@@ -375,7 +375,7 @@ function Cell:SetMaxWidth(maxWidth)
     return self
 end
 
--- Sets the minimum width of the Cell.
+--- Sets the minimum width of the Cell.
 ---@param minWidth? integer
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetMinWidth(minWidth)
@@ -390,7 +390,7 @@ function Cell:SetMinWidth(minWidth)
     return self
 end
 
--- Sets the right pixel padding of the Cell.
+--- Sets the right pixel padding of the Cell.
 ---@param pixels integer
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetRightPadding(pixels)
@@ -399,7 +399,7 @@ function Cell:SetRightPadding(pixels)
     return self
 end
 
--- Assigns a script to the Cell.
+--- Assigns a script to the Cell.
 ---@param scriptType LibQTip-2.0.ScriptType The ScriptType to assign to the Cell.
 ---@param handler fun(frame: Frame, ...) The function called when the script is run. Parameters conform to the given ScriptType.
 ---@param arg? unknown Data to be passed to the script function.
@@ -410,7 +410,7 @@ function Cell:SetScript(scriptType, handler, arg)
     return self
 end
 
--- Sets the text displayed in the Cell.
+--- Sets the text displayed in the Cell.
 ---@param text string The text to display in the Cell.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetText(text)
@@ -420,7 +420,7 @@ function Cell:SetText(text)
     return self
 end
 
--- Sets the text color for the Cell.
+--- Sets the text color for the Cell.
 ---@param r? number Red color value of the Cell's text. Defaults to the red value of the Cell's FontString.
 ---@param g? number Green color value of the Cell's text. Defaults to the green value of the Cell's FontString.
 ---@param b? number Blue color value of the Cell's text. Defaults to the blue value of the Cell's FontString.

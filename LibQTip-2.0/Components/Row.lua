@@ -48,7 +48,7 @@ function Row:GetCell(columnIndex, cellProvider)
     )
 end
 
--- Returns the RGBA numbers for the Row.
+--- Returns the RGBA numbers for the Row.
 ---@return number red Red color, from 0 to 1
 ---@return number green Green color, from 0 to 1
 ---@return number blue Blue color, from 0 to 1
@@ -57,7 +57,7 @@ function Row:GetColor()
     return self:GetBackdropColor()
 end
 
--- Sets the background color for the Row.
+--- Sets the background color for the Row.
 ---@param r? number Red color value of the Row. Defaults to the Tooltip's current red value.
 ---@param g? number Green color value of the Row. Defaults to the Tooltip's current green value.
 ---@param b? number Blue color value of the Row. Defaults to the Tooltip's current blue value.
@@ -78,7 +78,7 @@ function Row:SetColor(r, g, b, a)
     return self
 end
 
--- Assigns a script to the Row.
+--- Assigns a script to the Row.
 ---@param scriptType LibQTip-2.0.ScriptType The column ScriptType.
 ---@param handler fun(frame: Frame, ...) The function called when the script is run. Parameters conform to the given ScriptType.
 ---@param arg? string Data to be passed to the script handler.
@@ -89,7 +89,7 @@ function Row:SetScript(scriptType, handler, arg)
     return self
 end
 
--- Sets the text color for every Cell in the Row.
+--- Sets the text color for every Cell in the Row.
 ---@param r? number Red color value of the Row's text. Defaults to the red value of the Tooltip's default Font.
 ---@param g? number Green color value of the Row's text. Defaults to the green value of the Tooltip's default Font.
 ---@param b? number Blue color value of the Row's text. Defaults to the blue value of the Tooltip's default Font.

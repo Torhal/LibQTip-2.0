@@ -298,8 +298,8 @@ function Tooltip:Clear()
 
     wipe(self.ColSpanWidths)
 
-    self.HorizontalCellMargin = nil
-    self.VerticalCellMargin = nil
+    self.HorizontalCellMargin = 0
+    self.VerticalCellMargin = 0
 
     TooltipManager:AdjustTooltipSize(self)
 

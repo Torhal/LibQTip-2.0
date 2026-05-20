@@ -48,10 +48,7 @@ TooltipManager.DefaultBackdrop = TooltipManager.DefaultBackdrop
 
 TooltipManager.DefaultHighlightTexturePath = [[Interface\QuestFrame\UI-QuestTitleHighlight]]
 
----@class TooltipPixelSize
----@field CellPadding 10
----@field HorizontalCellMargin 6
----@field VerticalCellMargin 3
+---@enum TooltipPixelSize
 local PixelSize = {
     CellPadding = 10,
     HorizontalCellMargin = 6,

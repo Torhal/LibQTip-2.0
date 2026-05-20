@@ -11,36 +11,5 @@
     ],
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
-    "Lua.diagnostics.globals": [
-        "GameTooltipText",
-        "GameTooltipHeaderText",
-        "GameTooltip",
-        "NORMAL_FONT_COLOR",
-        "PROFESSIONS_TRACKER_HEADER_PROFESSION",
-        "PROFESSIONS_UNTRACK_RECIPE",
-        "ObjectiveTrackerFrame",
-        "PROFESSIONS_TRACKING_VIEW_RECIPE",
-        "ProfessionsFrame",
-        "BACKDROP_SLIDER_8_8",
-        "NineSlicePanelMixin",
-        "CLASS_ICON_TCOORDS",
-        "UIParent"
-    ],
-    "Lua.runtime.builtin": {
-        "basic": "disable",
-        "debug": "disable",
-        "io": "disable",
-        "math": "disable",
-        "os": "disable",
-        "package": "disable",
-        "string": "disable",
-        "table": "disable",
-        "utf8": "disable"
-    },
-    "Lua.runtime.version": "Lua 5.1",
-    "Lua.workspace.library": [
-        "~/.vscode/extensions/ketho.wow-api-0.22.1/Annotations/Core",
-        "~/.vscode/extensions/ketho.wow-api-0.22.1/Annotations/FrameXML"
-    ],
     "stylua.targetReleaseVersion": "latest"
 }

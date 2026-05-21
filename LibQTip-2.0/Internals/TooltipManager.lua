@@ -377,8 +377,12 @@ function TooltipManager:RegisterForCleanup(tooltip)
 end
 
 --- Releases a Cell to its CellProvider.
----@param cell LibQTip-2.0.Cell
+---@param cell? LibQTip-2.0.Cell
 function TooltipManager:ReleaseCell(cell)
+    if not cell then
+        return
+    end
+
     cell:Hide()
     cell:SetParent(nil)
     cell:ClearAllPoints()
@@ -391,8 +395,12 @@ function TooltipManager:ReleaseCell(cell)
 end
 
 --- Releases a Column to the TooltipManager's ColumnHeap.
----@param column LibQTip-2.0.Column
+---@param column? LibQTip-2.0.Column
 function TooltipManager:ReleaseColumn(column)
+    if not column then
+        return
+    end
+
     column:Hide()
     column:SetParent(nil)
     column:ClearAllPoints()
@@ -410,8 +418,12 @@ function TooltipManager:ReleaseColumn(column)
 end
 
 --- Releases a Row to the TooltipManager's RowHeap.
----@param row LibQTip-2.0.Row
+---@param row? LibQTip-2.0.Row
 function TooltipManager:ReleaseRow(row)
+    if not row then
+        return
+    end
+
     row:Hide()
     row:SetParent(nil)
     row:ClearAllPoints()

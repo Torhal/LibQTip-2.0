@@ -275,10 +275,14 @@ function TooltipManager:AdjustCellSizes(tooltip)
             right = tonumber(right)
 
             for columnIndex = left, right - 1 do
-                width = width - columns[columnIndex].Width - horizontalMargin
+                if columns[columnIndex] then
+                    width = width - columns[columnIndex].Width - horizontalMargin
+                end
             end
 
-            width = width - columns[right].Width
+            if columns[right] then
+                width = width - columns[right].Width
+            end
 
             if width <= 0 then
                 colSpanWidths[columnRange] = nil
@@ -310,7 +314,7 @@ function TooltipManager:AdjustCellSizes(tooltip)
 
     -- Now that the Cell width is set, recalculate the height values of the Rows.
     for _, row in ipairs(rows) do
-        if #row.Cells > 0 then
+        if row and row.Cells and #row.Cells > 0 then
             local rowHeight = 0
 
             for _, cell in ipairs(row.Cells) do

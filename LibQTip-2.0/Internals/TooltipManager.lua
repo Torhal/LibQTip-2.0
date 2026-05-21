@@ -507,7 +507,9 @@ function TooltipManager:ReleaseTooltip(tooltip)
         ScriptManager:RawSetScript(tooltip, scriptType, nil)
     end
 
-    wipe(tooltip.Scripts)
+    if tooltip.Scripts then
+        wipe(tooltip.Scripts)
+    end
 
     self.LayoutRegistry[tooltip] = nil
 

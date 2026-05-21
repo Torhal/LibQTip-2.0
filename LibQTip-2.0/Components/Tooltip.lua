@@ -290,10 +290,12 @@ function Tooltip:Clear()
     wipe(self.Rows)
 
     for _, column in ipairs(self.Columns) do
-        column.Width = 0
-        column:SetWidth(1)
+        if column then
+            column.Width = 0
+            column:SetWidth(1)
 
-        wipe(column.Cells)
+            wipe(column.Cells)
+        end
     end
 
     wipe(self.ColSpanWidths)

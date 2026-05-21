@@ -1,0 +1,8 @@
+{
+    "diagnostics": {
+        "enable": [
+            "need-check-nil"
+        ]
+    },
+    "framexml": false
+}

@@ -1,0 +1,9 @@
+{
+    "diagnostics": {
+        "disable": [
+            "cannot-call",
+            "need-check-nil"
+        ]
+    },
+    "framexml": false
+}

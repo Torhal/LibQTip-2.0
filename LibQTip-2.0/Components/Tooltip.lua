@@ -496,7 +496,7 @@ end
 --- Ensure the Tooltip has at least the passed number of Columns.
 ---
 --- The justification of existing Columns is reset to any passed values, or to "LEFT" if none are provided.
----@param columnCount number Minimum number of columns
+---@param columnCount? number Minimum number of columns
 ---@param ...? JustifyHorizontal Column horizontal justifications ("CENTER", "LEFT" or "RIGHT"). Defaults to "LEFT".
 --- ***
 --- Example Tooltip with 5 columns justified as left, center, left, left, left:

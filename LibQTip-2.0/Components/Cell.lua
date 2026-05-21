@@ -205,7 +205,6 @@ function Cell:OnRelease()
     self.MaxWidth = nil
     self.MinWidth = nil
     self.RightPadding = 0
-    self.Tooltip = nil
 end
 
 --- Sets the background color for the Cell.

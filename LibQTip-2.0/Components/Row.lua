@@ -100,6 +100,10 @@ function Row:SetTextColor(r, g, b, a)
         r, g, b, a = self.Tooltip:GetDefaultFont():GetTextColor()
     end
 
+    if not self.Cells then
+        return self
+    end
+
     for cellIndex = 1, #self.Cells do
         self.Cells[cellIndex]:SetTextColor(r, g, b, a)
     end

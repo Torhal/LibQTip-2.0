@@ -7,7 +7,7 @@ local QTip = LibStub:GetLibrary("LibQTip-2.0")
 local ScriptManager = QTip.ScriptManager
 local TooltipManager = QTip.TooltipManager
 
----@class LibQTip-2.0.Tooltip: BackdropTemplate, Frame
+---@class LibQTip-2.0.Tooltip: TooltipBackdropTemplate, Frame
 ---@field AutoHideTimerFrame? LibQTip-2.0.Timer Allocated when :SetAutoHideDelay is used.
 ---@field ColSpanWidths table<string, number|nil> Widths of ColSpans, keyed by index range.
 ---@field Columns (LibQTip-2.0.Column|nil)[] Columns allocated to the Tooltip.

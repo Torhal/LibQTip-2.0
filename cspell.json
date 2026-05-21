@@ -4,7 +4,9 @@
     "dictionaryDefinitions": [],
     "dictionaries": [],
     "words": [
-        "framexml"
+        "framexml",
+        "tinsert",
+        "tremove"
     ],
     "ignoreWords": [],
     "import": []

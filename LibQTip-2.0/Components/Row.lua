@@ -8,7 +8,7 @@ local ScriptManager = QTip.ScriptManager
 local TooltipManager = QTip.TooltipManager
 
 ---@class LibQTip-2.0.Row: LibQTip-2.0.ScriptFrame
----@field Cells (LibQTip-2.0.Cell|nil)[] Cells indexed by Column.
+---@field Cells LibQTip-2.0.Cell[]|nil Cells indexed by Column.
 ---@field ColSpanCells (true|nil)[] A value of true means the Column index is part of a ColSpan.
 ---@field Height number Height, in pixels.
 ---@field Index integer The Row's index on its Tooltip

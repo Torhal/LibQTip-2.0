@@ -8,7 +8,7 @@ local ScriptManager = QTip.ScriptManager
 local TooltipManager = QTip.TooltipManager
 
 ---@class LibQTip-2.0.Cell: LibQTip-2.0.ScriptFrame, ColorMixin
----@field CellProvider LibQTip-2.0.CellProvider The CellProvider responsible for Cells of this type.
+---@field CellProvider LibQTip-2.0.CellProvider! The CellProvider responsible for Cells of this type.
 ---@field ColSpan integer The number of columns the cell will span. Defaults to 1.
 ---@field ColumnIndex integer The Column index of Cell.
 ---@field FontString FontString The FontString used to set and display textual values on the Cell.
@@ -18,7 +18,7 @@ local TooltipManager = QTip.TooltipManager
 ---@field MinWidth? integer The minimum width (in pixels) of the Cell. Must not exceed the value of MaxWidth.
 ---@field RightPadding integer Pixel padding on the right side of the Cell's value. Defaults to 0.
 ---@field RowIndex integer The Row index of Cell.
----@field Tooltip LibQTip-2.0.Tooltip The Tooltip this Cell belongs to.
+---@field Tooltip LibQTip-2.0.Tooltip! The Tooltip this Cell belongs to.
 local Cell = QTip.DefaultCellPrototype
 
 --------------------------------------------------------------------------------

@@ -18,7 +18,7 @@ local TooltipManager = QTip.TooltipManager
 ---@field HighlightFrame Frame The Frame for the HighlightTexture. Used for mouse-enabled Scripts.
 ---@field HighlightTexture Texture The texture used for Frames with mouse-enabled Scripts set on them.
 ---@field HorizontalCellMargin number Horizontal Cell margin, in pixels.
----@field Key string The key used to acquire the Tooltip.
+---@field Key string! The key used to acquire the Tooltip.
 ---@field MaxHeight? number The maximum Tooltip height, in pixels. Contents larger than this value will be scrollable.
 ---@field Rows (LibQTip-2.0.Row|nil)[] Rows allocated to the Tooltip.
 ---@field Scripts? table<LibQTip-2.0.ScriptType, true|nil> Currently-set Scripts on the Tooltip.

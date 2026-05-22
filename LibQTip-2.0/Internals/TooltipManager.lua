@@ -414,6 +414,7 @@ function TooltipManager:ReleaseColumn(column)
 
     column.HorizontalJustification = "LEFT"
     column.Index = 0
+    column.Tooltip = nil
     column.Width = 0
 
     ScriptManager:ClearScripts(column)

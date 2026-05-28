@@ -4,7 +4,7 @@
 
 local Version = {
     Major = "LibQTip-2.0",
-    Minor = 1,
+    Minor = 2,
 }
 
 assert(LibStub, ("%s requires LibStub"):format(Version.Major))

@@ -215,13 +215,11 @@ end
 ---@param a? number Alpha level of the Cell. Defaults to 1.
 ---@return LibQTip-2.0.Cell cell
 function Cell:SetColor(r, g, b, a)
-    local red, green, blue, alpha
-
-    if r and g and b and a then
-        red, green, blue, alpha = r, g, b, a
-    else
-        red, green, blue, alpha = self.Tooltip:GetBackdropColor()
-    end
+    local tooltipRed, tooltipGreen, tooltipBlue, tooltipAlpha = self.Tooltip:GetBackdropColor()
+    local red = r or tooltipRed
+    local green = g or tooltipGreen
+    local blue = b or tooltipBlue
+    local alpha = a or tooltipAlpha
 
     self:SetBackdrop(TooltipManager.DefaultBackdrop)
     self:SetBackdropColor(red, green, blue, alpha)
